@@ -53,7 +53,7 @@ void physics();
 void render();
 
 extern void tristanCredits(Rect* r);
-extern void kennyCredits(Rect *);
+extern void kennyCredits(Rect* r);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {

@@ -2,7 +2,7 @@
 
 #include "fonts.h"
 
-kennyCredits(Rect* r)
+void kennyCredits(Rect *r)
 {
-    ggprint8b(&r, 16, 0x000000ff, "Kenny Taylor");
+    ggprint8b(r, 16, 0x000000ff, "Kenny Taylor");
 }
