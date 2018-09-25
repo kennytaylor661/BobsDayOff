@@ -53,7 +53,7 @@ void physics();
 void render();
 
 extern void tristanCredits(Rect* r);
-extern void kennyCredits(int, int);
+extern void kennyCredits(Rect *);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -735,7 +735,8 @@ void render(void)
 		r.center = 0;
 		tristanCredits(&r);
 		//Kenny's and Rudy's credit functions
-		return;
+		kennyCredits(&r);
+        return;
 	}
 	//
 	//show ground
