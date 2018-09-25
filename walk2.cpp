@@ -54,6 +54,7 @@ void render();
 
 extern void tristanCredits(Rect* r);
 extern void kennyCredits(Rect* r);
+extern void rudyCredits(Rect* r);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -736,6 +737,7 @@ void render(void)
 		tristanCredits(&r);
 		//Kenny's and Rudy's credit functions
 		kennyCredits(&r);
+		rudyCredits(&r);
         return;
 	}
 	//
