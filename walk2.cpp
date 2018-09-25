@@ -52,6 +52,7 @@ void init();
 void physics();
 void render();
 
+extern void tristanCredits(Rect* r);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -104,6 +105,7 @@ public:
 	int walk;
 	int walkFrame;
 	double delay;
+	bool creditsFlag = 0;
 	Image *walkImage;
 	GLuint walkTexture;
 	Vec box[20];
@@ -597,6 +599,9 @@ int checkKeys(XEvent *e)
 		case XK_Escape:
 			return 1;
 			break;
+		case XK_c: //Credits key is C.
+			creditsFlag = !creditsFlag;
+			break;
 	}
 	return 0;
 }
@@ -721,6 +726,16 @@ void render(void)
 	glClear(GL_COLOR_BUFFER_BIT);
 	float cx = gl.xres/2.0;
 	float cy = gl.yres/2.0;
+	//
+	//Credits Scene
+	if(creditsFlag) {
+		r.bot = gl.yres/2;
+		r.left = gl.xres/2;
+		r.center = 0;
+		tristanCredits(r);
+		//Kenny's and Rudy's credit functions
+		return;
+	}
 	//
 	//show ground
 	glBegin(GL_QUADS);
