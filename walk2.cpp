@@ -51,6 +51,7 @@ int checkKeys(XEvent *e);
 void init();
 void physics();
 void render();
+void show_credits();
 
 extern void tristanCredits(Rect* r);
 extern void kennyCredits(Rect* r);
@@ -731,16 +732,10 @@ void render(void)
 	//
 	//Credits Scene
 	if(gl.creditsFlag) {
-		r.bot = gl.yres/2;
-		r.left = gl.xres/2;
-		r.center = 0;
-		tristanCredits(&r);
-		//Kenny's and Rudy's credit functions
-		kennyCredits(&r);
-		rudyCredits(&r);
-        return;
+		show_credits();
+		return;
 	}
-	//
+    //
 	//show ground
 	glBegin(GL_QUADS);
 		glColor3f(0.2, 0.2, 0.2);
@@ -948,3 +943,13 @@ void render(void)
 
 
 
+void show_credits()
+{
+    Rect r;
+    r.bot = gl.yres/2;
+    r.left = gl.xres/2;
+    r.center = 0;
+	tristanCredits(&r);
+	kennyCredits(&r);
+	rudyCredits(&r);
+}
