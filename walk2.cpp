@@ -600,7 +600,7 @@ int checkKeys(XEvent *e)
 			return 1;
 			break;
 		case XK_c: //Credits key is C.
-			creditsFlag = !creditsFlag;
+			gl.creditsFlag = !gl.creditsFlag;
 			break;
 	}
 	return 0;
@@ -728,11 +728,11 @@ void render(void)
 	float cy = gl.yres/2.0;
 	//
 	//Credits Scene
-	if(creditsFlag) {
+	if(gl.creditsFlag) {
 		r.bot = gl.yres/2;
 		r.left = gl.xres/2;
 		r.center = 0;
-		tristanCredits(r);
+		tristanCredits(&r);
 		//Kenny's and Rudy's credit functions
 		return;
 	}
