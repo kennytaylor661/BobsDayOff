@@ -927,7 +927,8 @@ void render(void)
 	r.center = 0;
 	ggprint8b(&r, 16, c, "W   Walk cycle");
 	ggprint8b(&r, 16, c, "E   Explosion");
-	ggprint8b(&r, 16, c, "+   faster");
+	ggprint8b(&r, 16, c, "C   Credits");
+    ggprint8b(&r, 16, c, "+   faster");
 	ggprint8b(&r, 16, c, "-   slower");
 	ggprint8b(&r, 16, c, "right arrow -> walk right");
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
