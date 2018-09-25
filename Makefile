@@ -3,7 +3,7 @@ LFLAGS = -lrt -lX11 -lGLU -lGL -pthread -lm #-lXrandr
 
 all: walk2
 
-walk2: walk2.cpp log.cpp tristanB.cpp
+walk2: walk2.cpp log.cpp tristanB.cpp rudyM.cpp
 	g++ $(CFLAGS) walk2.cpp log.cpp tristanB.cpp libggfonts.a -Wall -Wextra $(LFLAGS) -owalk2
 
 clean:
