@@ -1,4 +1,6 @@
-// Kenny's code goes here
+// Kenny Taylor
+// Modified:  9/26/18
+// Purpose:  individual work on group project
 
 #include "fonts.h"
 
