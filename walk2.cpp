@@ -1,3 +1,5 @@
+//Modified by: Tristan Bock, Kenny Taylor, Rudy Martinez
+//Purpose: CMPS 3350 Fall 2018 Project
 //3350
 //program: walk2.cpp
 //author:  Gordon Griesel
