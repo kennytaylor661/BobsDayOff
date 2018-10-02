@@ -338,10 +338,11 @@ public:
 			unlink(ppmname);
 	}
 };
-Image img[3] = {
+Image img[4] = {
 "./images/walk.gif",
 "./images/exp.png",
-"./images/exp44.png" };
+"./images/exp44.png",
+"./images/Cactuar.png"};
 
 
 int main(void)
