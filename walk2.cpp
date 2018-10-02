@@ -60,7 +60,7 @@ extern void tristanCredits(Rect*);
 extern void kennyCredits(Rect*);
 extern void showKennyImage(int, int, GLuint);
 extern void rudyCredits(Rect*);
-
+extern void tristanImage(int, int, GLuint);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -117,6 +117,7 @@ public:
 	Image *walkImage;
 	GLuint walkTexture;
 	GLuint kennyCreditsTexture;
+	GLuint tristanTexture;
     Vec box[20];
 	Sprite exp;
 	Sprite exp44;
@@ -344,11 +345,12 @@ public:
 };
 
 // ADDED FOURTH IMAGE HERE 10/2/18
-Image img[4] = {
+Image img[5] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
-"./images/bob.jpg" };
+"./images/bob.jpg",
+"./images/resize_Cactuar.png"};
 
 int main(void)
 {
@@ -403,6 +405,7 @@ unsigned char *buildAlphaData(Image *img)
 void initOpengl(void)
 {
 	//OpenGL initialization
+	glGenTextures(1, &gl.tristanTexture);
 	glViewport(0, 0, gl.xres, gl.yres);
 	//Initialize matrices
 	glMatrixMode(GL_PROJECTION); glLoadIdentity();
@@ -483,6 +486,17 @@ void initOpengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
         GL_RGB, GL_UNSIGNED_BYTE, img[3].data);
+
+   	glGenTextures(1, &gl.tristanTexture);
+   	w = img[4].width;
+   	h = img[4].height;
+   	glBindTexture(GL_TEXTURE_2D, gl.tristanTexture);
+   	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+   	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+   	glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
+		GL_RGB, GL_UNSIGNED_BYTE, img[4].data);
+
+
 }
 
 void init() {
@@ -946,7 +960,7 @@ void render(void)
 	ggprint8b(&r, 16, c, "W   Walk cycle");
 	ggprint8b(&r, 16, c, "E   Explosion");
 	ggprint8b(&r, 16, c, "C   Credits");
-    ggprint8b(&r, 16, c, "+   faster");
+	ggprint8b(&r, 16, c, "+   faster");
 	ggprint8b(&r, 16, c, "-   slower");
 	ggprint8b(&r, 16, c, "right arrow -> walk right");
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
@@ -955,12 +969,6 @@ void render(void)
 		screenCapture();
 	}
 }
-
-
-
-
-
-
 
 void show_credits()
 {
@@ -976,4 +984,5 @@ void show_credits()
 
     // Draw individual images
     showKennyImage(600, 300, gl.kennyCreditsTexture);
+    tristanImage(150, 500, gl.tristanTexture);
 }
