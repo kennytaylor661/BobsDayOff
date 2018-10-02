@@ -17,11 +17,13 @@ void kennyCredits(int x, int y)
     r.left = x;
     r.center = 0; 
 
-    ggprint8b(&r, 16, 0x000000ff, "Kenny Taylor");
+    ggprint8b(&r, 16, 0x004040ff, "Kenny Taylor");
 }
 
 void showKennyImage(int x, int y, GLuint texid)
 {
+    //
+
     // ADDED IN CLASS 10/2/18 - Draw Kenny picture
     glColor3ub(255, 255, 255);
     int wid = 80; 
