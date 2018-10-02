@@ -61,6 +61,7 @@ extern void kennyCredits(Rect*);
 extern void showKennyImage(int, int, GLuint);
 extern void rudyCredits(Rect*);
 extern void tristanImage(int, int, GLuint);
+extern void showRudyPicture(int, int, GLuint);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -118,6 +119,7 @@ public:
 	GLuint walkTexture;
 	GLuint kennyCreditsTexture;
 	GLuint tristanTexture;
+	GLuint rudyTexture;
     Vec box[20];
 	Sprite exp;
 	Sprite exp44;
@@ -345,12 +347,13 @@ public:
 };
 
 // ADDED FOURTH IMAGE HERE 10/2/18
-Image img[5] = {
+Image img[6] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
 "./images/bob.jpg",
-"./images/resize_Cactuar.png"};
+"./images/resize_Cactuar.png",
+"./images/dog.jpg};
 
 int main(void)
 {
@@ -495,6 +498,16 @@ void initOpengl(void)
    	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
    	glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
 		GL_RGB, GL_UNSIGNED_BYTE, img[4].data);
+
+	//Load Rudy's Texture
+	 glGenTextures(1, &gl.rudyTexture);
+        w = img[5].width;
+        h = img[5].height;
+        glBindTexture(GL_TEXTURE_2D, gl.rudyTexture);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
+                GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
 
 
 }
@@ -985,4 +998,5 @@ void show_credits()
     // Draw individual images
     showKennyImage(600, 300, gl.kennyCreditsTexture);
     tristanImage(150, 500, gl.tristanTexture);
+    showRudyPicture(300, 300, gl.rudyTexture);
 }
