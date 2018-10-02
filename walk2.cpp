@@ -55,9 +55,12 @@ void physics();
 void render();
 void show_credits();
 
-extern void tristanCredits(Rect* r);
-extern void kennyCredits(Rect* r);
-extern void rudyCredits(Rect* r);
+// Individual functions here
+extern void tristanCredits(Rect*);
+extern void kennyCredits(Rect*);
+extern void showKennyImage(int, int, GLuint);
+extern void rudyCredits(Rect*);
+
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
@@ -113,7 +116,8 @@ public:
 	bool creditsFlag = 0;
 	Image *walkImage;
 	GLuint walkTexture;
-	Vec box[20];
+	GLuint kennyCreditsTexture;
+    Vec box[20];
 	Sprite exp;
 	Sprite exp44;
 	Vec ball_pos;
@@ -338,12 +342,13 @@ public:
 			unlink(ppmname);
 	}
 };
+
+// ADDED FOURTH IMAGE HERE 10/2/18
 Image img[4] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
-"./images/Cactuar.png"};
-
+"./images/bob.jpg" };
 
 int main(void)
 {
@@ -468,6 +473,16 @@ void initOpengl(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
 		GL_RGBA, GL_UNSIGNED_BYTE, xData);
 	free(xData);
+
+    // ADDED IN CLASS 10/2/18 
+    glGenTextures(1, &gl.kennyCreditsTexture);
+    w = img[3].width;
+    h = img[3].height;
+    glBindTexture(GL_TEXTURE_2D, gl.kennyCreditsTexture);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
+        GL_RGB, GL_UNSIGNED_BYTE, img[3].data);
 }
 
 void init() {
@@ -953,7 +968,12 @@ void show_credits()
     r.bot = gl.yres/2;
     r.left = gl.xres/2;
     r.center = 0;
+
+    // Draw individual text
 	tristanCredits(&r);
 	kennyCredits(&r);
 	rudyCredits(&r);
+
+    // Draw individual images
+    showKennyImage(600, 300, gl.kennyCreditsTexture);
 }
