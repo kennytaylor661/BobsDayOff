@@ -10,10 +10,15 @@ void kennyCredits(Rect *r)
     ggprint8b(r, 16, 0x000000ff, "Kenny Taylor");
 }
 
-//void kennyCredits(int x, int y)
-//{
-    //ggprint8b(r, 16, 0x000000ff, "Kenny Taylor");
-//}
+void kennyCredits(int x, int y)
+{
+    Rect r;
+    r.bot = y;
+    r.left = x;
+    r.center = 0; 
+
+    ggprint8b(&r, 16, 0x000000ff, "Kenny Taylor");
+}
 
 void showKennyImage(int x, int y, GLuint texid)
 {
