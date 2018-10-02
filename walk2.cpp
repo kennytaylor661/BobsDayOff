@@ -353,7 +353,7 @@ Image img[6] = {
 "./images/exp44.png",
 "./images/bob.jpg",
 "./images/resize_Cactuar.png",
-"./images/dog.jpg};
+"./images/dog.jpg"};
 
 int main(void)
 {
