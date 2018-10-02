@@ -28,13 +28,14 @@ void kennyCredits(int x, int y)
 
 void showKennyImage(int x, int y, GLuint texid)
 {
-    cout << "Entered showKennyImage()" << endl;
-    cout << "    yOffset = " << yOffset << endl;
-    cout << "    yVelocity = " << yVelocity << endl;
+    //cout << "Entered showKennyImage()" << endl;
+    //cout << "    yOffset = " << yOffset << endl;
+    //cout << "    yVelocity = " << yVelocity << endl;
+
     // Wiggle the image up and down between (y + yRange) and (y - yRange)
     int yRange = 20; 
     yOffset += yVelocity;
-    cout << "    New yOffset = " << yOffset << endl; 
+    //cout << "    New yOffset = " << yOffset << endl; 
    if (yOffset > yRange) {
         yOffset = yRange;
         yVelocity = -1;
