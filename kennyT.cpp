@@ -1,5 +1,5 @@
 // Kenny Taylor
-// Modified:  9/26/18
+// Modified:  10/3/18
 // Purpose:  individual work on group project
 
 #include <iostream>
@@ -11,12 +11,12 @@ using namespace std;
 static double yVelocity = 1;
 static double yOffset = 0;
 
-void kennyCredits(Rect *r)
+void showKennyCredits(Rect *r)
 {
     ggprint8b(r, 16, 0x000000ff, "Kenny Taylor");
 }
 
-void kennyCredits(int x, int y)
+void showKennyCredits(int x, int y)
 {
     Rect r;
     r.bot = y;

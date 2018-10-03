@@ -57,7 +57,8 @@ void show_credits();
 
 // Individual functions here
 extern void tristanCredits(Rect*);
-extern void kennyCredits(Rect*);
+extern void showKennyCredits(Rect*);
+extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
 extern void rudyCredits(Rect*);
 extern void tristanImage(int, int, GLuint);
@@ -992,7 +993,7 @@ void show_credits()
 
     // Draw individual text
 	tristanCredits(&r);
-	kennyCredits(&r);
+	showKennyCredits(&r);
 	rudyCredits(&r);
 
     // Draw individual images
