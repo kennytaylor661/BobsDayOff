@@ -2,11 +2,8 @@
 // Modified:  10/3/18
 // Purpose:  individual work on group project
 
-#include <iostream>
 #include <GL/glx.h>
 #include "fonts.h"
-
-using namespace std;
 
 static double yVelocity = 1;
 static double yOffset = 0;
@@ -28,14 +25,9 @@ void showKennyCredits(int x, int y)
 
 void showKennyImage(int x, int y, GLuint texid)
 {
-    //cout << "Entered showKennyImage()" << endl;
-    //cout << "    yOffset = " << yOffset << endl;
-    //cout << "    yVelocity = " << yVelocity << endl;
-
     // Wiggle the image up and down between (y + yRange) and (y - yRange)
     int yRange = 20; 
     yOffset += yVelocity;
-    //cout << "    New yOffset = " << yOffset << endl; 
    if (yOffset > yRange) {
         yOffset = yRange;
         yVelocity = -1;
@@ -57,6 +49,4 @@ void showKennyImage(int x, int y, GLuint texid)
         glTexCoord2f(1.0f, 1.0f); glVertex2i( wid,-wid);
     glEnd();
     glPopMatrix();
-    
-    //cout << "Leaving showKennyImage()" << endl;
 }
