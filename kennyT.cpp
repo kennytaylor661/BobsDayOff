@@ -58,5 +58,5 @@ void showKennyImage(int x, int y, GLuint texid)
     glEnd();
     glPopMatrix();
     
-    cout << "Leaving showKennyImage()" << endl;
+    //cout << "Leaving showKennyImage()" << endl;
 }
