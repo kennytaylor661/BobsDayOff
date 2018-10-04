@@ -23,6 +23,17 @@ void showKennyCredits(int x, int y)
     ggprint8b(&r, 16, 0x004040ff, "Kenny Taylor");
 }
 
+void creditsTitle(int x, int y)
+{
+    Rect r;
+    r.bot = y;
+    r.left = x;
+    r.center = 0;  
+
+    ggprint8b(&r, 16, 0x004040ff, "Game Credits");
+}
+
+
 void showKennyImage(int x, int y, GLuint texid)
 {
     // Wiggle the image up and down between (y + yRange) and (y - yRange)

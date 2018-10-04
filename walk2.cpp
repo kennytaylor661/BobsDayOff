@@ -56,6 +56,7 @@ void render();
 void show_credits();
 
 // Individual functions here
+extern void creditsTitle(int,int);
 extern void tristanCredits(Rect*);
 extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
@@ -776,12 +777,6 @@ void render(void)
 	float cx = gl.xres/2.0;
 	float cy = gl.yres/2.0;
 	//
-	//Credits Scene
-	if(gl.creditsFlag) {
-		show_credits();
-		return;
-	}
-    //
 	//show ground
 	glBegin(GL_QUADS);
 		glColor3f(0.2, 0.2, 0.2);
@@ -979,6 +974,13 @@ void render(void)
 	ggprint8b(&r, 16, c, "right arrow -> walk right");
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
 	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
+
+    //Credits Scene
+    if(gl.creditsFlag) {
+        show_credits();
+        //return;
+    }
+
 	if (gl.movie) {
 		screenCapture();
 	}
@@ -986,15 +988,33 @@ void render(void)
 
 void show_credits()
 {
-    Rect r;
-    r.bot = gl.yres/2;
-    r.left = gl.xres/2;
-    r.center = 0;
+    // Draw background rectangle
+    glPushMatrix();
+    glColor3ub(255,255,255);
+    glBegin(GL_QUADS);
+        glVertex2i(100, 100);
+        glVertex2i(700, 100);
+        glVertex2i(700, 500);
+        glVertex2i(100, 500);
+    glEnd();
+    glPopMatrix();
+
+    // Draw the credits title
+    creditsTitle(380,470);
 
     // Draw individual text
+    Rect r;
+    r.bot = 400;
+    r.left = 200;
 	tristanCredits(&r);
-	showKennyCredits(&r);
-	rudyCredits(&r);
+	
+    r.bot = 300;
+    r.left = 200;
+    showKennyCredits(&r);
+	
+    r.bot = 200;
+    r.left = 200;
+    rudyCredits(&r);
 
     // Draw individual images
     showKennyImage(600, 300, gl.kennyCreditsTexture);
