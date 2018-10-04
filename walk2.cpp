@@ -355,7 +355,7 @@ Image img[6] = {
 "./images/exp44.png",
 "./images/bob.jpg",
 "./images/resize_Cactuar.png",
-"./images/resize_dog.jpg"};
+"./images/resize_turtle.jpg"};
 
 int main(void)
 {

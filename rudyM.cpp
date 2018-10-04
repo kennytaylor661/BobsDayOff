@@ -7,7 +7,7 @@
 
 void rudyCredits(Rect* r)
 {
-	ggprint8b(r, 16, 0x00ffff00, "Rudy Martinez");
+	ggprint8b(r, 16, 0x002da3ce, "Rudy Martinez");
 }
 
 void showRudyPicture(int x, int y, GLuint texid)
