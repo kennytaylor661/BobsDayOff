@@ -962,8 +962,13 @@ void render(void)
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_ALPHA_TEST);
 	}
-	unsigned int c = 0x00ffff44;
-	r.bot = gl.yres - 20;
+	unsigned int c;
+    // Dim the text if we're showing the credits screen
+    if (gl.creditsFlag)
+        c = 0x00888822;
+    else
+        c = 0x00ffff44;
+    r.bot = gl.yres - 20;
 	r.left = 10;
 	r.center = 0;
 	ggprint8b(&r, 16, c, "W   Walk cycle");
@@ -988,36 +993,38 @@ void render(void)
 
 void show_credits()
 {
-    // Draw background rectangle
+    // Draw background rectangle (center in viewport)
     glPushMatrix();
     glColor3ub(255,255,255);
     glBegin(GL_QUADS);
-        glVertex2i(100, 100);
-        glVertex2i(700, 100);
-        glVertex2i(700, 500);
-        glVertex2i(100, 500);
+        glVertex2i(gl.xres/2-300, gl.yres/2-200);
+        glVertex2i(gl.xres/2+300, gl.yres/2-200);
+        glVertex2i(gl.xres/2+300, gl.yres/2+200);
+        glVertex2i(gl.xres/2-300, gl.yres/2+200);
     glEnd();
     glPopMatrix();
 
     // Draw the credits title
-    creditsTitle(380,470);
+    creditsTitle(gl.xres/2-20, gl.yres/2+170);
 
     // Draw individual text
     Rect r;
-    r.bot = 400;
-    r.left = 200;
+    r.bot = gl.yres/2+100;
+    r.left = gl.xres/2-200;
 	tristanCredits(&r);
 	
-    r.bot = 300;
-    r.left = 200;
+    r.bot = gl.yres/2;
+    r.left = gl.xres/2-200;
     showKennyCredits(&r);
 	
-    r.bot = 200;
-    r.left = 200;
+    r.bot = gl.yres/2-100;
+    r.left = gl.xres/2-200;
     rudyCredits(&r);
 
     // Draw individual images
-    showKennyImage(600, 300, gl.kennyCreditsTexture);
-    tristanImage(150, 500, gl.tristanTexture);
-    showRudyPicture(300, 300, gl.rudyTexture);
+    showKennyImage(gl.xres/2+200, gl.yres/2, gl.kennyCreditsTexture);
+    //tristanImage(150, 500, gl.tristanTexture);
+    tristanImage(gl.xres/2, gl.yres/2+75, gl.tristanTexture);
+    //showRudyPicture(300, 300, gl.rudyTexture);
+    showRudyPicture(gl.xres/2, gl.yres/2-100, gl.rudyTexture);
 }
