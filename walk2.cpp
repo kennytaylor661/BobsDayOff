@@ -1013,9 +1013,7 @@ void show_credits()
     r.left = gl.xres/2-200;
 	tristanCredits(&r);
 	
-    r.bot = gl.yres/2;
-    r.left = gl.xres/2-200;
-    showKennyCredits(&r);
+    showKennyCredits(gl.xres/2-200, gl.yres/2);
 	
     r.bot = gl.yres/2-100;
     r.left = gl.xres/2-200;
