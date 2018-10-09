@@ -1,5 +1,5 @@
-#IFNDEF ENEMY_H
-#DEFINE ENEMY_H
+#IFNDEF TRISTAN_H
+#DEFINE TRISTAN_H
 //Header file for enemy type declaration and basic AI
 extern class player;
 class Enemy
