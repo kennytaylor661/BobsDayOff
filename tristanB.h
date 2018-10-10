@@ -1,28 +1,23 @@
 #IFNDEF TRISTAN_H
 #DEFINE TRISTAN_H
-//Header file for enemy type declaration and basic AI
-extern class player;
+
+#include "fonts.h"
+#include <GL/glx.h>
+
 class Enemy
 {
-	int posx;
-	int posy;
-	int HP;
-	int damage;
-	int id;
+	int posX, posY, HP, damage, id;
+
 	Enemy(int x, int y): posx(x), posy(y){}
 
 public:
-	void moveLeft() {posx--;}
-	void moveRight() {posx++;}
-	bool findPlayer(player P) {return P->getx() > posx;}
-	void takeAction(player P)
-	{
-		if (P->getx() - posx < 15 && P->gety() - posy < 10)
-			if (findPlayer())
-				moveLeft();
-			else
-				moveRight();
-	}
+	void moveLeft();
+	void moveRight();
+	bool findPlayer(player P);
+	void takeAction(player P);
 };
+
+void tristanCredits(Rect* r);
+void tristanImage(int x, int y, GLuint texid);
 
 #ENDIF

@@ -1,7 +1,34 @@
 //Name: Tristan Bock
 //Date: 2018-09-25
-#include "fonts.h"
-#include <GL/glx.h>
+#include "tristanB.h"
+
+class Enemy
+{
+    int posX, posY, HP, damageDealt, id;
+
+    Enemy(int x, int y): posX(x), posY(y){}
+
+public:
+    void moveLeft()
+    {
+        posX--;
+    }
+
+    void moveRight()
+    {
+        posX++;
+    }
+
+    bool findPlayer()
+    {
+        //TBD
+    }
+
+    void takeAction()
+    {
+        //stuff
+    }
+};
 
 void tristanCredits(Rect* r)
 {
