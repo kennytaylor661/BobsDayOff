@@ -2,33 +2,27 @@
 //Date: 2018-09-25
 #include "tristanB.h"
 
-class Enemy
-{
-    int posX, posY, HP, damageDealt, id;
+Enemy::Enemy(int x, int y): posX(x), posY(y){}
 
-    Enemy(int x, int y): posX(x), posY(y){}
-
-public:
-    void moveLeft()
+   void Enemy::moveLeft()
     {
         posX--;
     }
 
-    void moveRight()
+    void Enemy::moveRight()
     {
         posX++;
     }
 
-    bool findPlayer()
+    bool Enemy::findPlayer()
     {
         //TBD
     }
 
-    void takeAction()
+    void Enemy::takeAction()
     {
         //stuff
     }
-};
 
 void tristanCredits(Rect* r)
 {
