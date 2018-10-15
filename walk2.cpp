@@ -652,6 +652,9 @@ int checkKeys(XEvent *e)
 		case XK_c: //Credits key is C.
 			gl.creditsFlag = !gl.creditsFlag;
 			break;
+		case XK_space:
+			//gl.yvelocity = 2? then gl.yvelocity -= gravity;
+			break;
 	}
 	return 0;
 }
