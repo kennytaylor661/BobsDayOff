@@ -1,12 +1,12 @@
 CFLAGS = -I ./include
 LFLAGS = -lrt -lX11 -lGLU -lGL -pthread -lm #-lXrandr
 
-all: walk2
+all: bobsdayoff 
 
-walk2: walk2.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp
-	g++ $(CFLAGS) walk2.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp libggfonts.a -Wall -Wextra $(LFLAGS) -owalk2
+bobsdayoff: bobsdayoff.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp
+	g++ $(CFLAGS) bobsdayoff.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp libggfonts.a -Wall -Wextra $(LFLAGS) -obobsdayoff
 
 clean:
-	rm -f walk2
+	rm -f bobsdayoff
 	rm -f *.o
 
