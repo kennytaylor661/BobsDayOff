@@ -4,6 +4,7 @@
 
 #include <GL/glx.h>
 #include "fonts.h"
+#include "level.h"
 
 static double yVelocity = 1;
 static double yOffset = 0;
@@ -61,7 +62,7 @@ void showKennyImage(int x, int y, GLuint texid)
     glPopMatrix();
 }
 
-void loadLevel()
+void loadLevel(Level *lev)
 {
 
 }
