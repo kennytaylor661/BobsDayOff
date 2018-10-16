@@ -65,7 +65,7 @@ extern void creditsTitle(int,int);
 extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
-extern void loadLevel(Level*);
+extern void loadLevel(Level*, char*);
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -122,6 +122,7 @@ public:
 	int movie, movieStep;
 	int walk;
 	int walkFrame;
+    int render = 1;
 	double delay;
 	bool creditsFlag = 0;
 	Image *walkImage;
@@ -169,39 +170,46 @@ public:
 	}
 } gl;
 
+// Start on level 1
 Level lev;
 
 Level::Level() {
-	//Log("Level constructor\n");
-	tilesize[0] = 32;
-	tilesize[1] = 32;
-	ftsz[0] = (Flt)tilesize[0];
-	ftsz[1] = (Flt)tilesize[1];
-	tile_base = 220.0;
-	//read level
-	FILE *fpi = fopen("level1.txt","r");
-	if (fpi) {
-		nrows=0;
-		char line[100];
-		while (fgets(line, 100, fpi) != NULL) {
-			removeCrLf(line);
-			int slen = strlen(line);
-			ncols = slen;
-			//Log("line: %s\n", line);
-			for (int j=0; j<slen; j++) {
-				arr[nrows][j] = line[j];
-			}
-			++nrows;
-		}
-		fclose(fpi);
-		//printf("nrows of background data: %i\n", nrows);
-	}
-	for (int i=0; i<nrows; i++) {
-		for (int j=0; j<ncols; j++) {
-			printf("%c", arr[i][j]);
-		}
-		printf("\n");
-	}
+	load("level1.txt");
+}
+
+void Level::load(char *filename)
+{
+    //Log("Level constructor\n");
+    tilesize[0] = 32;
+    tilesize[1] = 32;
+    ftsz[0] = (Flt)tilesize[0];
+    ftsz[1] = (Flt)tilesize[1];
+    tile_base = 220.0;
+    //read level
+    //FILE *fpi = fopen("level1.txt","r");
+    FILE *fpi = fopen(filename, "r");
+    if (fpi) {
+        nrows=0;
+        char line[100];
+        while (fgets(line, 100, fpi) != NULL) {
+            removeCrLf(line);
+            int slen = strlen(line);
+            ncols = slen;
+            //Log("line: %s\n", line);
+            for (int j=0; j<slen; j++) {
+                arr[nrows][j] = line[j];
+            }
+            ++nrows;
+        }
+        fclose(fpi);
+        //printf("nrows of background data: %i\n", nrows);
+    }    
+    for (int i=0; i<nrows; i++) {
+        for (int j=0; j<ncols; j++) {
+            printf("%c", arr[i][j]);
+        }
+        printf("\n");
+    }    
 }
 void Level::removeCrLf(char *str) {
 	//remove carriage return and linefeed from a Cstring
@@ -371,7 +379,8 @@ int main(void)
 			done = checkKeys(&e);
 		}
 		physics();
-		render();
+		if(render)
+            render();
 		x11.swapBuffers();
 	}
 	cleanup_fonts();
@@ -631,6 +640,10 @@ int checkKeys(XEvent *e)
 			timers.recordTime(&gl.exp44.time);
 			gl.exp44.onoff ^= 1;
 			break;
+        case XK_2:
+            gl.render = 0;
+            loadLevel(&lev, (const char*)"level2.txt"); 
+            gl.render = 1;
 		case XK_Left:
 			break;
 		case XK_Right:

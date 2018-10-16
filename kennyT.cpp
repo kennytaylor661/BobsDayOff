@@ -62,7 +62,7 @@ void showKennyImage(int x, int y, GLuint texid)
     glPopMatrix();
 }
 
-void loadLevel(Level *lev)
+void loadLevel(Level *lev, char *filename)
 {
-
+    lev->load(filename);
 }
