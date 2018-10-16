@@ -184,7 +184,7 @@ void Level::load(char *filename)
     tilesize[1] = 32;
     ftsz[0] = (Flt)tilesize[0];
     ftsz[1] = (Flt)tilesize[1];
-    tile_base = 220.0;
+    tile_base = 140.0;
     //read level
     //FILE *fpi = fopen("level1.txt","r");
     FILE *fpi = fopen(filename, "r");
@@ -867,6 +867,18 @@ void render(void)
 				glEnd();
 				glPopMatrix();
 			}
+            if (lev.arr[row][col] == 'g') {
+                glColor3f(0.0, 0.6, 0.0);
+                glPushMatrix();
+                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);  
+                    glVertex2i( 0, ty); 
+                    glVertex2i(tx, ty); 
+                    glVertex2i(tx,  0);  
+                glEnd();
+                glPopMatrix();
+            }
 			--row;
 		}
 		col = (col+1) % lev.ncols;
