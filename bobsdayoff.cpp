@@ -1,9 +1,8 @@
-//Modified by: Tristan Bock, Kenny Taylor, Rudy Martinez
-//Purpose: CMPS 3350 Fall 2018 Project
-//3350
-//program: walk2.cpp
-//author:  Gordon Griesel
-//date:    summer 2017
+// Modified by: Tristan Bock, Kenny Taylor, Rudy Martinez
+// Purpose: CMPS 3350 Fall 2018 Project
+
+// Original author:  Gordon Griesel
+// Original date:    summer 2017
 //         spring 2018
 //
 //Walk cycle using a sprite sheet.
@@ -14,6 +13,7 @@
 //  a level tiling system
 //  parallax scrolling of backgrounds
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,15 +55,21 @@ void physics();
 void render();
 void show_credits();
 
-// Individual functions here
-extern void creditsTitle(int,int);
+// Tristan file functions
 extern void tristanCredits(Rect*);
+extern void tristanImage(int, int, GLuint);
+
+// Kenny file functions
+extern void creditsTitle(int,int);
 extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
+extern void loadLevel();
+ 
+// Rudy file functions
 extern void rudyCredits(Rect*);
-extern void tristanImage(int, int, GLuint);
 extern void showRudyPicture(int, int, GLuint);
+
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {

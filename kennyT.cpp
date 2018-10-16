@@ -60,3 +60,8 @@ void showKennyImage(int x, int y, GLuint texid)
     glEnd();
     glPopMatrix();
 }
+
+void loadLevel()
+{
+
+}
