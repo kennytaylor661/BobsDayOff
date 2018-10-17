@@ -2,28 +2,59 @@
 //Date: 2018-09-25
 #include "tristanB.h"
 
+//Enemy Class
 Enemy::Enemy(int x, int y): posX(x), posY(y){}
 
-   void Enemy::moveLeft()
-    {
-        posX--;
-    }
+void Enemy::moveLeft()
+{
+    posX--;
+}
 
-    void Enemy::moveRight()
-    {
-        posX++;
-    }
+void Enemy::moveRight()
+{
+    posX++;
+}
 
-    bool Enemy::findPlayer()
-    {
-        //TBD
-    }
+bool Enemy::findPlayer()
+{
+    return false;//TBD
+}
+//
 
-    void Enemy::takeAction()
-    {
-        //stuff
-    }
+//Player Class
+std::pair<int, int> Player::getPos()
+{
+    return std::pair<int, int>(this->posX, this->posY);
+}
+//
 
+/*/Slime Class
+Slime::Slime()
+{
+    this->HP = 1;
+    this->damage = 1;
+}
+
+void Slime::AI()
+{
+    if (rand()%2 == 0)
+        this->moveLeft();
+    else
+        this->moveRight();
+    sleep(5);
+}
+*/
+
+/*Zombie Class
+Zombie::Zombie()
+{
+    this->HP = 5;
+    this->damage = 1;
+}
+
+void Zombie::AI()
+{}
+*/
 void tristanCredits(Rect* r)
 {
 	ggprint8b(r, 16, 0x00ff44ff, "Tristan Bock");
