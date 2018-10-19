@@ -381,7 +381,7 @@ int main(void)
 			done = checkKeys(&e);
 		}
 		physics();
-		if(render)
+		if(gl.render)
             render();
 		x11.swapBuffers();
 	}
