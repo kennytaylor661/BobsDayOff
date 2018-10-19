@@ -1,6 +1,8 @@
 //Name: Tristan Bock
 //Date: 2018-09-25
 #include "tristanB.h"
+#include <cstdlib> //Rand()
+#include <unistd.h> // usleep()
 
 //Enemy Class
 Enemy::Enemy(int x, int y): posX(x), posY(y){}
@@ -26,35 +28,52 @@ std::pair<int, int> Player::getPos()
 {
     return std::pair<int, int>(this->posX, this->posY);
 }
-//
 
-/*/Slime Class
-Slime::Slime()
+void Player::moveLeft()
 {
-    this->HP = 1;
-    this->damage = 1;
+    posX--;
 }
 
+void Player::moveRight()
+{
+    posX++;
+}
+
+void Player::Jump()
+{
+}
+
+void Player::Fire()
+{
+}
+//
+
+//Slime Class
 void Slime::AI()
 {
     if (rand()%2 == 0)
         this->moveLeft();
     else
         this->moveRight();
-    sleep(5);
+    usleep(2000);
 }
-*/
+//
 
-/*Zombie Class
-Zombie::Zombie()
+//Zombie Class
+void Zombie::AI(Player p)
 {
-    this->HP = 5;
-    this->damage = 1;
-}
+    std::pair<int,int> playerLoc = p.getPos();
 
-void Zombie::AI()
-{}
-*/
+    if (playerLoc.first > posX && playerLoc.first - posX <= 5 && 
+	playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
+        this->moveRight();
+    } else if (playerLoc.first < posX && posX - playerLoc.first <= 5 &&
+	     playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
+	this->moveLeft();
+    }
+    usleep(500);
+}
+//
 void tristanCredits(Rect* r)
 {
 	ggprint8b(r, 16, 0x00ff44ff, "Tristan Bock");

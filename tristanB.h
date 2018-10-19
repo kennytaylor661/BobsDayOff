@@ -7,12 +7,12 @@
 
 class Enemy
 {
-	int posX, posY, id;
+	int id;
 
 	Enemy(int x, int y);
     
 protected:
-    int HP, damage;
+    int posX, posY, HP, damage;
 
 public:
 	void moveLeft();
@@ -34,13 +34,19 @@ public:
 
 class Slime : public Enemy
 {
-    Slime();
+    int HP = 1;
+    int damage = 1;
+
+public:
     void AI();
 };
 class Zombie : public Enemy
 {
-    Zombie();
-    void AI();
+    int HP = 5;
+    int damage = 1;
+
+public:
+    void AI(Player p);
 };
 
 void tristanCredits(Rect* r);
