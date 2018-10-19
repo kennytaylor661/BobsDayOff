@@ -1,0 +1,11 @@
+# Compiled Source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+bobsdayoff
+#Our program.
