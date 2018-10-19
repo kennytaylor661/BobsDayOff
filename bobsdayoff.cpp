@@ -176,7 +176,7 @@ public:
 Level lev;
 
 Level::Level() {
-	load("level1.txt");
+	load((char *)"level1.txt");
 }
 
 void Level::load(char *filename)
@@ -644,7 +644,7 @@ int checkKeys(XEvent *e)
 			break;
         case XK_2:
             gl.render = 0;
-            loadLevel(&lev, (const char*)"level2.txt"); 
+            loadLevel(&lev, (char*)"level2.txt"); 
             gl.render = 1;
 		case XK_Left:
 			break;
