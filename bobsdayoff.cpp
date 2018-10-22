@@ -642,10 +642,16 @@ int checkKeys(XEvent *e)
 			timers.recordTime(&gl.exp44.time);
 			gl.exp44.onoff ^= 1;
 			break;
+        case XK_1:
+            gl.render=0;
+            loadLevel(&lev, (char*)"level1.txt");
+            gl.render=1;
+            break;
         case XK_2:
             gl.render = 0;
             loadLevel(&lev, (char*)"level2.txt"); 
             gl.render = 1;
+            break;
 		case XK_Left:
 			break;
 		case XK_Right:
@@ -857,7 +863,7 @@ void render(void)
 				glEnd();
 				glPopMatrix();
 			}
-			if (lev.arr[row][col] == 'b') {
+			if (lev.arr[row][col] == 'r') {
 				glColor3f(0.9, 0.2, 0.2);
 				glPushMatrix();
 				glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
@@ -869,8 +875,44 @@ void render(void)
 				glEnd();
 				glPopMatrix();
 			}
+            if (lev.arr[row][col] == 'b') {
+                glColor3f(0.2, 0.2, 0.9);
+                glPushMatrix();
+                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);
+                    glVertex2i( 0, ty);
+                    glVertex2i(tx, ty);
+                    glVertex2i(tx,  0);
+                glEnd();
+                glPopMatrix();
+            }
             if (lev.arr[row][col] == 'g') {
                 glColor3f(0.0, 0.6, 0.0);
+                glPushMatrix();
+                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);  
+                    glVertex2i( 0, ty); 
+                    glVertex2i(tx, ty); 
+                    glVertex2i(tx,  0);  
+                glEnd();
+                glPopMatrix();
+            }
+            if (lev.arr[row][col] == 'p') {
+                glColor3f(0.5, 0, 0.5);
+                glPushMatrix();
+                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);  
+                    glVertex2i( 0, ty); 
+                    glVertex2i(tx, ty); 
+                    glVertex2i(tx,  0);  
+                glEnd();
+                glPopMatrix();
+            }
+            if (lev.arr[row][col] == 'y') {
+                glColor3f(1.0, 1.0, 0.0);
                 glPushMatrix();
                 glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
                 glBegin(GL_QUADS);
@@ -1002,11 +1044,12 @@ void render(void)
     r.bot = gl.yres - 20;
 	r.left = 10;
 	r.center = 0;
-	ggprint8b(&r, 16, c, "W   Walk cycle");
-	ggprint8b(&r, 16, c, "E   Explosion");
-	ggprint8b(&r, 16, c, "C   Credits");
-	ggprint8b(&r, 16, c, "+   faster");
-	ggprint8b(&r, 16, c, "-   slower");
+	ggprint8b(&r, 16, c, "W     Walk cycle");
+	ggprint8b(&r, 16, c, "E     Explosion");
+	ggprint8b(&r, 16, c, "C     Credits");
+    ggprint8b(&r, 16, c, "[1-2] Change Level");	
+    ggprint8b(&r, 16, c, "+     faster");
+	ggprint8b(&r, 16, c, "-     slower");
 	ggprint8b(&r, 16, c, "right arrow -> walk right");
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
 	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);

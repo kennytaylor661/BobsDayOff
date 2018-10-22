@@ -1,10 +1,12 @@
-                                        bbbbbbbb                              
-                                    bbbbbb                                    
-                                bbbbbbbb                                      
-bbbbbbbbbbbbbb              bbbbbbbbbb                                        
-bb  bb  bb  bb          bbbbbbbbbbbb                    b   b   b   b         
-bbbbbbbbbbbbbb          bbbbbbbbbbbbbbbbbbbbbbbbbbbbb  bbb bbb bbb bbb        
-bbbbbbbbbbbbbb          bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                 yy                                                           
+                 yy                                                           
+                                        rrrrrrr                               
+                                    rrrrrr                                    
+                                rrrrrrrr                                      
+rrrrrrrrrrrrrr              rrrrrrrrrr                                        
+rr  rr  rr  rr          rrrrrrrrrrrr                    r   r   r   r         
+rrrrrrrrrrrrrr          rrrrrrrrrrrrrrrrrrrrrrrrrrrrr  rrr rrr rrr rrr        
+rrrrrrrrrrrrrr          rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
 wwwwwwwwwwwwwwwwwwww    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                                                                               
