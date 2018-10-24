@@ -362,7 +362,7 @@ public:
 	}
 };
 
-// ADDED FOURTH IMAGE HERE 10/2/18
+// Texture images
 Image img[6] = {
 "./images/walk.gif",
 "./images/exp.png",
@@ -497,7 +497,7 @@ void initOpengl(void)
 		GL_RGBA, GL_UNSIGNED_BYTE, xData);
 	free(xData);
 
-    // ADDED IN CLASS 10/2/18 
+    // Load Kenny's credit screen texture
     glGenTextures(1, &gl.kennyCreditsTexture);
     w = img[3].width;
     h = img[3].height;
@@ -507,6 +507,7 @@ void initOpengl(void)
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
         GL_RGB, GL_UNSIGNED_BYTE, img[3].data);
 
+    // Load Tristan's credit screen texture
    	glGenTextures(1, &gl.tristanTexture);
    	w = img[4].width;
    	h = img[4].height;
@@ -516,7 +517,7 @@ void initOpengl(void)
    	glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
 		GL_RGB, GL_UNSIGNED_BYTE, img[4].data);
 
-	//Load Rudy's Texture
+	// Load Rudy's credit screen texture
 	 glGenTextures(1, &gl.rudyTexture);
         w = img[5].width;
         h = img[5].height;
@@ -525,7 +526,6 @@ void initOpengl(void)
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
                 GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
-
 
 }
 
@@ -705,6 +705,9 @@ Flt VecNormalize(Vec vec)
 
 void physics(void)
 {
+    // ============================
+    // Move the character sprite
+    // ============================
 	if (gl.walk || gl.keys[XK_Right] || gl.keys[XK_Left]) {
 		//man is walking...
 		//when time is up, advance the frame.
@@ -741,6 +744,10 @@ void physics(void)
 			gl.exp44.pos[0] -= 2.0 * (0.05 / gl.delay);
 		}
 	}
+
+    // =======================
+    // Handle explosions
+    // =======================
 	if (gl.exp.onoff) {
 		//explosion is happening
 		timers.recordTime(&timers.timeCurrent);
@@ -773,6 +780,7 @@ void physics(void)
 			}
 		}
 	}
+
 	//====================================
 	//Adjust position of ball.
 	//Height of highest tile when ball is?
@@ -799,13 +807,17 @@ void physics(void)
 void render(void)
 {
 	Rect r;
-	//Clear the screen
+    // =======================
+	// Clear the screen
+    // =======================
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	float cx = gl.xres/2.0;
 	float cy = gl.yres/2.0;
-	//
-	//show ground
+
+    // =======================
+	// Render the ground
+    // =======================
 	glBegin(GL_QUADS);
 		glColor3f(0.2, 0.2, 0.2);
 		glVertex2i(0,       220);
@@ -814,8 +826,10 @@ void render(void)
 		glVertex2i(gl.xres,   0);
 		glVertex2i(0,         0);
 	glEnd();
-	//
-	//show boxes as background
+
+    // ===========================
+	// Draw boxes as background
+    // ===========================
 	for (int i=0; i<20; i++) {
 		glPushMatrix();
 		glTranslated(gl.box[i][0],gl.box[i][1],gl.box[i][2]);
@@ -828,10 +842,10 @@ void render(void)
 		glEnd();
 		glPopMatrix();
 	}
-	//
-	//========================
-	//Render the tile system
-	//========================
+	
+	// =================================
+	// Draw the foreground tile system
+	// =================================
 	int tx = lev.tilesize[0];
 	int ty = lev.tilesize[1];
 	Flt dd = lev.ftsz[0];
@@ -941,8 +955,10 @@ void render(void)
 		glVertex2i( 10, 0);
 	glEnd();
 	glPopMatrix();
-	//--------------------------------------
-	//
+
+	// =========================
+	// Draw shadow
+    // =========================
 	//#define SHOW_FAKE_SHADOW
 	#ifdef SHOW_FAKE_SHADOW
 	glColor3f(0.25, 0.25, 0.25);
@@ -953,8 +969,10 @@ void render(void)
 		glVertex2i(cx-60, 130);
 	glEnd();
 	#endif
-	//
-	//
+
+	// ========================
+	// Draw character sprite
+    // ========================
 	float h = 200.0;
 	float w = h * 0.5;
 	glPushMatrix();
@@ -986,8 +1004,10 @@ void render(void)
 	glPopMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_ALPHA_TEST);
-	//
-	//
+
+	// =======================
+    // Render explosions
+    // =======================
 	if (gl.exp.onoff) {
 		h = 80.0;
 		w = 80.0;
@@ -1013,7 +1033,6 @@ void render(void)
 		glDisable(GL_ALPHA_TEST);
 	}
 	//
-	//
 	if (gl.exp44.onoff) {
 		h = 80.0;
 		w = 80.0;
@@ -1038,6 +1057,10 @@ void render(void)
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_ALPHA_TEST);
 	}
+
+    // ======================
+    // Draw the UI/HUD
+    // ======================
 	unsigned int c;
     // Dim the text if we're showing the credits screen
     if (gl.creditsFlag)
@@ -1057,7 +1080,9 @@ void render(void)
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
 	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
 
-    //Credits Scene
+    // ==========================
+    // Draw the credits screen
+    // ==========================
     if(gl.creditsFlag) {
         show_credits();
         //return;
@@ -1098,8 +1123,6 @@ void show_credits()
 
     // Draw individual images
     showKennyImage(gl.xres/2+200, gl.yres/2, gl.kennyCreditsTexture);
-    //tristanImage(150, 500, gl.tristanTexture);
     tristanImage(gl.xres/2, gl.yres/2+75, gl.tristanTexture);
-    //showRudyPicture(300, 300, gl.rudyTexture);
     showRudyPicture(gl.xres/2, gl.yres/2-100, gl.rudyTexture);
 }
