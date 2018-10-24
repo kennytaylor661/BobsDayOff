@@ -1,0 +1,4 @@
+10/22/18 [KT] Added additional colors to the level renderer (see level-colors.txt)
+              Also added a definition for textured tiles.  Need to code this.
+10/24/18 [KT] Added the ability to use comment lines in the level files
+

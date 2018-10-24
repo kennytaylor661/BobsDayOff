@@ -194,14 +194,17 @@ void Level::load(char *filename)
         nrows=0;
         char line[100];
         while (fgets(line, 100, fpi) != NULL) {
-            removeCrLf(line);
-            int slen = strlen(line);
-            ncols = slen;
-            //Log("line: %s\n", line);
-            for (int j=0; j<slen; j++) {
-                arr[nrows][j] = line[j];
+            // Ignore comments
+            if (line[0] != '#') {
+                removeCrLf(line);
+                int slen = strlen(line);
+                ncols = slen;
+                //Log("line: %s\n", line);
+                for (int j=0; j<slen; j++) {
+                    arr[nrows][j] = line[j];
+                }
+                ++nrows;
             }
-            ++nrows;
         }
         fclose(fpi);
         //printf("nrows of background data: %i\n", nrows);
