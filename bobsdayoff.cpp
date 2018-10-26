@@ -192,8 +192,8 @@ void Level::load(char *filename)
     FILE *fpi = fopen(filename, "r");
     if (fpi) {
         nrows=0;
-        char line[100];
-        while (fgets(line, 100, fpi) != NULL) {
+        char line[200];
+        while (fgets(line, 200, fpi) != NULL) {
             // Ignore comments
             if (line[0] != '#') {
                 removeCrLf(line);
@@ -214,7 +214,10 @@ void Level::load(char *filename)
             printf("%c", arr[i][j]);
         }
         printf("\n");
-    }    
+    }
+
+    // Set player initial location of (gl.xres/2, ?)
+
 }
 void Level::removeCrLf(char *str) {
 	//remove carriage return and linefeed from a Cstring

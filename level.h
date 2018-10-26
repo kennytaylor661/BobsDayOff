@@ -8,7 +8,7 @@ typedef double Flt;
 
 class Level {
 public:
-    unsigned char arr[16][80];
+    unsigned char arr[16][125];
     int nrows, ncols;
     int tilesize[2];
     int levelNumber;
