@@ -5,8 +5,6 @@
 #include <unistd.h> // usleep()
 
 //Enemy Class
-Enemy::Enemy(int x, int y): posX(x), posY(y){}
-
 void Enemy::moveLeft()
 {
     posX--;
@@ -21,6 +19,16 @@ bool Enemy::findPlayer()
 {
     return false;//TBD
 }
+/*
+void Enemy::physics()
+{
+        if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2 ||
+	    posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
+	        return;
+	this->yvel -= gl.Gravity;
+	this->AI(Player p);
+}
+*/
 //
 
 //Player Class
@@ -41,21 +49,28 @@ void Player::moveRight()
 
 void Player::Jump()
 {
+	
 }
 
 void Player::Fire()
 {
+
 }
 //
 
 //Slime Class
-void Slime::AI()
+void Slime::AI(Player p)
 {
     if (rand()%2 == 0)
         this->moveLeft();
     else
         this->moveRight();
     usleep(2000);
+}
+
+void Slime::render()
+{
+
 }
 //
 
@@ -73,7 +88,14 @@ void Zombie::AI(Player p)
     }
     usleep(500);
 }
+
+void Zombie::render()
+{
+
+}
 //
+
+//Global Functions
 void tristanCredits(Rect* r)
 {
 	ggprint8b(r, 16, 0x00ff44ff, "Tristan Bock");
@@ -94,3 +116,4 @@ void tristanImage(int x, int y, GLuint texid)
 	glEnd();
 	glPopMatrix();
 }
+//
