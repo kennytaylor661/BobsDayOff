@@ -731,7 +731,7 @@ void physics(void)
 				gl.camera[0] -= 2.0/lev.tilesize[0] * (0.05 / gl.delay);
 				if (gl.camera[0] < 0.0)
 					gl.camera[0] = 0.0;
-			} else {
+			} else if (gl.camera[0] <= 4000) {
 				gl.box[i][0] -= 1.0 * (0.05 / gl.delay);
 				if (gl.box[i][0] < -10.0)
 					gl.box[i][0] += gl.xres + 10.0;
