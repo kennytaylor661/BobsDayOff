@@ -12,6 +12,7 @@ public:
     int nrows, ncols;
     int tilesize[2];
     int levelNumber;
+    int levelWidth;
     Flt ftsz[2];
     Flt tile_base;
     Level();
