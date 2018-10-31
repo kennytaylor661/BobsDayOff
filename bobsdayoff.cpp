@@ -58,6 +58,11 @@ void physics();
 void render();
 void show_credits();
 
+// timer.cpp functions
+extern struct timespec timeStart, timeCurrent;
+extern double timeDiff(struct timespec *start, struct timespec *end);
+extern void timeCopy(struct timespec *dest, struct timespec *source);
+
 // Tristan file functions
 extern void tristanCredits(Rect*);
 extern void tristanImage(int, int, GLuint);
@@ -809,6 +814,10 @@ void physics(void)
 
 void render(void)
 {
+    struct timespec ts, te;
+    // Record the start time
+    clock_gettime(CLOCK_REALTIME, &ts);
+
 	Rect r;
     // =======================
 	// Clear the screen
@@ -1082,6 +1091,11 @@ void render(void)
 	ggprint8b(&r, 16, c, "right arrow -> walk right");
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
 	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
+
+    // Draw the render time
+    clock_gettime(CLOCK_REALTIME, &te);
+    double diff = timeDiff(&ts, &te);
+    ggprint8b(&r, 16, c, "render time:  %lf sec", diff);
 
     // ==========================
     // Draw the credits screen
