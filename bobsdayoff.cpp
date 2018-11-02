@@ -133,9 +133,11 @@ public:
     int render = 1;
 	double delay;
     double physicsTime = 0.0, renderTime = 0.0;
+    double backgroundXoffset = 0.0;
 	bool creditsFlag = 0;
 	Image *walkImage;
 	GLuint walkTexture;
+    GLuint backgroundTexture;
 	GLuint kennyCreditsTexture;
 	GLuint tristanTexture;
 	GLuint rudyTexture;
@@ -373,13 +375,14 @@ public:
 };
 
 // Texture images
-Image img[6] = {
+Image img[7] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
 "./images/bob.jpg",
 "./images/resize_Cactuar.png",
-"./images/resize_turtle.jpg"};
+"./images/resize_turtle.jpg",
+"./textures/blue-tile.jpg"};
 
 int main(void)
 {
@@ -506,6 +509,16 @@ void initOpengl(void)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
 		GL_RGBA, GL_UNSIGNED_BYTE, xData);
 	free(xData);
+
+    // Load the background texture
+    glGenTextures(1, &gl.backgroundTexture);
+    w = img[6].width;
+    h = img[6].height;
+    glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
+        GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
 
     // Load Kenny's credit screen texture
     glGenTextures(1, &gl.kennyCreditsTexture);
@@ -736,16 +749,22 @@ void physics(void)
 		}
 		for (int i=0; i<20; i++) {
 			if (gl.keys[XK_Left]) {
-				gl.box[i][0] += 1.0 * (0.05 / gl.delay);
-				if (gl.box[i][0] > gl.xres + 10.0)
-					gl.box[i][0] -= gl.xres + 10.0;
+//				gl.box[i][0] += 1.0 * (0.05 / gl.delay);
+                gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
+//				if (gl.box[i][0] > gl.xres + 10.0)
+//					gl.box[i][0] -= gl.xres + 10.0;
+                if (gl.backgroundXoffset > gl.xres + 10)
+                    gl.backgroundXoffset -= gl.xres + 10;
 				gl.camera[0] -= 2.0/lev.tilesize[0] * (0.05 / gl.delay);
 				if (gl.camera[0] < 0.0)
 					gl.camera[0] = 0.0;
 			} else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
-				gl.box[i][0] -= 1.0 * (0.05 / gl.delay);
-				if (gl.box[i][0] < -10.0)
-					gl.box[i][0] += gl.xres + 10.0;
+//				gl.box[i][0] -= 1.0 * (0.05 / gl.delay);
+                gl.backgroundXoffset -= 1.0 * (0.5 / gl.delay);
+//				if (gl.box[i][0] < -10.0)
+//					gl.box[i][0] += gl.xres + 10.0;
+                if (gl.backgroundXoffset < -10.0)
+                    gl.backgroundXoffset += gl.xres + 10.0;
 				gl.camera[0] += 2.0/lev.tilesize[0] * (0.05 / gl.delay);
 				if (gl.camera[0] < 0.0)
 					gl.camera[0] = 0.0;
@@ -837,6 +856,29 @@ void render(void)
 	float cx = gl.xres/2.0;
 	float cy = gl.yres/2.0;
 
+    // ===========================================
+    // Draw textured background (256x256 tiles)
+    // ===========================================
+    int bgWidth = 256, bgHeight = 256; 
+    for (int i=0; i < 2; i++) {
+        for (int j=0; j < 10; j++) {
+            glPushMatrix();
+            glColor3f(1.0, 1.0, 1.0);
+//            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0); 
+            glTranslatef(j*bgWidth+bgWidth/2, 140+i*bgHeight+bgHeight/2, 0);
+            glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.0f, 1.0f); glVertex2i(-bgWidth/2, -bgHeight/2);
+                glTexCoord2f(0.0f, 0.0f); glVertex2i(-bgWidth/2, bgHeight/2);
+                glTexCoord2f(1.0f, 0.0f); glVertex2i(bgWidth/2, bgHeight/2);
+                glTexCoord2f(1.0f, 1.0f); glVertex2i(bgWidth/2, -bgHeight/2);
+            glEnd();
+            glPopMatrix();
+        }
+    }    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+
     // =======================
 	// Render the ground
     // =======================
@@ -852,19 +894,19 @@ void render(void)
     // ===========================
 	// Draw boxes as background
     // ===========================
-	for (int i=0; i<20; i++) {
-		glPushMatrix();
-		glTranslated(gl.box[i][0],gl.box[i][1],gl.box[i][2]);
-		glColor3f(0.2, 0.2, 0.2);
-		glBegin(GL_QUADS);
-			glVertex2i( 0,  0);
-			glVertex2i( 0, 30);
-			glVertex2i(20, 30);
-			glVertex2i(20,  0);
-		glEnd();
-		glPopMatrix();
-	}
-	
+//	for (int i=0; i<20; i++) {
+//		glPushMatrix();
+//		glTranslated(gl.box[i][0],gl.box[i][1],gl.box[i][2]);
+//		glColor3f(0.2, 0.2, 0.2);
+//		glBegin(GL_QUADS);
+//			glVertex2i( 0,  0);
+//			glVertex2i( 0, 30);
+//			glVertex2i(20, 30);
+//			glVertex2i(20,  0);
+//		glEnd();
+//		glPopMatrix();
+//	}
+
 	// =================================
 	// Draw the foreground tile system
 	// =================================
@@ -953,6 +995,19 @@ void render(void)
             if (lev.arr[row][col] == 'y') {
                 glColor3f(1.0, 1.0, 0.0);
                 glPushMatrix();
+                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);  
+                    glVertex2i( 0, ty); 
+                    glVertex2i(tx, ty); 
+                    glVertex2i(tx,  0);  
+                glEnd();
+                glPopMatrix();
+            }
+            if (lev.arr[row][col] == 'z') {
+//                glColor3f(0.4, 0.4, 0.4);
+                glPushMatrix();
+                glColor3f(0.4, 0.4, 0.4);
                 glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
                 glBegin(GL_QUADS);
                     glVertex2i( 0,  0);  

@@ -1,5 +1,5 @@
 // Kenny Taylor
-// Modified:  10/3/18
+// Modified:  11/1/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>

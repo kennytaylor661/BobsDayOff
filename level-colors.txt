@@ -6,6 +6,7 @@ List of level colors:
   r - Red
   w - White
   y - Yellow
+  z - Dark gray
 
 List of level textures:
 
