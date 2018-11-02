@@ -1013,15 +1013,23 @@ void render(void)
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
 		if (gl.keys[XK_Left]) {
-			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, cy-h-58);
-			glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, cy+h-58);
-			glTexCoord2f(fx,      fy);    glVertex2i(cx+w, cy+h-58);
-			glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, cy-h-58);
+//			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, cy-h-58);
+//			glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, cy+h-58);
+//			glTexCoord2f(fx,      fy);    glVertex2i(cx+w, cy+h-58);
+//			glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, cy-h-58);
+            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
+            glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
+            glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
+            glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
 		} else {
-			glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, cy-h-58);
-			glTexCoord2f(fx,      fy);    glVertex2i(cx-w, cy+h-58);
-			glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, cy+h-58);
-			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, cy-h-58);
+//			glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, cy-h-58);
+//			glTexCoord2f(fx,      fy);    glVertex2i(cx-w, cy+h-58);
+//			glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, cy+h-58);
+//			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, cy-h-58);
+            glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
+            glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
+            glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
+            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
 		}
 	glEnd();
 	glPopMatrix();
