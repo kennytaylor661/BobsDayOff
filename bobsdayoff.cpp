@@ -754,6 +754,8 @@ void physics(void)
         // START NEW CODE
         if (gl.keys[XK_Left]) {
             gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
+            if (gl.backgroundXoffset > 0)
+                gl.backgroundXoffset = 0;
 //          if (gl.backgroundXoffset > gl.xres + 10)
 //              gl.backgroundXoffset -= gl.xres + 10;
             gl.camera[0] -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
