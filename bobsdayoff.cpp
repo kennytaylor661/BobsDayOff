@@ -738,7 +738,8 @@ void physics(void)
     // ============================
     // Move the character sprite
     // ============================
-	if (gl.walk || gl.keys[XK_Right] || gl.keys[XK_Left]) {
+	if (gl.walk || gl.keys[XK_Right] || gl.keys[XK_Left]
+        || gl.keys[XK_a] || gl.keys[XK_d]) {
 		//man is walking...
 		//when time is up, advance the frame.
 		timers.recordTime(&timers.timeCurrent);
@@ -751,7 +752,7 @@ void physics(void)
 			timers.recordTime(&timers.walkTime);
 		}
 
-        if (gl.keys[XK_Left]) {
+        if (gl.keys[XK_Left] || gl.keys[XK_a]) {
             gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
             if (gl.backgroundXoffset > 0)
                 gl.backgroundXoffset = 0;
@@ -1050,7 +1051,7 @@ void render(void)
 	float fx = (float)ix / 8.0;
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
-		if (gl.keys[XK_Left]) {
+		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
             glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
