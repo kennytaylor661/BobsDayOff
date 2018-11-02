@@ -751,7 +751,6 @@ void physics(void)
 			timers.recordTime(&timers.walkTime);
 		}
 
-        // START NEW CODE
         if (gl.keys[XK_Left]) {
             gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
             if (gl.backgroundXoffset > 0)
@@ -769,8 +768,8 @@ void physics(void)
             if (gl.camera[0] < 0.0)
                 gl.camera[0] = 0.0;
         }
-        // END NEW CODE
-		if (gl.exp.onoff) {
+		
+        if (gl.exp.onoff) {
 			gl.exp.pos[0] -= 2.0 * (0.05 / gl.delay);
 		}
 		if (gl.exp44.onoff) {
@@ -781,6 +780,7 @@ void physics(void)
     // =======================
     // Handle explosions
     // =======================
+
 	if (gl.exp.onoff) {
 		//explosion is happening
 		timers.recordTime(&timers.timeCurrent);
@@ -865,7 +865,6 @@ void render(void)
             glPushMatrix();
             glColor3f(1.0, 1.0, 1.0);
             glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0); 
-//            glTranslatef(j*bgWidth+bgWidth/2, 140+i*bgHeight+bgHeight/2, 0);
             glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
             glBegin(GL_QUADS);
                 glTexCoord2f(0.0f, 1.0f); glVertex2i(-bgWidth/2, -bgHeight/2);
@@ -989,7 +988,7 @@ void render(void)
                 glPopMatrix();
             }
             if (lev.arr[row][col] == 'z') {
-//                glColor3f(0.4, 0.4, 0.4);
+                glColor3f(0.2, 0.2, 0.2);
                 glPushMatrix();
                 glColor3f(0.4, 0.4, 0.4);
                 glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
@@ -1052,19 +1051,11 @@ void render(void)
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
 		if (gl.keys[XK_Left]) {
-//			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, cy-h-58);
-//			glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, cy+h-58);
-//			glTexCoord2f(fx,      fy);    glVertex2i(cx+w, cy+h-58);
-//			glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, cy-h-58);
             glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
 		} else {
-//			glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, cy-h-58);
-//			glTexCoord2f(fx,      fy);    glVertex2i(cx-w, cy+h-58);
-//			glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, cy+h-58);
-//			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, cy-h-58);
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
