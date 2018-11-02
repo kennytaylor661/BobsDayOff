@@ -1,4 +1,6 @@
 // Modified by: Tristan Bock, Kenny Taylor, Rudy Martinez
+// Last updated 11/1/18
+
 // Purpose: CMPS 3350 Fall 2018 Project
 
 // Original author:  Gordon Griesel
@@ -47,7 +49,6 @@ typedef Flt	Matrix[4][4];
 const float timeslice = 1.0f;
 const float gravity = -0.2f;
 #define ALPHA 1
-#define SHOW_FAKE_SHADOW
 
 //function prototypes
 void initOpengl();
@@ -994,7 +995,8 @@ void render(void)
 	// ========================
 	// Draw character sprite
     // ========================
-	float h = 200.0;
+    // Define height and width of character sprite
+	float h = 128.0;
 	float w = h * 0.5;
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 1.0);
@@ -1011,15 +1013,15 @@ void render(void)
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
 		if (gl.keys[XK_Left]) {
-			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, cy-h);
-			glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, cy+h);
-			glTexCoord2f(fx,      fy);    glVertex2i(cx+w, cy+h);
-			glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, cy-h);
+			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, cy-h-58);
+			glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, cy+h-58);
+			glTexCoord2f(fx,      fy);    glVertex2i(cx+w, cy+h-58);
+			glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, cy-h-58);
 		} else {
-			glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, cy-h);
-			glTexCoord2f(fx,      fy);    glVertex2i(cx-w, cy+h);
-			glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, cy+h);
-			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, cy-h);
+			glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, cy-h-58);
+			glTexCoord2f(fx,      fy);    glVertex2i(cx-w, cy+h-58);
+			glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, cy+h-58);
+			glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, cy-h-58);
 		}
 	glEnd();
 	glPopMatrix();
