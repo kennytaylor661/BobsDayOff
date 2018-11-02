@@ -131,6 +131,7 @@ public:
 	int walkFrame;
     int render = 1;
 	double delay;
+    double physicsTime = 0.0, renderTime = 0.0;
 	bool creditsFlag = 0;
 	Image *walkImage;
 	GLuint walkTexture;
@@ -713,6 +714,10 @@ Flt VecNormalize(Vec vec)
 
 void physics(void)
 {
+    struct timespec ts, te;
+    // Record the start time
+    clock_gettime(CLOCK_REALTIME, &ts);
+
     // ============================
     // Move the character sprite
     // ============================
@@ -810,6 +815,10 @@ void physics(void)
 		gl.ball_vel[1] -= 0.9;
 	}
 	gl.ball_pos[1] += gl.ball_vel[1];
+
+    // Record the physics time
+    clock_gettime(CLOCK_REALTIME, &te);
+    gl.physicsTime = timeDiff(&ts, &te);
 }
 
 void render(void)
@@ -1092,10 +1101,12 @@ void render(void)
 	ggprint8b(&r, 16, c, "left arrow  <- walk left");
 	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
 
-    // Draw the render time
+    // Draw the physics and render times
     clock_gettime(CLOCK_REALTIME, &te);
-    double diff = timeDiff(&ts, &te);
-    ggprint8b(&r, 16, c, "render time:  %lf sec", diff);
+    gl.renderTime = timeDiff(&ts, &te);
+    ggprint8b(&r, 16, c, "");
+    ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
+    ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
 
     // ==========================
     // Draw the credits screen
