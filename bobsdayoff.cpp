@@ -25,10 +25,13 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
+#include <iostream>
 #include "log.h"
 //#include "ppm.h"
 #include "fonts.h"
 #include "level.h"
+
+using namespace std;
 
 //defined types
 //typedef double Flt;
@@ -747,29 +750,24 @@ void physics(void)
 				gl.walkFrame -= 16;
 			timers.recordTime(&timers.walkTime);
 		}
-		for (int i=0; i<20; i++) {
-			if (gl.keys[XK_Left]) {
-//				gl.box[i][0] += 1.0 * (0.05 / gl.delay);
-                gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
-//				if (gl.box[i][0] > gl.xres + 10.0)
-//					gl.box[i][0] -= gl.xres + 10.0;
-                if (gl.backgroundXoffset > gl.xres + 10)
-                    gl.backgroundXoffset -= gl.xres + 10;
-				gl.camera[0] -= 2.0/lev.tilesize[0] * (0.05 / gl.delay);
-				if (gl.camera[0] < 0.0)
-					gl.camera[0] = 0.0;
-			} else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
-//				gl.box[i][0] -= 1.0 * (0.05 / gl.delay);
-                gl.backgroundXoffset -= 1.0 * (0.5 / gl.delay);
-//				if (gl.box[i][0] < -10.0)
-//					gl.box[i][0] += gl.xres + 10.0;
-                if (gl.backgroundXoffset < -10.0)
-                    gl.backgroundXoffset += gl.xres + 10.0;
-				gl.camera[0] += 2.0/lev.tilesize[0] * (0.05 / gl.delay);
-				if (gl.camera[0] < 0.0)
-					gl.camera[0] = 0.0;
-			}
-		}
+
+        // START NEW CODE
+        if (gl.keys[XK_Left]) {
+            gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
+//          if (gl.backgroundXoffset > gl.xres + 10)
+//              gl.backgroundXoffset -= gl.xres + 10;
+            gl.camera[0] -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+            if (gl.camera[0] < 0.0)
+                gl.camera[0] = 0.0;
+        } else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
+            gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
+//          if (gl.backgroundXoffset < -10.0)
+//              gl.backgroundXoffset += gl.xres + 10.0;
+            gl.camera[0] += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+            if (gl.camera[0] < 0.0)
+                gl.camera[0] = 0.0;
+        }
+        // END NEW CODE
 		if (gl.exp.onoff) {
 			gl.exp.pos[0] -= 2.0 * (0.05 / gl.delay);
 		}
@@ -860,12 +858,12 @@ void render(void)
     // Draw textured background (256x256 tiles)
     // ===========================================
     int bgWidth = 256, bgHeight = 256; 
-    for (int i=0; i < 2; i++) {
-        for (int j=0; j < 10; j++) {
+    for (int i=0; i < 3; i++) {
+        for (int j=0; j < 15; j++) {
             glPushMatrix();
             glColor3f(1.0, 1.0, 1.0);
-//            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0); 
-            glTranslatef(j*bgWidth+bgWidth/2, 140+i*bgHeight+bgHeight/2, 0);
+            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0); 
+//            glTranslatef(j*bgWidth+bgWidth/2, 140+i*bgHeight+bgHeight/2, 0);
             glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
             glBegin(GL_QUADS);
                 glTexCoord2f(0.0f, 1.0f); glVertex2i(-bgWidth/2, -bgHeight/2);
@@ -890,22 +888,6 @@ void render(void)
 		glVertex2i(gl.xres,   0);
 		glVertex2i(0,         0);
 	glEnd();
-
-    // ===========================
-	// Draw boxes as background
-    // ===========================
-//	for (int i=0; i<20; i++) {
-//		glPushMatrix();
-//		glTranslated(gl.box[i][0],gl.box[i][1],gl.box[i][2]);
-//		glColor3f(0.2, 0.2, 0.2);
-//		glBegin(GL_QUADS);
-//			glVertex2i( 0,  0);
-//			glVertex2i( 0, 30);
-//			glVertex2i(20, 30);
-//			glVertex2i(20,  0);
-//		glEnd();
-//		glPopMatrix();
-//	}
 
 	// =================================
 	// Draw the foreground tile system
