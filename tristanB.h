@@ -29,13 +29,14 @@ protected:
     float xvel = 0, yvel = 0;
 
 public:
-        Enemy(int x, int y): id(giveID++), posX(x), posY(y) {}
-        ~Enemy(){giveID--;}
+    Enemy(int x, int y): id(giveID++), posX(x), posY(y) {}
+    ~Enemy(){giveID--;}
+
 	void moveLeft();
 	void moveRight();
-	bool findPlayer();
 	virtual void AI(Player p) = 0;
 	void physics();
+    std::pair<int, int> getPos();
 	virtual void render() = 0;
 };
 int Enemy::giveID = 0;
@@ -57,6 +58,18 @@ class Zombie : public Enemy
 public:
     void AI(Player p);
     void render();
+};
+
+class Door
+{
+    std::pair<int, int> upleft, downright; 
+    //coordinates for the UL and LR corners
+    const char* dest;
+
+    Door(int x1, int y1, int x2, int y2, const char* dest):
+        upleft(x1,y1), downright(x2, y2), dest(dest){}
+public:
+    void loadDest();
 };
 
 void tristanCredits(Rect* r);

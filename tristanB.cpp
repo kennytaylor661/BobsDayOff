@@ -4,6 +4,7 @@
 #include <cstdlib> //Rand()
 #include <unistd.h> // usleep()
 
+const float GRAVITY = -0.2f;
 //Enemy Class
 void Enemy::moveLeft()
 {
@@ -15,20 +16,19 @@ void Enemy::moveRight()
     posX++;
 }
 
-bool Enemy::findPlayer()
-{
-    return false;//TBD
-}
-/*
 void Enemy::physics()
 {
-        if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2 ||
-	    posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
-	        return;
-	this->yvel -= gl.Gravity;
-	this->AI(Player p);
+//      if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
+//	         posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
+//	        return;
+	this->yvel -= GRAVITY;
+//	this->AI(Player p);
 }
-*/
+
+std::pair<int, int> Enemy::getPos()
+{
+    return std::pair<int, int>(this->posX, this->posY);
+}
 //
 
 //Player Class
@@ -49,12 +49,25 @@ void Player::moveRight()
 
 void Player::Jump()
 {
-	
+    if (yvel == 0)
+        yvel = 4;
 }
 
 void Player::Fire()
 {
 
+}
+
+void Player::render()
+{
+
+}
+
+void Player::physics()
+{
+    yvel += GRAVITY;
+    if (yvel < 0)
+        yvel = 0;
 }
 //
 
@@ -90,6 +103,13 @@ void Zombie::AI(Player p)
 }
 
 void Zombie::render()
+{
+
+}
+//
+
+//Door Class
+void Door::loadDest()
 {
 
 }
