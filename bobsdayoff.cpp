@@ -141,6 +141,7 @@ public:
 	Image *walkImage;
 	GLuint walkTexture;
     GLuint backgroundTexture;
+    GLuint gray1Texture;
 	GLuint kennyCreditsTexture;
 	GLuint tristanTexture;
 	GLuint rudyTexture;
@@ -385,7 +386,8 @@ Image img[7] = {
 "./images/bob.jpg",
 "./images/resize_Cactuar.png",
 "./images/resize_turtle.jpg",
-"./textures/blue-tile.jpg"};
+"./textures/blue-tile.jpg",
+"./textures/gray1.jpg};
 
 int main(void)
 {
@@ -522,6 +524,16 @@ void initOpengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
         GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
+
+    // Load the gray1 tile texture
+    glGenTextures(1, &gl.gray1Texture);
+    w = img[6].width;
+    h = img[6].height;
+    glBindTexture(GL_TEXTURE_2D, gl.gray1Texture);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
+        GL_RGB, GL_UNSIGNED_BYTE, img[7].data);
 
     // Load Kenny's credit screen texture
     glGenTextures(1, &gl.kennyCreditsTexture);
