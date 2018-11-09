@@ -927,10 +927,10 @@ void render(void)
 	for (int j=0; j<ncols_to_render; j++) {
 		int row = lev.nrows-1;
 		for (int i=0; i<lev.nrows; i++) {
+            // Draw white tile
 			if (lev.arr[row][col] == 'w') {
 				glColor3f(0.8, 0.8, 0.6);
 				glPushMatrix();
-				//put tile in its place
 				glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
 				glBegin(GL_QUADS);
 					glVertex2i( 0,  0);
@@ -940,6 +940,7 @@ void render(void)
 				glEnd();
 				glPopMatrix();
 			}
+            // Draw red tile
 			if (lev.arr[row][col] == 'r') {
 				glColor3f(0.9, 0.2, 0.2);
 				glPushMatrix();
@@ -952,6 +953,7 @@ void render(void)
 				glEnd();
 				glPopMatrix();
 			}
+            // Draw blue tile
             if (lev.arr[row][col] == 'b') {
                 glColor3f(0.2, 0.2, 0.9);
                 glPushMatrix();
@@ -964,6 +966,7 @@ void render(void)
                 glEnd();
                 glPopMatrix();
             }
+            // Draw green tile
             if (lev.arr[row][col] == 'g') {
                 glColor3f(0.0, 0.6, 0.0);
                 glPushMatrix();
@@ -976,6 +979,7 @@ void render(void)
                 glEnd();
                 glPopMatrix();
             }
+            // Draw purple tile
             if (lev.arr[row][col] == 'p') {
                 glColor3f(0.5, 0, 0.5);
                 glPushMatrix();
@@ -988,6 +992,7 @@ void render(void)
                 glEnd();
                 glPopMatrix();
             }
+            // Draw yellow tile
             if (lev.arr[row][col] == 'y') {
                 glColor3f(1.0, 1.0, 0.0);
                 glPushMatrix();
@@ -1000,6 +1005,7 @@ void render(void)
                 glEnd();
                 glPopMatrix();
             }
+            // Draw dark gray tile
             if (lev.arr[row][col] == 'z') {
                 glColor3f(0.2, 0.2, 0.2);
                 glPushMatrix();
