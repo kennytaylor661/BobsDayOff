@@ -66,3 +66,8 @@ void loadLevel(Level *lev, char *filename)
 {
     lev->load(filename);
 }
+
+void drawTexturedTile1(float x, float y)
+{
+
+}
