@@ -22,13 +22,13 @@ void Banana::render()
     // code that will draw the picture of the banana
     // reference code below for texture
 
-    glColor3ub(255, 255, 255);
     int wid = 80;
     glPushMatrix();
     glTranslatef(posx, posy, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, 0.0f);
+    //glEnable(GL_ALPHA_TEST);
+    //glAlphaFunc(GL_GREATER, 0.0f);
+    glColor4ub(255,255,255,255);
     glBegin(GL_QUADS); 
         glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid,-wid);
        	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
@@ -36,6 +36,7 @@ void Banana::render()
        	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid,-wid);
    	glEnd();
    	glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_ALPHA_TEST);
 }
 

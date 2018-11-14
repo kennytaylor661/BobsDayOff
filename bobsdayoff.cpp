@@ -384,7 +384,7 @@ public:
 };
 
 // Texture images
-Image img[9] = {
+Image img[10] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
@@ -393,7 +393,8 @@ Image img[9] = {
 "./images/resize_turtle.jpg",
 "./textures/blue-tile.jpg",
 "./textures/gray1.jpg",
-"./images/banana.jpg"};
+"./images/banana.jpg",
+"./images/banana2.png" };
 int main(void)
 {
 	initOpengl();
@@ -537,10 +538,15 @@ void initOpengl(void)
     glBindTexture(GL_TEXTURE_2D, gl.bananaTexture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, 
-        GL_RGBA, GL_UNSIGNED_BYTE, img[8].data);
-    
-    //Add banana object
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, 
+//        GL_RGB, GL_UNSIGNED_BYTE, img[8].data);
+    xData = buildAlphaData(&img[9]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+        GL_RGBA, GL_UNSIGNED_BYTE, xData);
+    free(xData);
+ 
+
+   //Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
 
     // Load the gray1 tile texture
@@ -1081,7 +1087,7 @@ void render(void)
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 1.0);
 	glBindTexture(GL_TEXTURE_2D, gl.walkTexture);
-	//
+	
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.0f);
 	glColor4ub(255,255,255,255);
