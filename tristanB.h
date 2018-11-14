@@ -9,6 +9,7 @@ class Player
 {
     int posX, posY, HP, wid;
     float xvel, yvel;
+    GLuint texid;
 
 public:
     std::pair<int, int> getPos();
@@ -45,6 +46,7 @@ class Slime : public Enemy
 {
     int HP = 1;
     int damage = 1;
+    GLuint texid;
 
 public:
     void AI(Player p);
@@ -54,6 +56,7 @@ class Zombie : public Enemy
 {
     int HP = 5;
     int damage = 1;
+    GLuint texid;
 
 public:
     void AI(Player p);
@@ -65,9 +68,10 @@ class Door
     std::pair<int, int> upleft, downright; 
     //coordinates for the UL and LR corners
     const char* dest;
+    GLuint texid;
 
-    Door(int x1, int y1, int x2, int y2, const char* dest):
-        upleft(x1,y1), downright(x2, y2), dest(dest){}
+    Door(int x1, int y1, int x2, int y2, const char* dest, GLuint texture):
+        upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
 public:
     void loadDest();
 };
