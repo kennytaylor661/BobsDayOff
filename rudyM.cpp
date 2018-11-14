@@ -6,9 +6,38 @@
 
 #include <GL/glx.h>
 #include "fonts.h"
+#include "rudyM.h"
 
 static double xVelocity = 1;
 static double xOffset = 0;
+
+void Banana::physics()
+{
+
+
+}
+
+void Banana::render()
+{
+    // code that will draw the picture of the banana
+    // reference code below for texture
+
+    glColor3ub(255, 255, 255);
+    int wid = 80;
+    glPushMatrix();
+    glTranslatef(posx, posy, 0);
+    glBindTexture(GL_TEXTURE_2D, texid);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.0f);
+    glBegin(GL_QUADS); 
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid,-wid);
+       	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+       	glTexCoord2f(1.0f, 0.0f); glVertex2i( wid, wid);
+       	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid,-wid);
+   	glEnd();
+   	glPopMatrix();
+    glDisable(GL_ALPHA_TEST);
+}
 
 void rudyCredits(Rect* r)
 {

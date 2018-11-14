@@ -30,6 +30,7 @@
 //#include "ppm.h"
 #include "fonts.h"
 #include "level.h"
+#include "rudyM.h"
 
 using namespace std;
 
@@ -146,6 +147,9 @@ public:
 	GLuint kennyCreditsTexture;
 	GLuint tristanTexture;
 	GLuint rudyTexture;
+    GLuint bananaTexture;
+    int bananaCount = 0;
+    Banana *ban;
     Vec box[20];
 	Sprite exp;
 	Sprite exp44;
@@ -380,7 +384,7 @@ public:
 };
 
 // Texture images
-Image img[8] = {
+Image img[9] = {
 "./images/walk.gif",
 "./images/exp.png",
 "./images/exp44.png",
@@ -388,8 +392,8 @@ Image img[8] = {
 "./images/resize_Cactuar.png",
 "./images/resize_turtle.jpg",
 "./textures/blue-tile.jpg",
-"./textures/gray1.jpg"};
-
+"./textures/gray1.jpg",
+"./images/banana.jpg"};
 int main(void)
 {
 	initOpengl();
@@ -525,6 +529,19 @@ void initOpengl(void)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
         GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
+
+    // Load the banana texture
+    glGenTextures(1, &gl.bananaTexture);
+    w = img[6].width;
+    h = img[6].height;
+    glBindTexture(GL_TEXTURE_2D, gl.bananaTexture);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, 
+        GL_RGBA, GL_UNSIGNED_BYTE, img[8].data);
+    
+    //Add banana object
+    gl.ban = new Banana(100, 100, gl.bananaTexture);
 
     // Load the gray1 tile texture
     glGenTextures(1, &gl.gray1Texture);
@@ -1051,6 +1068,9 @@ void render(void)
 		glVertex2i(cx-60, 130);
 	glEnd();
 	#endif
+
+    //Draw Banana objects
+    gl.ban->render();
 
 	// ========================
 	// Draw character sprite
