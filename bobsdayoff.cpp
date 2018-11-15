@@ -81,7 +81,7 @@ extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
 extern void loadLevel(Level*, char*);
-extern void drawTexturedTile1(float,float);
+extern void drawTexturedTile(int, float, float);
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -914,7 +914,7 @@ void render(void)
                 glPopMatrix();
             }
             if (lev.arr[row][col] == '0')
-                drawTexturedTile1((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy);
+                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy);
 			--row;
 		}
 		col = (col+1) % lev.ncols;

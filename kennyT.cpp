@@ -1,5 +1,5 @@
 // Kenny Taylor
-// Modified:  11/1/18
+// Modified:  11/14/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
@@ -70,7 +70,7 @@ void loadLevel(Level *lev, char *filename)
     lev->load(filename);
 }
 
-void drawTexturedTile1(float x, float y)
+void drawTexturedTile(int index, float x, float y)
 {
 
 }
