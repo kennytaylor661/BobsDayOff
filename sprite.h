@@ -4,6 +4,7 @@
 #define SPRITE_H
 
 #include "image.h"
+#include <GL/glx.h>
 
 typedef double Vec[3];
 
@@ -16,12 +17,7 @@ public:
     Image *image;
     GLuint tex; 
     struct timespec time;
-    Sprite() {
-        onoff = 0; 
-        frame = 0; 
-        image = NULL;
-        delay = 0.1; 
-    }    
+    Sprite();
 };
 
 #endif
