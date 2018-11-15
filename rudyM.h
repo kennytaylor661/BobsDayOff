@@ -1,4 +1,6 @@
 
+#ifndef RUDY_H
+#define RUDY_H
 
 #include <GL/glx.h>
 #include <utility>
@@ -17,3 +19,5 @@ public:
 
 
 };
+
+#endif

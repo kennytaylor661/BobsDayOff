@@ -29,8 +29,11 @@
 #include "log.h"
 //#include "ppm.h"
 #include "fonts.h"
+#include "global.h"
+#include "image.h"
 #include "level.h"
 #include "rudyM.h"
+#include "sprite.h"
 
 using namespace std;
 
@@ -109,86 +112,8 @@ public:
 } timers;
 //-----------------------------------------------------------------------------
 
-class Image;
 
-class Sprite {
-public:
-	int onoff;
-	int frame;
-	double delay;
-	Vec pos;
-	Image *image;
-	GLuint tex;
-	struct timespec time;
-	Sprite() {
-		onoff = 0;
-		frame = 0;
-		image = NULL;
-		delay = 0.1;
-	}
-};
-
-class Global {
-public:
-	unsigned char keys[65536];
-	int xres, yres;
-	int movie, movieStep;
-	int walk;
-	int walkFrame;
-    int render = 1;
-	double delay;
-    double physicsTime = 0.0, renderTime = 0.0;
-    double backgroundXoffset = 0.0;
-	bool creditsFlag = 0;
-	Image *walkImage;
-	GLuint walkTexture;
-    GLuint backgroundTexture;
-    GLuint gray1Texture;
-	GLuint kennyCreditsTexture;
-	GLuint tristanTexture;
-	GLuint rudyTexture;
-    GLuint bananaTexture;
-    int bananaCount = 0;
-    Banana *ban;
-    Vec box[20];
-	Sprite exp;
-	Sprite exp44;
-	Vec ball_pos;
-	Vec ball_vel;
-	//camera is centered at (0,0) lower-left of screen. 
-	Flt camera[2];
-	~Global() {
-		logClose();
-	}
-	Global() {
-		logOpen();
-		camera[0] = camera[1] = 0.0;
-		movie=0;
-		movieStep=2;
-		xres=800;
-		yres=600;
-		walk=0;
-		walkFrame=0;
-		walkImage=NULL;
-		MakeVector(ball_pos, 520.0, 0, 0);
-		MakeVector(ball_vel, 0, 0, 0);
-		delay = 0.02;
-		exp.onoff=0;
-		exp.frame=0;
-		exp.image=NULL;
-		exp.delay = 0.02;
-		exp44.onoff=0;
-		exp44.frame=0;
-		exp44.image=NULL;
-		exp44.delay = 0.022;
-		for (int i=0; i<20; i++) {
-			box[i][0] = rnd() * xres;
-			box[i][1] = rnd() * (yres-220) + 220.0;
-			box[i][2] = 0.0;
-		}
-		memset(keys, 0, 65536);
-	}
-} gl;
+Global gl;
 
 // Start on level 1
 Level lev;
@@ -327,61 +252,6 @@ public:
 		glXSwapBuffers(dpy, win);
 	}
 } x11;
-
-class Image {
-public:
-	int width, height;
-	unsigned char *data;
-	~Image() { delete [] data; }
-	Image(const char *fname) {
-		if (fname[0] == '\0')
-			return;
-		//printf("fname **%s**\n", fname);
-		int ppmFlag = 0;
-		char name[40];
-		strcpy(name, fname);
-		int slen = strlen(name);
-		char ppmname[80];
-		if (strncmp(name+(slen-4), ".ppm", 4) == 0)
-			ppmFlag = 1;
-		if (ppmFlag) {
-			strcpy(ppmname, name);
-		} else {
-			name[slen-4] = '\0';
-			//printf("name **%s**\n", name);
-			sprintf(ppmname,"%s.ppm", name);
-			//printf("ppmname **%s**\n", ppmname);
-			char ts[100];
-			//system("convert eball.jpg eball.ppm");
-			sprintf(ts, "convert %s %s", fname, ppmname);
-			system(ts);
-		}
-		//sprintf(ts, "%s", name);
-		//printf("read ppm **%s**\n", ppmname); fflush(stdout);
-		FILE *fpi = fopen(ppmname, "r");
-		if (fpi) {
-			char line[200];
-			fgets(line, 200, fpi);
-			fgets(line, 200, fpi);
-			//skip comments and blank lines
-			while (line[0] == '#' || strlen(line) < 2)
-				fgets(line, 200, fpi);
-			sscanf(line, "%i %i", &width, &height);
-			fgets(line, 200, fpi);
-			//get pixel data
-			int n = width * height * 3;			
-			data = new unsigned char[n];			
-			for (int i=0; i<n; i++)
-				data[i] = fgetc(fpi);
-			fclose(fpi);
-		} else {
-			printf("ERROR opening image: %s\n",ppmname);
-			exit(0);
-		}
-		if (!ppmFlag)
-			unlink(ppmname);
-	}
-};
 
 // Texture images
 Image img[10] = {
