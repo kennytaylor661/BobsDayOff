@@ -4,10 +4,13 @@
 
 #include <GL/glx.h>
 #include "fonts.h"
+#include "global.h"
 #include "level.h"
 
 static double yVelocity = 1;
 static double yOffset = 0;
+
+extern Global gl;
 
 void showKennyCredits(Rect *r)
 {

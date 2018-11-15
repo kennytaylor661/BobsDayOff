@@ -12,7 +12,7 @@ public:
     int width, height;
     unsigned char *data;
     ~Image();
-    Image(const char *fname);
+    Image(const char*);
 };
 
 #endif
