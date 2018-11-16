@@ -257,12 +257,6 @@ public:
 	}
 } x11;
 
-// Texture images
-Image img[3] = {
-"./images/walk.gif",
-"./images/exp.png",
-"./images/exp44.png"};
-
 int main()
 {
 	initOpengl();
@@ -336,59 +330,16 @@ void initOpengl(void)
 	//Do this to allow fonts
 	glEnable(GL_TEXTURE_2D);
 	initialize_fonts();
-	//
-	//load the images file into a ppm structure.
-	//
-	int w = img[0].width;
-	int h = img[0].height;
-	//
-	//create opengl texture elements
-	glGenTextures(1, &gl.walkTexture);
-	//-------------------------------------------------------------------------
-	//silhouette
-	//this is similar to a sprite graphic
-	//
-	glBindTexture(GL_TEXTURE_2D, gl.walkTexture);
-	//
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-	//
-	//must build a new set of data...
-	unsigned char *walkData = buildAlphaData(&img[0]);	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
-		GL_RGBA, GL_UNSIGNED_BYTE, walkData);
-	free(walkData);
-	//-------------------------------------------------------------------------
-	//create opengl texture elements
-	w = img[1].width;
-	h = img[1].height;
-	glGenTextures(1, &gl.exp.tex);
-	//-------------------------------------------------------------------------
-	//this is similar to a sprite graphic
-	glBindTexture(GL_TEXTURE_2D, gl.exp.tex);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-	//must build a new set of data...
-	unsigned char *xData = buildAlphaData(&img[1]);	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
-		GL_RGBA, GL_UNSIGNED_BYTE, xData);
-	free(xData);
-	//-------------------------------------------------------------------------
-	w = img[2].width;
-	h = img[2].height;
-	//create opengl texture elements
-	glGenTextures(1, &gl.exp44.tex);
-	//-------------------------------------------------------------------------
-	//this is similar to a sprite graphic
-	glBindTexture(GL_TEXTURE_2D, gl.exp44.tex);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-	//must build a new set of data...
-	xData = buildAlphaData(&img[2]);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
-		GL_RGBA, GL_UNSIGNED_BYTE, xData);
-	free(xData);
 
+    // Load the character texture
+    loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
+
+    // Load the first explosion texture
+    loadTextureAlpha(&gl.exp.tex, "./images/exp.png");
+
+    // Load the second explosion texture
+    loadTextureAlpha(&gl.exp44.tex, "./images/exp44.png");
+    
     // Load the background texture
     loadTexture(&gl.backgroundTexture, "./textures/blue-tile.jpg");
 
