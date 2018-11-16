@@ -120,3 +120,15 @@ void drawTexturedTile(int index, float x, float y, float tilesize)
     glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void loadTexture(GLuint *tex, Image img)
+{
+    glGenTextures(1, tex);
+    int w = img.width;
+    int h = img.height;
+    glBindTexture(GL_TEXTURE_2D, *tex);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
+        GL_RGB, GL_UNSIGNED_BYTE, img.data);
+}

@@ -26,7 +26,6 @@ public:
     Image *walkImage;
     GLuint walkTexture;
     GLuint backgroundTexture;
-    GLuint gray1Texture;
     GLuint kennyCreditsTexture;
     GLuint tristanTexture;
     GLuint rudyTexture;

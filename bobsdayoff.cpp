@@ -84,6 +84,7 @@ extern void loadLevel(Level*, char*);
 extern void drawTexturedBackground();
 extern void drawSolidTile(float,float,float,float,float,float);
 extern void drawTexturedTile(int, float, float, float);
+extern void loadTexture(GLuint*, Image);
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -394,14 +395,7 @@ void initOpengl(void)
 	free(xData);
 
     // Load the background texture
-    glGenTextures(1, &gl.backgroundTexture);
-    w = img[6].width;
-    h = img[6].height;
-    glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
-        GL_RGB, GL_UNSIGNED_BYTE, img[6].data);
+    loadTexture(&gl.backgroundTexture, img[6]);
 
     // Load the banana texture
     glGenTextures(1, &gl.bananaTexture);
@@ -422,45 +416,16 @@ void initOpengl(void)
     gl.ban = new Banana(100, 100, gl.bananaTexture);
 
     // Load tile texture #0
-    glGenTextures(1, &gl.tileTexture[0]);
-    w = img[7].width;
-    h = img[7].height;
-    glBindTexture(GL_TEXTURE_2D, gl.tileTexture[0]);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
-        GL_RGB, GL_UNSIGNED_BYTE, img[7].data);
+    loadTexture(&gl.tileTexture[0], img[7]);
 
     // Load Kenny's credit screen texture
-    glGenTextures(1, &gl.kennyCreditsTexture);
-    w = img[3].width;
-    h = img[3].height;
-    glBindTexture(GL_TEXTURE_2D, gl.kennyCreditsTexture);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-    glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
-        GL_RGB, GL_UNSIGNED_BYTE, img[3].data);
+    loadTexture(&gl.kennyCreditsTexture, img[3]);
 
     // Load Tristan's credit screen texture
-   	glGenTextures(1, &gl.tristanTexture);
-   	w = img[4].width;
-   	h = img[4].height;
-   	glBindTexture(GL_TEXTURE_2D, gl.tristanTexture);
-   	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-   	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-   	glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
-		GL_RGB, GL_UNSIGNED_BYTE, img[4].data);
+    loadTexture(&gl.tristanTexture, img[4]);
 
 	// Load Rudy's credit screen texture
-	 glGenTextures(1, &gl.rudyTexture);
-        w = img[5].width;
-        h = img[5].height;
-        glBindTexture(GL_TEXTURE_2D, gl.rudyTexture);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0,
-                GL_RGB, GL_UNSIGNED_BYTE, img[5].data);
-
+    loadTexture(&gl.rudyTexture, img[5]);
 }
 
 void init() {
@@ -863,7 +828,7 @@ void render()
     // =========================
     // Draw Banana objects
     // =========================
-    gl.ban->render();
+    //gl.ban->render();
 
 	// ========================
 	// Draw character sprite
