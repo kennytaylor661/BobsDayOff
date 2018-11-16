@@ -258,18 +258,12 @@ public:
 } x11;
 
 // Texture images
-Image img[10] = {
+Image img[3] = {
 "./images/walk.gif",
 "./images/exp.png",
-"./images/exp44.png",
-"./images/bob.jpg",
-"./images/resize_Cactuar.png",
-"./images/resize_turtle.jpg",
-"./textures/blue-tile.jpg",
-"./textures/gray1.jpg",
-"./images/banana.jpg",
-"./images/banana2.png" };
-int main(void)
+"./images/exp44.png"};
+
+int main()
 {
 	initOpengl();
 	init();
@@ -282,7 +276,7 @@ int main(void)
 			done = checkKeys(&e);
 		}
 		physics();
-		if(gl.render)
+	if(gl.render)
             render();
 		x11.swapBuffers();
 	}
@@ -396,25 +390,25 @@ void initOpengl(void)
 	free(xData);
 
     // Load the background texture
-    loadTexture(&gl.backgroundTexture, img[6]);
+    loadTexture(&gl.backgroundTexture, "./textures/blue-tile.jpg");
 
     // Load the banana texture
-    loadTextureAlpha(&gl.bananaTexture, img[9]);
+    loadTextureAlpha(&gl.bananaTexture, "./images/banana.jpg");
 
-   //Add banana object
+    // Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
 
     // Load tile texture #0
-    loadTexture(&gl.tileTexture[0], img[7]);
+    loadTexture(&gl.tileTexture[0], "./textures/gray1.jpg");
 
     // Load Kenny's credit screen texture
-    loadTexture(&gl.kennyCreditsTexture, img[3]);
+    loadTexture(&gl.kennyCreditsTexture, "./images/bob.jpg");
 
     // Load Tristan's credit screen texture
-    loadTexture(&gl.tristanTexture, img[4]);
+    loadTexture(&gl.tristanTexture, "./images/resize_Cactuar.png");
 
 	// Load Rudy's credit screen texture
-    loadTexture(&gl.rudyTexture, img[5]);
+    loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
 }
 
 void init() {
