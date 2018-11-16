@@ -405,8 +405,8 @@ void initOpengl(void)
 
     // Load the banana texture
     glGenTextures(1, &gl.bananaTexture);
-    w = img[6].width;
-    h = img[6].height;
+    w = img[9].width;
+    h = img[9].height;
     glBindTexture(GL_TEXTURE_2D, gl.bananaTexture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
@@ -421,11 +421,11 @@ void initOpengl(void)
    //Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
 
-    // Load the gray1 tile texture
-    glGenTextures(1, &gl.gray1Texture);
-    w = img[6].width;
-    h = img[6].height;
-    glBindTexture(GL_TEXTURE_2D, gl.gray1Texture);
+    // Load tile texture #0
+    glGenTextures(1, &gl.tileTexture[0]);
+    w = img[7].width;
+    h = img[7].height;
+    glBindTexture(GL_TEXTURE_2D, gl.tileTexture[0]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
