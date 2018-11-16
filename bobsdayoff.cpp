@@ -83,7 +83,7 @@ extern void showKennyImage(int, int, GLuint);
 extern void loadLevel(Level*, char*);
 extern void drawTexturedBackground();
 extern void drawSolidTile(float,float,float,float,float,float);
-extern void drawTexturedTile(int, float, float);
+extern void drawTexturedTile(int, float, float, float);
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -829,7 +829,7 @@ void render()
                 drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
             // Draw textured tile 0
             else if (lev.arr[row][col] == '0')
-                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy);
+                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
 			--row;
 		}
 		col = (col+1) % lev.ncols;
@@ -860,7 +860,9 @@ void render()
 	glEnd();
 	#endif
 
-    //Draw Banana objects
+    // =========================
+    // Draw Banana objects
+    // =========================
     gl.ban->render();
 
 	// ========================
