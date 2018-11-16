@@ -91,6 +91,20 @@ void drawTexturedBackground()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+void drawSolidTile(float x, float y, float tilesize, float r, float g, float b)
+{
+                glColor3f(r, g, b);
+                glPushMatrix();
+                glTranslated(x, y, 0);
+                glBegin(GL_QUADS);
+                    glVertex2i( 0,  0);  
+                    glVertex2i( 0, tilesize); 
+                    glVertex2i(tilesize, tilesize); 
+                    glVertex2i(tilesize,  0);  
+                glEnd();
+                glPopMatrix();
+}
+
 void drawTexturedTile(int index, float x, float y)
 {
 

@@ -82,6 +82,7 @@ extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
 extern void loadLevel(Level*, char*);
 extern void drawTexturedBackground();
+extern void drawSolidTile(float,float,float,float,float,float);
 extern void drawTexturedTile(int, float, float);
  
 // Rudy file functions
@@ -785,7 +786,7 @@ void render()
 	// Draw the foreground tile system
 	// =================================
 	int tx = lev.tilesize[0];
-	int ty = lev.tilesize[1];
+	//int ty = lev.tilesize[1];
 	Flt dd = lev.ftsz[0];
 	Flt offy = lev.tile_base;
 	int ncols_to_render = gl.xres / lev.tilesize[0] + 2;
@@ -806,98 +807,28 @@ void render()
 		int row = lev.nrows-1;
 		for (int i=0; i<lev.nrows; i++) {
             // Draw white tile
-			if (lev.arr[row][col] == 'w') {
-				glColor3f(0.8, 0.8, 0.6);
-				glPushMatrix();
-				glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-				glBegin(GL_QUADS);
-					glVertex2i( 0,  0);
-					glVertex2i( 0, ty);
-					glVertex2i(tx, ty);
-					glVertex2i(tx,  0);
-				glEnd();
-				glPopMatrix();
-			}
+			if (lev.arr[row][col] == 'w')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.8, 0.8, 0.6);
             // Draw red tile
-			if (lev.arr[row][col] == 'r') {
-				glColor3f(0.9, 0.2, 0.2);
-				glPushMatrix();
-				glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-				glBegin(GL_QUADS);
-					glVertex2i( 0,  0);
-					glVertex2i( 0, ty);
-					glVertex2i(tx, ty);
-					glVertex2i(tx,  0);
-				glEnd();
-				glPopMatrix();
-			}
+			else if (lev.arr[row][col] == 'r')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.9, 0.2, 0.2);
             // Draw blue tile
-            if (lev.arr[row][col] == 'b') {
-                glColor3f(0.2, 0.2, 0.9);
-                glPushMatrix();
-                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-                glBegin(GL_QUADS);
-                    glVertex2i( 0,  0);
-                    glVertex2i( 0, ty);
-                    glVertex2i(tx, ty);
-                    glVertex2i(tx,  0);
-                glEnd();
-                glPopMatrix();
-            }
+            else if (lev.arr[row][col] == 'b')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.2, 0.2, 0.9);
             // Draw green tile
-            if (lev.arr[row][col] == 'g') {
-                glColor3f(0.0, 0.6, 0.0);
-                glPushMatrix();
-                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-                glBegin(GL_QUADS);
-                    glVertex2i( 0,  0);  
-                    glVertex2i( 0, ty); 
-                    glVertex2i(tx, ty); 
-                    glVertex2i(tx,  0);  
-                glEnd();
-                glPopMatrix();
-            }
+            else if (lev.arr[row][col] == 'g')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.0, 0.6, 0.0);
             // Draw purple tile
-            if (lev.arr[row][col] == 'p') {
-                glColor3f(0.5, 0, 0.5);
-                glPushMatrix();
-                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-                glBegin(GL_QUADS);
-                    glVertex2i( 0,  0);  
-                    glVertex2i( 0, ty); 
-                    glVertex2i(tx, ty); 
-                    glVertex2i(tx,  0);  
-                glEnd();
-                glPopMatrix();
-            }
+            else if (lev.arr[row][col] == 'p')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.5, 0.0, 0.5);
             // Draw yellow tile
-            if (lev.arr[row][col] == 'y') {
-                glColor3f(1.0, 1.0, 0.0);
-                glPushMatrix();
-                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-                glBegin(GL_QUADS);
-                    glVertex2i( 0,  0);  
-                    glVertex2i( 0, ty); 
-                    glVertex2i(tx, ty); 
-                    glVertex2i(tx,  0);  
-                glEnd();
-                glPopMatrix();
-            }
+            else if (lev.arr[row][col] == 'y')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 1.0, 1.0, 0.0);
             // Draw dark gray tile
-            if (lev.arr[row][col] == 'z') {
-                glColor3f(0.2, 0.2, 0.2);
-                glPushMatrix();
-                glColor3f(0.4, 0.4, 0.4);
-                glTranslated((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, 0);
-                glBegin(GL_QUADS);
-                    glVertex2i( 0,  0);  
-                    glVertex2i( 0, ty); 
-                    glVertex2i(tx, ty); 
-                    glVertex2i(tx,  0);  
-                glEnd();
-                glPopMatrix();
-            }
-            if (lev.arr[row][col] == '0')
+            else if (lev.arr[row][col] == 'z')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
+            // Draw textured tile 0
+            else if (lev.arr[row][col] == '0')
                 drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy);
 			--row;
 		}
