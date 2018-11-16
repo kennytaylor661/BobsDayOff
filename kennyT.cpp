@@ -70,6 +70,27 @@ void loadLevel(Level *lev, char *filename)
     lev->load(filename);
 }
 
+void drawTexturedBackground()
+{
+    int bgWidth = 256, bgHeight = 256; 
+    for (int i=0; i < 3; i++) {
+        for (int j=0; j < 15; j++) {
+            glPushMatrix();
+            glColor3f(1.0, 1.0, 1.0);
+            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0);  
+            glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
+            glBegin(GL_QUADS);
+                glTexCoord2f(0.0f, 1.0f); glVertex2i(-bgWidth/2, -bgHeight/2);
+                glTexCoord2f(0.0f, 0.0f); glVertex2i(-bgWidth/2, bgHeight/2);
+                glTexCoord2f(1.0f, 0.0f); glVertex2i(bgWidth/2, bgHeight/2);
+                glTexCoord2f(1.0f, 1.0f); glVertex2i(bgWidth/2, -bgHeight/2);
+            glEnd();
+            glPopMatrix();
+        }
+    }    
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void drawTexturedTile(int index, float x, float y)
 {
 
