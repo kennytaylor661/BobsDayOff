@@ -5,10 +5,10 @@
                                         rrrrrrr                                                                             
                                     rrrrrr                                                                                  
                                 rrrrrrrr                                                                                    
-rrrrrrrrrrrrrr              rrrrrrrrrr                                                                                      
-rr  rr  rr  rr          rrrrrrrrrrrr                    r   r   r   r                                                       
-rrrrrrrrrrrrrr          rrrrrrrrrrrrrrrrrrrrrrrrrrrrr  rrr rrr rrr rrr                                                      
-rrrrrrrrrrrrrr          rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                              
+00000000000000              rrrrrrrrrr                                                                                      
+00  00  00  00          rrrrrrrrrrrr                    r   r   r   r                                                       
+00000000000000          rrrrrrrrrrrrrrrrrrrrrrrrrrrrr  rrr rrr rrr rrr                                                      
+00000000000000          rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr                                              
 wwwwwwwwwwwwwwwwwwww    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                                                                                                                             
