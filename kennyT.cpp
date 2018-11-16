@@ -1,11 +1,13 @@
 // Kenny Taylor
-// Modified:  11/14/18
+// Modified:  11/16/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
 #include "fonts.h"
 #include "global.h"
 #include "level.h"
+
+extern unsigned char *buildAlphaData(Image*);
 
 static double yVelocity = 1;
 static double yOffset = 0;
@@ -131,4 +133,18 @@ void loadTexture(GLuint *tex, Image img)
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, w, h, 0, 
         GL_RGB, GL_UNSIGNED_BYTE, img.data);
+}
+
+void loadTextureAlpha(GLuint *tex, Image img)
+{
+    glGenTextures(1, tex);
+    int w = img.width;
+    int h = img.height;
+    glBindTexture(GL_TEXTURE_2D, *tex);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
+    unsigned char *xData = buildAlphaData(&img);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
+        GL_RGBA, GL_UNSIGNED_BYTE, xData);
+    free(xData);
 }

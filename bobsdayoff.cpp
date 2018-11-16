@@ -85,6 +85,7 @@ extern void drawTexturedBackground();
 extern void drawSolidTile(float,float,float,float,float,float);
 extern void drawTexturedTile(int, float, float, float);
 extern void loadTexture(GLuint*, Image);
+extern void loadTextureAlpha(GLuint*, Image);
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -398,19 +399,7 @@ void initOpengl(void)
     loadTexture(&gl.backgroundTexture, img[6]);
 
     // Load the banana texture
-    glGenTextures(1, &gl.bananaTexture);
-    w = img[9].width;
-    h = img[9].height;
-    glBindTexture(GL_TEXTURE_2D, gl.bananaTexture);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST); 
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, 
-//        GL_RGB, GL_UNSIGNED_BYTE, img[8].data);
-    xData = buildAlphaData(&img[9]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
-        GL_RGBA, GL_UNSIGNED_BYTE, xData);
-    free(xData);
- 
+    loadTextureAlpha(&gl.bananaTexture, img[9]);
 
    //Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
@@ -828,7 +817,7 @@ void render()
     // =========================
     // Draw Banana objects
     // =========================
-    //gl.ban->render();
+    gl.ban->render();
 
 	// ========================
 	// Draw character sprite
