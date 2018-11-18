@@ -3,8 +3,8 @@ LFLAGS = -lrt -lX11 -lGLU -lGL -pthread -lm #-lXrandr
 
 all: bobsdayoff 
 
-bobsdayoff: bobsdayoff.cpp global.cpp image.cpp sprite.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp timers.cpp
-	g++ $(CFLAGS) bobsdayoff.cpp global.cpp image.cpp sprite.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp libggfonts.a timers.cpp -Wall -Wextra $(LFLAGS) -obobsdayoff
+bobsdayoff: bobsdayoff.cpp global.cpp image.cpp sprite.cpp log.cpp tristanB.cpp rudyM.cpp kennyT.cpp timers.cpp level.cpp global.h sprite.h image.h kennyT.h tristanB.h rudyM.h level.h
+	g++ $(CFLAGS) bobsdayoff.cpp global.cpp image.cpp sprite.cpp log.cpp level.cpp tristanB.cpp rudyM.cpp kennyT.cpp libggfonts.a timers.cpp -Wall -Wextra $(LFLAGS) -obobsdayoff
 
 clean:
 	rm -f bobsdayoff

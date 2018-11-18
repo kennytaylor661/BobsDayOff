@@ -4,6 +4,7 @@
 #define GLOBAL_H
 
 #include "image.h"
+#include "kennyT.h"
 #include "rudyM.h"
 #include "sprite.h"
 
@@ -33,7 +34,6 @@ public:
     GLuint tileTexture[10];
     int bananaCount = 0; 
     Banana *ban;
-    Vec box[20];
     Sprite exp; 
     Sprite exp44;
     Vec ball_pos;

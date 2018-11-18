@@ -3,6 +3,11 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <vector>
+#include "kennyT.h"
+
+using namespace std;
+
 //defined types
 typedef double Flt; 
 
@@ -15,6 +20,9 @@ public:
     int levelWidth;
     Flt ftsz[2];
     Flt tile_base;
+    // Create an array of the SomeObject class objects
+    vector<SomeObject> someobject;
+
     Level();
     void load(char*);
     void removeCrLf(char *);

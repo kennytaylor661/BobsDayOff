@@ -27,11 +27,6 @@ Global::Global() {
     exp44.frame=0;
     exp44.image=NULL;
     exp44.delay = 0.022;
-    for (int i=0; i<20; i++) {
-        box[i][0] = rnd() * xres;
-        box[i][1] = rnd() * (yres-220) + 220.0;
-        box[i][2] = 0.0;
-    }
     memset(keys, 0, 65536);
 };
 

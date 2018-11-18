@@ -34,6 +34,7 @@
 #include "level.h"
 #include "rudyM.h"
 #include "sprite.h"
+#include "kennyT.h"
 
 using namespace std;
 
@@ -122,6 +123,7 @@ Global gl;
 // Start on level 1
 Level lev;
 
+/*
 Level::Level() {
 	load((char *)"level1.txt");
 }
@@ -177,6 +179,7 @@ void Level::removeCrLf(char *str) {
 		++p;
 	}
 }
+*/
 
 //X Windows variables
 class X11_wrapper {
@@ -614,6 +617,12 @@ void physics(void)
 	}
 	gl.ball_pos[1] += gl.ball_vel[1];
 
+    // =======================================
+    // Handle the SomeObject objects (example)
+    // =======================================
+    for(unsigned int i = 0; i < lev.someobject.size(); i++) 
+        lev.someobject[i].physics();
+
     // Record the physics time
     clock_gettime(CLOCK_REALTIME, &te);
     gl.physicsTime = timeDiff(&ts, &te);
@@ -728,6 +737,12 @@ void render()
 		glVertex2i(cx-60, 130);
 	glEnd();
 	#endif
+
+    // ===================================
+    // Render SomeObject objects (example)
+    // ===================================
+    for(unsigned int i = 0; i < lev.someobject.size(); i++)
+        lev.someobject[i].render();
 
     // =========================
     // Draw Banana objects

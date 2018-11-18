@@ -180,3 +180,12 @@ void loadTextureAlpha(GLuint *tex, Image img)
         GL_RGBA, GL_UNSIGNED_BYTE, xData);
     free(xData);
 }
+
+// Example functions for the SomeObject class
+void SomeObject::physics()
+{
+}
+
+void SomeObject::render()
+{
+}
