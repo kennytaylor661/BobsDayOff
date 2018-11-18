@@ -314,7 +314,7 @@ void initOpengl(void)
     loadTexture(&gl.backgroundTexture, "./textures/blue-tile.jpg");
 
     // Load the banana texture
-    loadTextureAlpha(&gl.bananaTexture, "./images/banana3.jpg");
+    loadTextureAlpha(&gl.bananaTexture, "./images/banana2.png");
 
     // Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
