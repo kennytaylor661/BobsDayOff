@@ -654,17 +654,20 @@ void render()
 		}
 		col = (col+1) % lev.ncols;
 	}
-	glColor3f(1.0, 1.0, 0.1);
-	glPushMatrix();
-	//put ball in its place
-	glTranslated(gl.ball_pos[0], lev.tile_base+gl.ball_pos[1], 0);
-	glBegin(GL_QUADS);
-		glVertex2i(-10, 0);
-		glVertex2i(-10, 20);
-		glVertex2i( 10, 20);
-		glVertex2i( 10, 0);
-	glEnd();
-	glPopMatrix();
+
+    // ========================
+    // Draw the ball (disabled)
+    // ========================
+	//glColor3f(1.0, 1.0, 0.1);
+	//glPushMatrix();
+	//glTranslated(gl.ball_pos[0], lev.tile_base+gl.ball_pos[1], 0);
+	//glBegin(GL_QUADS);
+	//	glVertex2i(-10, 0);
+	//	glVertex2i(-10, 20);
+	//	glVertex2i( 10, 20);
+	//	glVertex2i( 10, 0);
+	//glEnd();
+	//glPopMatrix();
 
 	// =========================
 	// Draw shadow
