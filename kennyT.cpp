@@ -3,11 +3,12 @@
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
+#include <iostream>
 #include "fonts.h"
 #include "global.h"
 #include "level.h"
 
-extern unsigned char *buildAlphaData(Image*);
+using namespace std;
 
 static double yVelocity = 1;
 static double yOffset = 0;
@@ -121,6 +122,37 @@ void drawTexturedTile(int index, float x, float y, float tilesize)
     glEnd();
     glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+unsigned char *buildAlphaData(Image *img)
+{
+    //add 4th component to RGB stream...
+    int i;
+    unsigned char *newdata, *ptr;
+    unsigned char *data = (unsigned char *)img->data;
+    newdata = (unsigned char *)malloc(img->width * img->height * 4); 
+    ptr = newdata;
+    unsigned char a,b,c;
+    //use the first pixel in the image as the transparent color.
+    unsigned char t0 = *(data+0);
+    unsigned char t1 = *(data+1);
+    unsigned char t2 = *(data+2);
+    //cout << "buildAlphaData() clear color is:  (" << (int)t0 << ", " << (int)t1 << ", " << (int)t2 << ")" << endl;
+    for (i=0; i<img->width * img->height * 3; i+=3) {
+        a = *(data+0);
+        b = *(data+1);
+        c = *(data+2);
+        *(ptr+0) = a;
+        *(ptr+1) = b;
+        *(ptr+2) = c;
+        *(ptr+3) = 1;
+        if (a==t0 && b==t1 && c==t2)
+            *(ptr+3) = 0;
+        //-----------------------------------------------
+        ptr += 4;
+        data += 3;
+    }   
+    return newdata;
 }
 
 void loadTexture(GLuint *tex, Image img)
