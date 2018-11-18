@@ -11,7 +11,7 @@ List of level colors:
 List of level textures:
 
   0 - gray texture (gray1.jpg) 
-  1 - undefined
+  1 - grass texture (grass.jpg) 
   2 - undefined
   3 - undefined
   4 - undefined

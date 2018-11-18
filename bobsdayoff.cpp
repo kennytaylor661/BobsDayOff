@@ -264,8 +264,9 @@ void initOpengl(void)
     // Add banana object
     gl.ban = new Banana(100, 100, gl.bananaTexture);
 
-    // Load tile texture #0
+    // Load tile textures
     loadTexture(&gl.tileTexture[0], "./textures/gray1.jpg");
+    loadTexture(&gl.tileTexture[1], "./textures/grass_32x32.png");
 
     // Load Kenny's credit screen texture
     loadTexture(&gl.kennyCreditsTexture, "./images/bob.jpg");
@@ -647,9 +648,13 @@ void render()
             // Draw dark gray tile
             else if (lev.arr[row][col] == 'z')
                 drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
-            // Draw textured tile 0
-            else if (lev.arr[row][col] == '0')
-                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
+            // Draw textured tiles
+            else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
+                drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
+//            else if (lev.arr[row][col] == '0')
+//                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
+//            else if (lev.arr[row][col] == '1')
+//                drawTexturedTile(1, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
 			--row;
 		}
 		col = (col+1) % lev.ncols;
@@ -801,9 +806,9 @@ void render()
     ggprint8b(&r, 16, c, "[1-2] Change Level");	
     ggprint8b(&r, 16, c, "+     faster");
 	ggprint8b(&r, 16, c, "-     slower");
-	ggprint8b(&r, 16, c, "right arrow -> walk right");
-	ggprint8b(&r, 16, c, "left arrow  <- walk left");
-	ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
+	ggprint8b(&r, 16, c, "D, right arrow -> walk right");
+	ggprint8b(&r, 16, c, "A, left arrow  <- walk left");
+	//ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
 
     // Draw the physics and render times
     clock_gettime(CLOCK_REALTIME, &te);
