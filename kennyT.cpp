@@ -184,8 +184,10 @@ void loadTextureAlpha(GLuint *tex, Image img)
 // Example functions for the SomeObject class
 void SomeObject::physics()
 {
+    cout << "SomeObject::physics() was called.." << endl;
 }
 
 void SomeObject::render()
 {
+    cout << "SomeObject::render() was called.." << endl;
 }

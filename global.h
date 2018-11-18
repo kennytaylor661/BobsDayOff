@@ -31,6 +31,7 @@ public:
     GLuint tristanTexture;
     GLuint rudyTexture;
     GLuint bananaTexture;
+    GLuint someObjectTexture;
     GLuint tileTexture[10];
     int bananaCount = 0; 
     Banana *ban;

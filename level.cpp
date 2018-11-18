@@ -1,7 +1,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "global.h"
 #include "level.h"
+
+extern Global gl;
 
 Level::Level() {
     load((char *)"level1.txt");
@@ -46,6 +49,12 @@ void Level::load(char *filename)
 
     // Set player initial location of (gl.xres/2, ?)
 
+    // Clear the vector of SomeObject objects
+    someobject.clear();
+    // Create a few collectable SomeObject objects
+    SomeObject *so;
+    so = new SomeObject(100, 100, gl.someObjectTexture);
+    someobject.push_back(*so);
 }
 
 void Level::removeCrLf(char *str) {
