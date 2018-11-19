@@ -26,8 +26,8 @@ void Banana::render()
     glPushMatrix();
     glTranslatef(posx, posy, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
-    //glEnable(GL_ALPHA_TEST);
-    //glAlphaFunc(GL_GREATER, 0.0f);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.0f);
     glColor4ub(255,255,255,255);
     glBegin(GL_QUADS); 
         glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid,-wid);

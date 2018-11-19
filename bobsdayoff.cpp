@@ -651,10 +651,6 @@ void render()
             // Draw textured tiles
             else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
                 drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
-//            else if (lev.arr[row][col] == '0')
-//                drawTexturedTile(0, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
-//            else if (lev.arr[row][col] == '1')
-//                drawTexturedTile(1, (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
 			--row;
 		}
 		col = (col+1) % lev.ncols;
