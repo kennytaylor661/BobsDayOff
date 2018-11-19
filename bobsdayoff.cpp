@@ -205,6 +205,7 @@ public:
 int main()
 {
 	initOpengl();
+    lev.load("level1.txt");
 	init();
 	int done = 0;
 	while (!done) {
@@ -260,9 +261,6 @@ void initOpengl(void)
 
     // Load the banana texture
     loadTextureAlpha(&gl.bananaTexture, "./images/banana2.png");
-
-    // Add banana object
-    gl.ban = new Banana(100, 100, gl.bananaTexture);
 
     // Load tile textures
     loadTexture(&gl.tileTexture[0], "./textures/gray1.jpg");
@@ -565,6 +563,12 @@ void physics(void)
     // =======================================
     for(unsigned int i = 0; i < lev.someobject.size(); i++) 
         lev.someobject[i].physics();
+    
+    // =======================================
+    // Handle the banana objects (example)
+    // =======================================
+    for(unsigned int i = 0; i < lev.ban.size(); i++)
+        lev.ban[i].physics();
 
     // Record the physics time
     clock_gettime(CLOCK_REALTIME, &te);
@@ -693,7 +697,8 @@ void render()
     // =========================
     // Draw Banana objects
     // =========================
-    gl.ban->render();
+    for(unsigned int i = 0; i < lev.ban.size(); i++)
+        lev.ban[i].render();
 
 	// ========================
 	// Draw character sprite

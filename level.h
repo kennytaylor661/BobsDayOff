@@ -23,6 +23,9 @@ public:
     // Create an array of the SomeObject class objects
     vector<SomeObject> someobject;
 
+    // Create an arry of Banana Class
+    vector<Banana> ban;
+
     Level();
     void load(char*);
     void removeCrLf(char *);

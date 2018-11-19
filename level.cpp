@@ -3,6 +3,8 @@
 #include <string.h>
 #include "global.h"
 #include "level.h"
+#include <iostream>
+using namespace std;
 
 extern Global gl;
 
@@ -55,6 +57,25 @@ void Level::load(char *filename)
     SomeObject *so;
     so = new SomeObject(100, 100, gl.someObjectTexture);
     someobject.push_back(*so);
+
+    // Clear the vector of Banana Objects
+    ban.clear();
+
+    // Create new banana objects
+    Banana *b;
+    cout << "Creating new Banana Texture = " << gl.bananaTexture << endl;
+    /*b = new Banana(670, 400, gl.bananaTexture);
+    ban.push_back(*b);
+    b = new Banana(850, 400, gl.bananaTexture);
+    ban.push_back(*b);
+    b = new Banana(2000, 400, gl.bananaTexture);
+    ban.push_back(*b);*/
+    srand(time(NULL));
+    for(int i = 0; i < 10; i++) {
+        b = new Banana((rand() % 80) * 50, (rand() % 200) + 300, gl.bananaTexture);
+        ban.push_back(*b);
+    }
+
 }
 
 void Level::removeCrLf(char *str) {

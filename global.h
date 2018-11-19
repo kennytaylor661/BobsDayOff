@@ -33,8 +33,6 @@ public:
     GLuint bananaTexture;
     GLuint someObjectTexture;
     GLuint tileTexture[10];
-    int bananaCount = 0; 
-    Banana *ban;
     Sprite exp; 
     Sprite exp44;
     Vec ball_pos;

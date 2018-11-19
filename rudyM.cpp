@@ -3,10 +3,14 @@
  * Modified: 10/4/18
  * Purpose:  Individual file for group project
 */
-
+#include <iostream>
+using namespace std;
 #include <GL/glx.h>
 #include "fonts.h"
 #include "rudyM.h"
+#include "global.h"
+
+extern Global gl;
 
 static double xVelocity = 1;
 static double xOffset = 0;
@@ -21,10 +25,11 @@ void Banana::render()
 {
     // code that will draw the picture of the banana
     // reference code below for texture
+    //cout << "Banana::Render() at " << posx << "," << posy << " texture =" << texid << endl; 
 
-    int wid = 80;
+    int wid = 25;
     glPushMatrix();
-    glTranslatef(posx, posy, 0);
+    glTranslatef(posx - gl.camera[0], posy, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);
