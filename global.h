@@ -24,6 +24,7 @@ public:
     double physicsTime = 0.0, renderTime = 0.0; 
     double backgroundXoffset = 0.0; 
     bool creditsFlag = 0; 
+    bool leaderboardFlag = 0;
     Image *walkImage;
     GLuint walkTexture;
     GLuint backgroundTexture;

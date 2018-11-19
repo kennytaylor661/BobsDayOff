@@ -77,7 +77,7 @@ extern void tristanCredits(Rect*);
 extern void tristanImage(int, int, GLuint);
 
 // Kenny file functions
-extern void creditsTitle(int,int);
+extern void drawText(int,int,int,char*);
 extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
@@ -393,6 +393,9 @@ int checkKeys(XEvent *e)
 			timers.recordTime(&gl.exp44.time);
 			gl.exp44.onoff ^= 1;
 			break;
+        case XK_l:
+            gl.leaderboardFlag = !gl.leaderboardFlag;
+            break;
         case XK_1:
             gl.render=0;
             loadLevel(&lev, (char*)"level1.txt");
@@ -841,14 +844,18 @@ void render()
     // ==========================
     // Draw the credits screen
     // ==========================
-    if(gl.creditsFlag) {
+    if (gl.creditsFlag)
         show_credits();
-        //return;
-    }
 
-	if (gl.movie) {
-		screenCapture();
-	}
+    // ===========================
+    // Draw the leaderboard screen
+    // ===========================
+    if (gl.leaderboardFlag)
+        showLeaderboard();
+
+    if (gl.movie) {
+        screenCapture();
+    }
 }
 
 void show_credits()
@@ -865,7 +872,7 @@ void show_credits()
     glPopMatrix();
 
     // Draw the credits title
-    creditsTitle(gl.xres/2-20, gl.yres/2+170);
+    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char *)"Game Credits");
 
     // Draw individual text
     Rect r;

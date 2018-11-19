@@ -29,16 +29,14 @@ void showKennyCredits(int x, int y)
     ggprint8b(&r, 16, 0x004040ff, "Kenny Taylor");
 }
 
-void creditsTitle(int x, int y)
+void drawText(int x, int y, int color, char *text)
 {
     Rect r;
     r.bot = y;
     r.left = x;
-    r.center = 0;  
-
-    ggprint8b(&r, 16, 0x004040ff, "Game Credits");
+    r.center = 0;
+    ggprint8b(&r, 16, color, text);
 }
-
 
 void showKennyImage(int x, int y, GLuint texid)
 {
@@ -179,6 +177,26 @@ void loadTextureAlpha(GLuint *tex, Image img)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
         GL_RGBA, GL_UNSIGNED_BYTE, xData);
     free(xData);
+}
+
+void showLeaderboard()
+{
+    // Show the top 10 scores, pulled from minons.rocket-tech.net/getscores.php
+
+    // Draw background rectangle (center in viewport)
+    glPushMatrix();
+    glColor3ub(255,255,255);
+    glBegin(GL_QUADS);
+        glVertex2i(gl.xres/2-300, gl.yres/2-200);
+        glVertex2i(gl.xres/2+300, gl.yres/2-200);
+        glVertex2i(gl.xres/2+300, gl.yres/2+200);
+        glVertex2i(gl.xres/2-300, gl.yres/2+200);
+    glEnd();
+    glPopMatrix();
+
+    // Draw the credits title
+    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"High Scores:");
+
 }
 
 // Example functions for the SomeObject class
