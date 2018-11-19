@@ -205,7 +205,7 @@ public:
 int main()
 {
 	initOpengl();
-    lev.load("level1.txt");
+    lev.load((char *)"level1.txt");
 	init();
 	int done = 0;
 	while (!done) {
