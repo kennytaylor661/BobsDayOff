@@ -87,6 +87,7 @@ extern void drawSolidTile(float,float,float,float,float,float);
 extern void drawTexturedTile(int, float, float, float);
 extern void loadTexture(GLuint*, Image);
 extern void loadTextureAlpha(GLuint*, Image);
+extern void showLeaderboard();
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -456,9 +457,9 @@ void physics(void)
     // Record the start time
     clock_gettime(CLOCK_REALTIME, &ts);
 
-    // ============================
-    // Move the character sprite
-    // ============================
+    // ========================================
+    // Move the background and foreground tiles 
+    // ========================================
 	if (gl.walk || gl.keys[XK_Right] || gl.keys[XK_Left]
         || gl.keys[XK_a] || gl.keys[XK_d]) {
 		//man is walking...
@@ -474,23 +475,24 @@ void physics(void)
 		}
 
         if (gl.keys[XK_Left] || gl.keys[XK_a]) {
+            // Move the background to the right
             gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
             if (gl.backgroundXoffset > 0)
                 gl.backgroundXoffset = 0;
-//          if (gl.backgroundXoffset > gl.xres + 10)
-//              gl.backgroundXoffset -= gl.xres + 10;
+            // Move the foreground to the right
             gl.camera[0] -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
             if (gl.camera[0] < 0.0)
                 gl.camera[0] = 0.0;
         } else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
+            // Move the background to the left
             gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
-//          if (gl.backgroundXoffset < -10.0)
-//              gl.backgroundXoffset += gl.xres + 10.0;
+            // Move the foreground to the left
             gl.camera[0] += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
             if (gl.camera[0] < 0.0)
                 gl.camera[0] = 0.0;
         }
-		
+	
+        // Move the explosions
         if (gl.exp.onoff) {
 			gl.exp.pos[0] -= 2.0 * (0.05 / gl.delay);
 		}
@@ -499,9 +501,9 @@ void physics(void)
 		}
 	}
 
-    // =======================
-    // Handle explosions
-    // =======================
+    // ==========================
+    // Handle explosion animation
+    // ==========================
 
 	if (gl.exp.onoff) {
 		//explosion is happening
@@ -564,9 +566,9 @@ void physics(void)
     for(unsigned int i = 0; i < lev.someobject.size(); i++) 
         lev.someobject[i].physics();
     
-    // =======================================
-    // Handle the banana objects (example)
-    // =======================================
+    // =========================
+    // Handle the banana objects
+    // =========================
     for(unsigned int i = 0; i < lev.ban.size(); i++)
         lev.ban[i].physics();
 
@@ -721,11 +723,13 @@ void render()
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
 		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
+            // Draw character facing left
             glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
 		} else {
+            // Draw character facing right
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
