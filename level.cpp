@@ -49,7 +49,9 @@ void Level::load(char *filename)
         printf("\n");
     }
 
-    // Set player initial location of (gl.xres/2, ?)
+    // Put player back at the start of the level
+    gl.camera[0] = gl.camera[1] = 0.0;
+    gl.backgroundXoffset = 0.0;
 
     // Clear the vector of SomeObject objects
     someobject.clear();
@@ -63,13 +65,6 @@ void Level::load(char *filename)
 
     // Create new banana objects
     Banana *b;
-    cout << "Creating new Banana Texture = " << gl.bananaTexture << endl;
-    /*b = new Banana(670, 400, gl.bananaTexture);
-    ban.push_back(*b);
-    b = new Banana(850, 400, gl.bananaTexture);
-    ban.push_back(*b);
-    b = new Banana(2000, 400, gl.bananaTexture);
-    ban.push_back(*b);*/
     srand(time(NULL));
     for(int i = 0; i < 10; i++) {
         b = new Banana((rand() % 80) * 50, (rand() % 200) + 300, gl.bananaTexture);
