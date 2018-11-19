@@ -3,8 +3,13 @@
 #include "tristanB.h"
 #include <cstdlib> //Rand()
 #include <unistd.h> // usleep()
+#include "global.h"
+#include "level.h"
 
 const float GRAVITY = -0.2f;
+extern Global gl;
+extern Player p;
+
 //Enemy Class
 void Enemy::moveLeft()
 {
@@ -18,11 +23,12 @@ void Enemy::moveRight()
 
 void Enemy::physics()
 {
-//      if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
-//	         posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
-//	        return;
-	this->yvel -= GRAVITY;
-//	this->AI(Player p);
+      if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
+         posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
+	        return;
+	this->posY += yvel;
+	this->yvel += GRAVITY;
+//	this->AI(p);
 }
 
 std::pair<int, int> Enemy::getPos()
@@ -65,6 +71,8 @@ void Player::render()
 
 void Player::physics()
 {
+    posX += xvel;
+    posY += yvel;
     yvel += GRAVITY;
     if (yvel < 0)
         yvel = 0;
