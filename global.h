@@ -39,6 +39,7 @@ public:
     Vec ball_vel;
     //camera is centered at (0,0) lower-left of screen. 
     Flt camera[2];
+    int lastFacing = 1;
     ~Global();
     Global();
 };

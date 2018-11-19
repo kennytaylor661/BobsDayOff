@@ -722,19 +722,35 @@ void render()
 	float fx = (float)ix / 8.0;
 	float fy = (float)iy / 2.0;
 	glBegin(GL_QUADS);
+        // Use gl.lastFacing to track whether we should render the sprite
+        // facing left or right when standing still
 		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
             // Draw character facing left
             glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
-		} else {
+            gl.lastFacing = -1;
+		} else if (gl.keys[XK_Right] || gl.keys[XK_d]) {
             // Draw character facing right
             glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
             glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
             glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
             glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
-		}
+            gl.lastFacing = 1;
+        } else if (gl.lastFacing == -1) {
+            // Draw character facing left
+            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
+            glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
+            glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
+            glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
+		} else if (gl.lastFacing == 1) {
+            // Draw character facing right
+            glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
+            glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
+            glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
+            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
+        }
 	glEnd();
 	glPopMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
