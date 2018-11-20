@@ -7,73 +7,71 @@
 
 class Player
 {
-    int posX, posY, HP, wid;
-    float xvel, yvel;
-    GLuint texid;
+	int posX, posY, HP, wid;
+	float xvel, yvel;
+	GLuint texid;
 
-public:
-    std::pair<int, int> getPos();
-    void moveLeft();
-    void moveRight();
-    void Jump();
-    void Fire();
-    void physics();
-    void render();
+	public:
+	std::pair<int, int> getPos();
+	void moveLeft();
+	void moveRight();
+	void Jump();
+	void Fire();
+	void physics();
+	void render();
 };
 
 class Enemy
 {
-	int id;
-	static int giveID;
-protected:
-    int posX, posY, HP, damage;
-    float xvel = 0, yvel = 0;
 
-public:
-    Enemy(int x, int y): id(giveID++), posX(x), posY(y) {}
-    ~Enemy(){giveID--;}
+	protected:
+		int posX, posY, HP, damage;
+		float xvel = 0, yvel = 0;
 
-	void moveLeft();
-	void moveRight();
-	virtual void AI(Player p) = 0;
-	void physics();
-    std::pair<int, int> getPos();
-	virtual void render() = 0;
+	public:
+		Enemy(int x, int y):posX(x), posY(y) {}
+		~Enemy(){}
+
+		void moveLeft();
+		void moveRight();
+		virtual void AI(Player p) = 0;
+		void physics();
+		std::pair<int, int> getPos();
+		virtual void render() = 0;
 };
-int Enemy::giveID = 0;
 
 class Slime : public Enemy
 {
-    int HP = 1;
-    int damage = 1;
-    GLuint texid;
+	int HP = 1;
+	int damage = 1;
+	GLuint texid;
 
-public:
-    void AI(Player p);
-    void render();
+	public:
+	void AI(Player p);
+	void render();
 };
 class Zombie : public Enemy
 {
-    int HP = 5;
-    int damage = 1;
-    GLuint texid;
+	int HP = 5;
+	int damage = 1;
+	GLuint texid;
 
-public:
-    void AI(Player p);
-    void render();
+	public:
+	void AI(Player p);
+	void render();
 };
 
 class Door
 {
-    std::pair<int, int> upleft, downright; 
-    //coordinates for the UL and LR corners
-    const char* dest;
-    GLuint texid;
+	std::pair<int, int> upleft, downright; 
+	//coordinates for the UL and LR corners
+	const char* dest;
+	GLuint texid;
 
-    Door(int x1, int y1, int x2, int y2, const char* dest, GLuint texture):
-        upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
-public:
-    void loadDest();
+	Door(int x1, int y1, int x2, int y2, const char* dest, GLuint texture):
+		upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
+	public:
+	void loadDest();
 };
 
 void tristanCredits(Rect* r);

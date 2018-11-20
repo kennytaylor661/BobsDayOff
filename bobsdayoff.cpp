@@ -35,6 +35,7 @@
 #include "rudyM.h"
 #include "sprite.h"
 #include "kennyT.h"
+#include "tristanB.h"
 
 using namespace std;
 
@@ -50,8 +51,8 @@ typedef Flt	Matrix[4][4];
 #define VecCopy(a,b) (b)[0]=(a)[0];(b)[1]=(a)[1];(b)[2]=(a)[2]
 #define VecDot(a,b)	((a)[0]*(b)[0]+(a)[1]*(b)[1]+(a)[2]*(b)[2])
 #define VecSub(a,b,c) (c)[0]=(a)[0]-(b)[0]; \
-                      (c)[1]=(a)[1]-(b)[1]; \
-                      (c)[2]=(a)[2]-(b)[2]
+							 (c)[1]=(a)[1]-(b)[1]; \
+(c)[2]=(a)[2]-(b)[2]
 
 //constants
 const float timeslice = 1.0f;
@@ -74,8 +75,8 @@ extern double timeDiff(struct timespec *start, struct timespec *end);
 extern void timeCopy(struct timespec *dest, struct timespec *source);
 
 // Tristan file functions
-extern void tristanCredits(Rect*);
-extern void tristanImage(int, int, GLuint);
+//extern void tristanCredits(Rect*);
+//extern void tristanImage(int, int, GLuint);
 
 // Kenny file functions
 extern void drawText(int,int,int,char*);
@@ -90,7 +91,7 @@ extern void loadTexture(GLuint*, Image);
 extern void loadTextureAlpha(GLuint*, Image);
 extern void showLeaderboard();
 extern void showIntroScreen();
- 
+
 // Rudy file functions
 extern void rudyCredits(Rect*);
 extern void showRudyPicture(int, int, GLuint);
@@ -98,117 +99,119 @@ extern void showRudyPicture(int, int, GLuint);
 //-----------------------------------------------------------------------------
 //Setup timers
 class Timers {
-public:
-	double physicsRate;
-	double oobillion;
-	struct timespec timeStart, timeEnd, timeCurrent;
-	struct timespec walkTime;
-	Timers() {
-		physicsRate = 1.0 / 30.0;
-		oobillion = 1.0 / 1e9;
-	}
-	double timeDiff(struct timespec *start, struct timespec *end) {
-		return (double)(end->tv_sec - start->tv_sec ) +
+	public:
+		double physicsRate;
+		double oobillion;
+		struct timespec timeStart, timeEnd, timeCurrent;
+		struct timespec walkTime;
+		Timers() {
+			physicsRate = 1.0 / 30.0;
+			oobillion = 1.0 / 1e9;
+		}
+		double timeDiff(struct timespec *start, struct timespec *end) {
+			return (double)(end->tv_sec - start->tv_sec ) +
 				(double)(end->tv_nsec - start->tv_nsec) * oobillion;
-	}
-	void timeCopy(struct timespec *dest, struct timespec *source) {
-		memcpy(dest, source, sizeof(struct timespec));
-	}
-	void recordTime(struct timespec *t) {
-		clock_gettime(CLOCK_REALTIME, t);
-	}
+		}
+		void timeCopy(struct timespec *dest, struct timespec *source) {
+			memcpy(dest, source, sizeof(struct timespec));
+		}
+		void recordTime(struct timespec *t) {
+			clock_gettime(CLOCK_REALTIME, t);
+		}
 } timers;
 //-----------------------------------------------------------------------------
 
 
 Global gl;
 
+Player pl;
+
 // Start on level 1
 Level lev;
 
 //X Windows variables
 class X11_wrapper {
-private:
-	Display *dpy;
-	Window win;
-public:
-	~X11_wrapper() {
-		XDestroyWindow(dpy, win);
-		XCloseDisplay(dpy);
-	}
-	void setTitle() {
-		//Set the window title bar.
-		XMapWindow(dpy, win);
-		XStoreName(dpy, win, "Bob's Day Off");
-	}
-	void setupScreenRes(const int w, const int h) {
-		gl.xres = w;
-		gl.yres = h;
-	}
-	X11_wrapper() {
-		GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
-		//GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, None };
-		XSetWindowAttributes swa;
-		setupScreenRes(gl.xres, gl.yres);
-		dpy = XOpenDisplay(NULL);
-		if (dpy == NULL) {
-			printf("\n\tcannot connect to X server\n\n");
-			exit(EXIT_FAILURE);
+	private:
+		Display *dpy;
+		Window win;
+	public:
+		~X11_wrapper() {
+			XDestroyWindow(dpy, win);
+			XCloseDisplay(dpy);
 		}
-		Window root = DefaultRootWindow(dpy);
-		XVisualInfo *vi = glXChooseVisual(dpy, 0, att);
-		if (vi == NULL) {
-			printf("\n\tno appropriate visual found\n\n");
-			exit(EXIT_FAILURE);
-		} 
-		Colormap cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
-		swa.colormap = cmap;
-		swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask |
-			StructureNotifyMask | SubstructureNotifyMask;
-		win = XCreateWindow(dpy, root, 0, 0, gl.xres, gl.yres, 0,
-			vi->depth, InputOutput, vi->visual,
-			CWColormap | CWEventMask, &swa);
-		GLXContext glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
-		glXMakeCurrent(dpy, win, glc);
-		setTitle();
-	}
-	void reshapeWindow(int width, int height) {
-		//window has been resized.
-		setupScreenRes(width, height);
-		glViewport(0, 0, (GLint)width, (GLint)height);
-		glMatrixMode(GL_PROJECTION); glLoadIdentity();
-		glMatrixMode(GL_MODELVIEW); glLoadIdentity();
-		glOrtho(0, gl.xres, 0, gl.yres, -1, 1);
-		setTitle();
-	}
-	void checkResize(XEvent *e) {
-		//The ConfigureNotify is sent by the
-		//server if the window is resized.
-		if (e->type != ConfigureNotify)
-			return;
-		XConfigureEvent xce = e->xconfigure;
-		if (xce.width != gl.xres || xce.height != gl.yres) {
-			//Window size did change.
-			reshapeWindow(xce.width, xce.height);
+		void setTitle() {
+			//Set the window title bar.
+			XMapWindow(dpy, win);
+			XStoreName(dpy, win, "Bob's Day Off");
 		}
-	}
-	bool getXPending() {
-		return XPending(dpy);
-	}
-	XEvent getXNextEvent() {
-		XEvent e;
-		XNextEvent(dpy, &e);
-		return e;
-	}
-	void swapBuffers() {
-		glXSwapBuffers(dpy, win);
-	}
+		void setupScreenRes(const int w, const int h) {
+			gl.xres = w;
+			gl.yres = h;
+		}
+		X11_wrapper() {
+			GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None };
+			//GLint att[] = { GLX_RGBA, GLX_DEPTH_SIZE, 24, None };
+			XSetWindowAttributes swa;
+			setupScreenRes(gl.xres, gl.yres);
+			dpy = XOpenDisplay(NULL);
+			if (dpy == NULL) {
+				printf("\n\tcannot connect to X server\n\n");
+				exit(EXIT_FAILURE);
+			}
+			Window root = DefaultRootWindow(dpy);
+			XVisualInfo *vi = glXChooseVisual(dpy, 0, att);
+			if (vi == NULL) {
+				printf("\n\tno appropriate visual found\n\n");
+				exit(EXIT_FAILURE);
+			} 
+			Colormap cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
+			swa.colormap = cmap;
+			swa.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask |
+				StructureNotifyMask | SubstructureNotifyMask;
+			win = XCreateWindow(dpy, root, 0, 0, gl.xres, gl.yres, 0,
+					vi->depth, InputOutput, vi->visual,
+					CWColormap | CWEventMask, &swa);
+			GLXContext glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
+			glXMakeCurrent(dpy, win, glc);
+			setTitle();
+		}
+		void reshapeWindow(int width, int height) {
+			//window has been resized.
+			setupScreenRes(width, height);
+			glViewport(0, 0, (GLint)width, (GLint)height);
+			glMatrixMode(GL_PROJECTION); glLoadIdentity();
+			glMatrixMode(GL_MODELVIEW); glLoadIdentity();
+			glOrtho(0, gl.xres, 0, gl.yres, -1, 1);
+			setTitle();
+		}
+		void checkResize(XEvent *e) {
+			//The ConfigureNotify is sent by the
+			//server if the window is resized.
+			if (e->type != ConfigureNotify)
+				return;
+			XConfigureEvent xce = e->xconfigure;
+			if (xce.width != gl.xres || xce.height != gl.yres) {
+				//Window size did change.
+				reshapeWindow(xce.width, xce.height);
+			}
+		}
+		bool getXPending() {
+			return XPending(dpy);
+		}
+		XEvent getXNextEvent() {
+			XEvent e;
+			XNextEvent(dpy, &e);
+			return e;
+		}
+		void swapBuffers() {
+			glXSwapBuffers(dpy, win);
+		}
 } x11;
 
 int main()
 {
 	initOpengl();
-    lev.load((char *)"level1.txt");
+	lev.load((char *)"level1.txt");
 	init();
 	int done = 0;
 	while (!done) {
@@ -217,20 +220,20 @@ int main()
 			x11.checkResize(&e);
 			checkMouse(&e);
 			done = checkKeys(&e);
-	    }
+		}
 
-        // Run physics unless the game is paused
-        if (!gl.paused)
-            physics();
+		// Run physics unless the game is paused
+		if (!gl.paused)
+			physics();
 
-        if (gl.introScreenFlag) {
-            showIntroScreen();
-            x11.swapBuffers();
-        } else if(gl.render) {
-            render();
-            x11.swapBuffers();
-        }
-    }
+		if (gl.introScreenFlag) {
+			showIntroScreen();
+			x11.swapBuffers();
+		} else if(gl.render) {
+			render();
+			x11.swapBuffers();
+		}
+	}
 	cleanup_fonts();
 	return 0;
 }
@@ -258,49 +261,49 @@ void initOpengl(void)
 	glEnable(GL_TEXTURE_2D);
 	initialize_fonts();
 
-    // Load the intro screen background texture
-    loadTexture(&gl.introScreenTexture, "./images/intro_background.jpg");
+	// Load the intro screen background texture
+	loadTexture(&gl.introScreenTexture, "./images/intro_background.jpg");
 
-    // Load the intro screen title texture
-    loadTextureAlpha(&gl.introTitleTexture, "./images/intro_title.png");
+	// Load the intro screen title texture
+	loadTextureAlpha(&gl.introTitleTexture, "./images/intro_title.png");
 
-    // Load the intro press space to begin texture
-    loadTextureAlpha(&gl.introPressSpaceTexture, "./images/intro_press_space.png");
+	// Load the intro press space to begin texture
+	loadTextureAlpha(&gl.introPressSpaceTexture, "./images/intro_press_space.png");
 
-    // Load the character texture
-    loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
+	// Load the character texture
+	loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
 
-    // Load the first explosion texture
-    loadTextureAlpha(&gl.exp.tex, "./images/exp.png");
+	// Load the first explosion texture
+	loadTextureAlpha(&gl.exp.tex, "./images/exp.png");
 
-    // Load the second explosion texture
-    loadTextureAlpha(&gl.exp44.tex, "./images/exp44.png");
-    
-    // Load the background texture
-    loadTexture(&gl.backgroundTexture, "./textures/blue-tile.jpg");
+	// Load the second explosion texture
+	loadTextureAlpha(&gl.exp44.tex, "./images/exp44.png");
 
-    // Load the banana texture
-    loadTextureAlpha(&gl.bananaTexture, "./images/banana2.png");
+	// Load the background texture
+	loadTexture(&gl.backgroundTexture, "./textures/blue-tile.jpg");
 
-    // Load tile textures
-    loadTexture(&gl.tileTexture[0], "./textures/gray1.jpg");
-    loadTexture(&gl.tileTexture[1], "./textures/grass_32x32.png");
+	// Load the banana texture
+	loadTextureAlpha(&gl.bananaTexture, "./images/banana2.png");
 
-    // Load Kenny's credit screen texture
-    loadTexture(&gl.kennyCreditsTexture, "./images/bob.jpg");
+	// Load tile textures
+	loadTexture(&gl.tileTexture[0], "./textures/gray1.jpg");
+	loadTexture(&gl.tileTexture[1], "./textures/grass_32x32.png");
 
-    // Load Tristan's credit screen texture
-    loadTexture(&gl.tristanTexture, "./images/resize_Cactuar.png");
+	// Load Kenny's credit screen texture
+	loadTexture(&gl.kennyCreditsTexture, "./images/bob.jpg");
+
+	// Load Tristan's credit screen texture
+	loadTexture(&gl.tristanTexture, "./images/resize_Cactuar.png");
 
 	// Load Rudy's credit screen texture
-    loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
+	loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
 
-    // Load the torch texture
-    //loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
-    loadTextureAlpha(&gl.torchTexture, "./images/walltorch.jpg");
+	// Load the torch texture
+	//loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
+	loadTextureAlpha(&gl.torchTexture, "./images/walltorch.jpg");
 
-    // Load the slime texture
-    loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
+	// Load the slime texture
+	loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
 }
 
 void init() {
@@ -347,7 +350,7 @@ void screenCapture()
 		vid = 1;
 	}
 	unsigned char *data = (unsigned char *)malloc(gl.xres * gl.yres * 3);
-    glReadPixels(0, 0, gl.xres, gl.yres, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glReadPixels(0, 0, gl.xres, gl.yres, GL_RGB, GL_UNSIGNED_BYTE, data);
 	char ts[32];
 	sprintf(ts, "./vid/pic%03i.ppm", fnum);
 	FILE *fpo = fopen(ts,"w");	
@@ -419,19 +422,19 @@ int checkKeys(XEvent *e)
 			timers.recordTime(&gl.exp44.time);
 			gl.exp44.onoff ^= 1;
 			break;
-        case XK_l:
-            gl.leaderboardFlag = !gl.leaderboardFlag;
-            break;
-        case XK_1:
-            gl.render=0;
-            loadLevel(&lev, (char*)"level1.txt");
-            gl.render=1;
-            break;
-        case XK_2:
-            gl.render = 0;
-            loadLevel(&lev, (char*)"level2.txt"); 
-            gl.render = 1;
-            break;
+		case XK_l:
+			gl.leaderboardFlag = !gl.leaderboardFlag;
+			break;
+		case XK_1:
+			gl.render=0;
+			loadLevel(&lev, (char*)"level1.txt");
+			gl.render=1;
+			break;
+		case XK_2:
+			gl.render = 0;
+			loadLevel(&lev, (char*)"level2.txt"); 
+			gl.render = 1;
+			break;
 		case XK_Left:
 			break;
 		case XK_Right:
@@ -457,11 +460,11 @@ int checkKeys(XEvent *e)
 		case XK_space:
 			//gl.yvelocity = 2? then gl.yvelocity -= gravity;
 			// Leave the intro screen
-            if (gl.introScreenFlag) {
-                gl.introScreenFlag = !gl.introScreenFlag;
-                gl.paused = 0;
-            }
-            break;
+			if (gl.introScreenFlag) {
+				gl.introScreenFlag = !gl.introScreenFlag;
+				gl.paused = 0;
+			}
+			break;
 	}
 	return 0;
 }
@@ -487,15 +490,15 @@ Flt VecNormalize(Vec vec)
 
 void physics(void)
 {
-    struct timespec ts, te;
-    // Record the start time
-    clock_gettime(CLOCK_REALTIME, &ts);
+	struct timespec ts, te;
+	// Record the start time
+	clock_gettime(CLOCK_REALTIME, &ts);
 
-    // ========================================
-    // Move the background and foreground tiles 
-    // ========================================
+	// ========================================
+	// Move the background and foreground tiles 
+	// ========================================
 	if (gl.walk || gl.keys[XK_Right] || gl.keys[XK_Left]
-        || gl.keys[XK_a] || gl.keys[XK_d]) {
+			|| gl.keys[XK_a] || gl.keys[XK_d]) {
 		//man is walking...
 		//when time is up, advance the frame.
 		timers.recordTime(&timers.timeCurrent);
@@ -508,36 +511,25 @@ void physics(void)
 			timers.recordTime(&timers.walkTime);
 		}
 
-        if (gl.keys[XK_Left] || gl.keys[XK_a]) {
-            // Move the background to the right
-            gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
-            if (gl.backgroundXoffset > 0)
-                gl.backgroundXoffset = 0;
-            // Move the foreground to the right
-            gl.camera[0] -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-            if (gl.camera[0] < 0.0)
-                gl.camera[0] = 0.0;
-        } else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
-            // Move the background to the left
-            gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
-            // Move the foreground to the left
-            gl.camera[0] += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-            if (gl.camera[0] < 0.0)
-                gl.camera[0] = 0.0;
-        }
-	
-        // Move the explosions
-        if (gl.exp.onoff) {
-			gl.exp.pos[0] -= 2.0 * (0.05 / gl.delay);
+		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
+			pl.moveLeft();
+
+		} else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
+			pl.moveRight();		
 		}
+
+		// Move the explosions
+		if (gl.exp.onoff) {
+			gl.exp.pos[0] -= 2.0 * (0.05 / gl.delay);
+		}	
 		if (gl.exp44.onoff) {
 			gl.exp44.pos[0] -= 2.0 * (0.05 / gl.delay);
 		}
 	}
 
-    // ==========================
-    // Handle explosion animation
-    // ==========================
+	// ==========================
+	// Handle explosion animation
+	// ==========================
 
 	if (gl.exp.onoff) {
 		//explosion is happening
@@ -594,53 +586,53 @@ void physics(void)
 	}
 	gl.ball_pos[1] += gl.ball_vel[1];
 
-    // =======================================
-    // Handle the SomeObject objects (example)
-    // =======================================
-    for(unsigned int i = 0; i < lev.someobject.size(); i++) 
-        lev.someobject[i].physics();
-    
-    // =========================
-    // Handle the banana objects
-    // =========================
-    for(unsigned int i = 0; i < lev.ban.size(); i++)
-        lev.ban[i].physics();
+	// =======================================
+	// Handle the SomeObject objects (example)
+	// =======================================
+	for(unsigned int i = 0; i < lev.someobject.size(); i++) 
+		lev.someobject[i].physics();
 
-    // Record the physics time
-    clock_gettime(CLOCK_REALTIME, &te);
-    gl.physicsTime = timeDiff(&ts, &te);
+	// =========================
+	// Handle the banana objects
+	// =========================
+	for(unsigned int i = 0; i < lev.ban.size(); i++)
+		lev.ban[i].physics();
+
+	// Record the physics time
+	clock_gettime(CLOCK_REALTIME, &te);
+	gl.physicsTime = timeDiff(&ts, &te);
 }
 
 void render()
 {
-    struct timespec ts, te;
-    // Record the start time
-    clock_gettime(CLOCK_REALTIME, &ts);
+	struct timespec ts, te;
+	// Record the start time
+	clock_gettime(CLOCK_REALTIME, &ts);
 
 	Rect r;
-    // =======================
+	// =======================
 	// Clear the screen
-    // =======================
+	// =======================
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	float cx = gl.xres/2.0;
 	float cy = gl.yres/2.0;
 
-    // ===========================================
-    // Draw textured background (256x256 tiles)
-    // ===========================================
-    drawTexturedBackground();
+	// ===========================================
+	// Draw textured background (256x256 tiles)
+	// ===========================================
+	drawTexturedBackground();
 
-    // =======================
+	// =======================
 	// Render the ground
-    // =======================
+	// =======================
 	glBegin(GL_QUADS);
-		glColor3f(0.2, 0.2, 0.2);
-		glVertex2i(0,       220);
-		glVertex2i(gl.xres, 220);
-		glColor3f(0.4, 0.4, 0.4);
-		glVertex2i(gl.xres,   0);
-		glVertex2i(0,         0);
+	glColor3f(0.2, 0.2, 0.2);
+	glVertex2i(0,       220);
+	glVertex2i(gl.xres, 220);
+	glColor3f(0.4, 0.4, 0.4);
+	glVertex2i(gl.xres,   0);
+	glVertex2i(0,         0);
 	glEnd();
 
 	// =================================
@@ -667,38 +659,38 @@ void render()
 	for (int j=0; j<ncols_to_render; j++) {
 		int row = lev.nrows-1;
 		for (int i=0; i<lev.nrows; i++) {
-            // Draw white tile
+			// Draw white tile
 			if (lev.arr[row][col] == 'w')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.8, 0.8, 0.6);
-            // Draw red tile
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.8, 0.8, 0.6);
+			// Draw red tile
 			else if (lev.arr[row][col] == 'r')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.9, 0.2, 0.2);
-            // Draw blue tile
-            else if (lev.arr[row][col] == 'b')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.2, 0.2, 0.9);
-            // Draw green tile
-            else if (lev.arr[row][col] == 'g')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.0, 0.6, 0.0);
-            // Draw purple tile
-            else if (lev.arr[row][col] == 'p')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.5, 0.0, 0.5);
-            // Draw yellow tile
-            else if (lev.arr[row][col] == 'y')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 1.0, 1.0, 0.0);
-            // Draw dark gray tile
-            else if (lev.arr[row][col] == 'z')
-                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
-            // Draw textured tiles
-            else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
-                drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.9, 0.2, 0.2);
+			// Draw blue tile
+			else if (lev.arr[row][col] == 'b')
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.2, 0.2, 0.9);
+			// Draw green tile
+			else if (lev.arr[row][col] == 'g')
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.0, 0.6, 0.0);
+			// Draw purple tile
+			else if (lev.arr[row][col] == 'p')
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.5, 0.0, 0.5);
+			// Draw yellow tile
+			else if (lev.arr[row][col] == 'y')
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 1.0, 1.0, 0.0);
+			// Draw dark gray tile
+			else if (lev.arr[row][col] == 'z')
+				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
+			// Draw textured tiles
+			else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
+				drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
 			--row;
 		}
 		col = (col+1) % lev.ncols;
 	}
 
-    // ========================
-    // Draw the ball (disabled)
-    // ========================
+	// ========================
+	// Draw the ball (disabled)
+	// ========================
 	//glColor3f(1.0, 1.0, 0.1);
 	//glPushMatrix();
 	//glTranslated(gl.ball_pos[0], lev.tile_base+gl.ball_pos[1], 0);
@@ -712,99 +704,50 @@ void render()
 
 	// =========================
 	// Draw shadow
-    // =========================
+	// =========================
 	//#define SHOW_FAKE_SHADOW
-	#ifdef SHOW_FAKE_SHADOW
+#ifdef SHOW_FAKE_SHADOW
 	glColor3f(0.25, 0.25, 0.25);
 	glBegin(GL_QUADS);
-		glVertex2i(cx-60, 150);
-		glVertex2i(cx+50, 150);
-		glVertex2i(cx+50, 130);
-		glVertex2i(cx-60, 130);
+	glVertex2i(cx-60, 150);
+	glVertex2i(cx+50, 150);
+	glVertex2i(cx+50, 130);
+	glVertex2i(cx-60, 130);
 	glEnd();
-	#endif
+#endif
 
-    // ===================================
-    // Render SomeObject objects (example)
-    // ===================================
-    for(unsigned int i = 0; i < lev.someobject.size(); i++)
-        lev.someobject[i].render();
+	// ===================================
+	// Render SomeObject objects (example)
+	// ===================================
+	for(unsigned int i = 0; i < lev.someobject.size(); i++)
+		lev.someobject[i].render();
 
-    // =========================
-    // Draw Banana objects
-    // =========================
-    for(unsigned int i = 0; i < lev.ban.size(); i++)
-        lev.ban[i].render();
-    
-    // =========================
-    // Draw Torch objects
-    // =========================
-    for(unsigned int i = 0; i < lev.tor.size(); i++)
-        lev.tor[i].render();
+	// =========================
+	// Draw Banana objects
+	// =========================
+	for(unsigned int i = 0; i < lev.ban.size(); i++)
+		lev.ban[i].render();
 
-    // =========================
-    // Draw Slime objects
-    // =========================
-    for(unsigned int i = 0; i < lev.slm.size(); i++)
-        lev.slm[i].render();
+	// =========================
+	// Draw Torch objects
+	// =========================
+	for(unsigned int i = 0; i < lev.tor.size(); i++)
+		lev.tor[i].render();
+
+	// =========================
+	// Draw Slime objects
+	// =========================
+	for(unsigned int i = 0; i < lev.slm.size(); i++)
+		lev.slm[i].render();
 
 	// ========================
 	// Draw character sprite
-    // ========================
-    // Define height and width of character sprite
-	float h = 128.0;
-	float w = h * 0.5;
-	glPushMatrix();
-	glColor3f(1.0, 1.0, 1.0);
-	glBindTexture(GL_TEXTURE_2D, gl.walkTexture);
-	
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.0f);
-	glColor4ub(255,255,255,255);
-	int ix = gl.walkFrame % 8;
-	int iy = 0;
-	if (gl.walkFrame >= 8)
-		iy = 1;
-	float fx = (float)ix / 8.0;
-	float fy = (float)iy / 2.0;
-	glBegin(GL_QUADS);
-        // Use gl.lastFacing to track whether we should render the sprite
-        // facing left or right when standing still
-		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
-            // Draw character facing left
-            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
-            glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
-            glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
-            glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
-            gl.lastFacing = -1;
-		} else if (gl.keys[XK_Right] || gl.keys[XK_d]) {
-            // Draw character facing right
-            glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
-            glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
-            glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
-            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
-            gl.lastFacing = 1;
-        } else if (gl.lastFacing == -1) {
-            // Draw character facing left
-            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
-            glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
-            glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
-            glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
-		} else if (gl.lastFacing == 1) {
-            // Draw character facing right
-            glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
-            glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
-            glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
-            glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
-        }
-	glEnd();
-	glPopMatrix();
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_ALPHA_TEST);
-
+	// ========================
+	pl.render();
 	// =======================
-    // Render explosions
-    // =======================
+	// Render explosions
+	// =======================
+	float h, w;
 	if (gl.exp.onoff) {
 		h = 80.0;
 		w = 80.0;
@@ -820,10 +763,10 @@ void render()
 		float tx = (float)ix / 5.0;
 		float ty = (float)iy / 5.0;
 		glBegin(GL_QUADS);
-			glTexCoord2f(tx,     ty+0.2); glVertex2i(cx-w, cy-h);
-			glTexCoord2f(tx,     ty);     glVertex2i(cx-w, cy+h);
-			glTexCoord2f(tx+0.2, ty);     glVertex2i(cx+w, cy+h);
-			glTexCoord2f(tx+0.2, ty+0.2); glVertex2i(cx+w, cy-h);
+		glTexCoord2f(tx,     ty+0.2); glVertex2i(cx-w, cy-h);
+		glTexCoord2f(tx,     ty);     glVertex2i(cx-w, cy+h);
+		glTexCoord2f(tx+0.2, ty);     glVertex2i(cx+w, cy+h);
+		glTexCoord2f(tx+0.2, ty+0.2); glVertex2i(cx+w, cy-h);
 		glEnd();
 		glPopMatrix();
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -845,92 +788,92 @@ void render()
 		float tx = (float)ix / 4.0;
 		float ty = (float)iy / 4.0;
 		glBegin(GL_QUADS);
-			glTexCoord2f(tx,      ty+0.25); glVertex2i(cx-w, cy-h);
-			glTexCoord2f(tx,      ty);      glVertex2i(cx-w, cy+h);
-			glTexCoord2f(tx+0.25, ty);      glVertex2i(cx+w, cy+h);
-			glTexCoord2f(tx+0.25, ty+0.25); glVertex2i(cx+w, cy-h);
+		glTexCoord2f(tx,      ty+0.25); glVertex2i(cx-w, cy-h);
+		glTexCoord2f(tx,      ty);      glVertex2i(cx-w, cy+h);
+		glTexCoord2f(tx+0.25, ty);      glVertex2i(cx+w, cy+h);
+		glTexCoord2f(tx+0.25, ty+0.25); glVertex2i(cx+w, cy-h);
 		glEnd();
 		glPopMatrix();
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glDisable(GL_ALPHA_TEST);
 	}
 
-    // ======================
-    // Draw the UI/HUD
-    // ======================
+	// ======================
+	// Draw the UI/HUD
+	// ======================
 	unsigned int c;
-    // Dim the text if we're showing the credits screen
-    if (gl.creditsFlag)
-        c = 0x00888822;
-    else
-        c = 0x00ffff44;
-    r.bot = gl.yres - 20;
+	// Dim the text if we're showing the credits screen
+	if (gl.creditsFlag)
+		c = 0x00888822;
+	else
+		c = 0x00ffff44;
+	r.bot = gl.yres - 20;
 	r.left = 10;
 	r.center = 0;
 	ggprint8b(&r, 16, c, "W     Walk cycle");
 	ggprint8b(&r, 16, c, "E     Explosion");
 	ggprint8b(&r, 16, c, "C     Credits");
-    ggprint8b(&r, 16, c, "[1-2] Change Level");	
-    ggprint8b(&r, 16, c, "+     faster");
+	ggprint8b(&r, 16, c, "[1-2] Change Level");	
+	ggprint8b(&r, 16, c, "+     faster");
 	ggprint8b(&r, 16, c, "-     slower");
 	ggprint8b(&r, 16, c, "D, right arrow -> walk right");
 	ggprint8b(&r, 16, c, "A, left arrow  <- walk left");
 	//ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
 
-    // Draw the physics and render times
-    clock_gettime(CLOCK_REALTIME, &te);
-    gl.renderTime = timeDiff(&ts, &te);
-    ggprint8b(&r, 16, c, "");
-    ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
-    ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
+	// Draw the physics and render times
+	clock_gettime(CLOCK_REALTIME, &te);
+	gl.renderTime = timeDiff(&ts, &te);
+	ggprint8b(&r, 16, c, "");
+	ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
+	ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
 
-    // ==========================
-    // Draw the credits screen
-    // ==========================
-    if (gl.creditsFlag)
-        show_credits();
+	// ==========================
+	// Draw the credits screen
+	// ==========================
+	if (gl.creditsFlag)
+		show_credits();
 
-    // ===========================
-    // Draw the leaderboard screen
-    // ===========================
-    if (gl.leaderboardFlag)
-        showLeaderboard();
+	// ===========================
+	// Draw the leaderboard screen
+	// ===========================
+	if (gl.leaderboardFlag)
+		showLeaderboard();
 
-    if (gl.movie) {
-        screenCapture();
-    }
+	if (gl.movie) {
+		screenCapture();
+	}
 }
 
 void show_credits()
 {
-    // Draw background rectangle (center in viewport)
-    glPushMatrix();
-    glColor3ub(255,255,255);
-    glBegin(GL_QUADS);
-        glVertex2i(gl.xres/2-300, gl.yres/2-200);
-        glVertex2i(gl.xres/2+300, gl.yres/2-200);
-        glVertex2i(gl.xres/2+300, gl.yres/2+200);
-        glVertex2i(gl.xres/2-300, gl.yres/2+200);
-    glEnd();
-    glPopMatrix();
+	// Draw background rectangle (center in viewport)
+	glPushMatrix();
+	glColor3ub(255,255,255);
+	glBegin(GL_QUADS);
+	glVertex2i(gl.xres/2-300, gl.yres/2-200);
+	glVertex2i(gl.xres/2+300, gl.yres/2-200);
+	glVertex2i(gl.xres/2+300, gl.yres/2+200);
+	glVertex2i(gl.xres/2-300, gl.yres/2+200);
+	glEnd();
+	glPopMatrix();
 
-    // Draw the credits title
-    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char *)"Game Credits");
+	// Draw the credits title
+	drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char *)"Game Credits");
 
-    // Draw individual text
-    Rect r;
-    r.bot = gl.yres/2+100;
-    r.left = gl.xres/2-200;
+	// Draw individual text
+	Rect r;
+	r.bot = gl.yres/2+100;
+	r.left = gl.xres/2-200;
 	tristanCredits(&r);
-	
-    showKennyCredits(gl.xres/2-200, gl.yres/2);
-	
-    r.bot = gl.yres/2-100;
-    r.left = gl.xres/2-200;
-    rudyCredits(&r);
 
-    // Draw individual images
-    showKennyImage(gl.xres/2+200, gl.yres/2, gl.kennyCreditsTexture);
-    tristanImage(gl.xres/2, gl.yres/2+75, gl.tristanTexture);
-    showRudyPicture(gl.xres/2, gl.yres/2-100, gl.rudyTexture);
+	showKennyCredits(gl.xres/2-200, gl.yres/2);
+
+	r.bot = gl.yres/2-100;
+	r.left = gl.xres/2-200;
+	rudyCredits(&r);
+
+	// Draw individual images
+	showKennyImage(gl.xres/2+200, gl.yres/2, gl.kennyCreditsTexture);
+	tristanImage(gl.xres/2, gl.yres/2+75, gl.tristanTexture);
+	showRudyPicture(gl.xres/2, gl.yres/2-100, gl.rudyTexture);
 }

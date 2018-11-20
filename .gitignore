@@ -6,6 +6,8 @@
 *.exe
 *.o
 *.so
+*.swp
 
-bobsdayoff
+*bobsdayoff*
+!bobsdayoff.cpp
 #Our program.

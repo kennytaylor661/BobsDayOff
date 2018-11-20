@@ -8,55 +8,72 @@
 
 const float GRAVITY = -0.2f;
 extern Global gl;
-extern Player p;
-
+extern Player pl;
+extern Level lev;
 //Enemy Class
 void Enemy::moveLeft()
 {
-    posX--;
+	posX--;
 }
 
 void Enemy::moveRight()
 {
-    posX++;
+	posX++;
 }
 
 void Enemy::physics()
 {
-      if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
-         posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
-	        return;
+	if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
+			posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
+		return;
 	this->posY += yvel;
 	this->yvel += GRAVITY;
-//	this->AI(p);
+	//	this->AI(p);
 }
 
 std::pair<int, int> Enemy::getPos()
 {
-    return std::pair<int, int>(this->posX, this->posY);
+	return std::pair<int, int>(this->posX, this->posY);
 }
 //
 
 //Player Class
 std::pair<int, int> Player::getPos()
 {
-    return std::pair<int, int>(this->posX, this->posY);
+	return std::pair<int, int>(this->posX, this->posY);
 }
 
 void Player::moveLeft()
 {
-    posX--;
-}
 
+	// Move the background to the right
+	gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
+	if (gl.backgroundXoffset > 0)
+		gl.backgroundXoffset = 0;
+	// Move the foreground to the right
+	gl.camera[0] -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+	if (gl.camera[0] < 0.0)
+		gl.camera[0] = 0.0;
+
+	gl.lastFacing = -1;
+
+}
 void Player::moveRight()
 {
-    posX++;
+	// Move the background to the left
+	gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
+	// Move the foreground to the left
+	gl.camera[0] += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+	if (gl.camera[0] < 0.0)
+		gl.camera[0] = 0.0;
+
+	gl.lastFacing = 1;
 }
 
 void Player::Jump()
 {
-    if (yvel == 0)
-        yvel = 4;
+	if (yvel == 0)
+		yvel = 4;
 }
 
 void Player::Fire()
@@ -66,48 +83,107 @@ void Player::Fire()
 
 void Player::render()
 {
+	float h = 128.0;
+	float w = h * 0.5;
+	glPushMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glBindTexture(GL_TEXTURE_2D, gl.walkTexture);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);
+	glColor4ub(255,255,255,255);
+	int ix = gl.walkFrame % 8;
+	int iy = 0;
+	if (gl.walkFrame >= 8)
+		iy = 1;
+	float fx = (float)ix / 8.0;
+	float fy = (float)iy / 2.0;
+	glBegin(GL_QUADS);
+	// Use gl.lastFacing to track whether we should render the sprite
+	// facing left or right when standing still
+	float cx = gl.xres/2.0;
 
+	if (gl.keys[XK_Left] || gl.keys[XK_a]) {
+		// Draw character facing left
+		glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
+		glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
+		glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
+		glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
+		gl.lastFacing = -1;
+	} else if (gl.keys[XK_Right] || gl.keys[XK_d]) {
+		// Draw character facing right
+		glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
+		glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
+		glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
+		glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
+		gl.lastFacing = 1;
+	} else if (gl.lastFacing == -1) {
+		// Draw character facing left
+		glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx-w, 114);
+		glTexCoord2f(fx+.125, fy);    glVertex2i(cx-w, 114+2*h);
+		glTexCoord2f(fx,      fy);    glVertex2i(cx+w, 114+2*h);
+		glTexCoord2f(fx,      fy+.5); glVertex2i(cx+w, 114);
+	} else if (gl.lastFacing == 1) {
+		// Draw character facing right
+		glTexCoord2f(fx,      fy+.5); glVertex2i(cx-w, 114);
+		glTexCoord2f(fx,      fy);    glVertex2i(cx-w, 114+2*h);
+		glTexCoord2f(fx+.125, fy);    glVertex2i(cx+w, 114+2*h);
+		glTexCoord2f(fx+.125, fy+.5); glVertex2i(cx+w, 114);
+	}
+	glEnd();
+	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_ALPHA_TEST);
 }
 
 void Player::physics()
 {
-    posX += xvel;
-    posY += yvel;
-    yvel += GRAVITY;
-    if (yvel < 0)
-        yvel = 0;
+	posX += xvel;
+	posY += yvel;
+	yvel += GRAVITY;
+	if (yvel < 0)
+		yvel = 0;
 }
 //
 
 //Slime Class
 void Slime::AI(Player p)
 {
-    if (rand()%2 == 0)
-        this->moveLeft();
-    else
-        this->moveRight();
-    usleep(2000);
+	if (rand()%2 == 0)
+		this->moveLeft();
+	else
+		this->moveRight();
+	usleep(2000);
 }
 
 void Slime::render()
 {
-
+	int wid = 25;
+	glPushMatrix();
+	glColor3ub(255,255,255);
+	glBindTexture(GL_TEXTURE_2D, texid);
+	glBegin(GL_QUADS);
+	glVertex2i(-wid, -wid);
+	glVertex2i(wid, -wid);
+	glVertex2i(wid, wid);
+	glVertex2i(-wid, wid);
+	glEnd();
+	glPopMatrix();
 }
 //
 
 //Zombie Class
 void Zombie::AI(Player p)
 {
-    std::pair<int,int> playerLoc = p.getPos();
+	std::pair<int,int> playerLoc = p.getPos();
 
-    if (playerLoc.first > posX && playerLoc.first - posX <= 5 && 
-	playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
-        this->moveRight();
-    } else if (playerLoc.first < posX && posX - playerLoc.first <= 5 &&
-	     playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
-	this->moveLeft();
-    }
-    usleep(500);
+	if (playerLoc.first > posX && playerLoc.first - posX <= 5 && 
+			playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
+		this->moveRight();
+	} else if (playerLoc.first < posX && posX - playerLoc.first <= 5 &&
+			playerLoc.second - posY <= 1 && posY - playerLoc.second <= 1) {
+		this->moveLeft();
+	}
+	usleep(500);
 }
 
 void Zombie::render()
@@ -137,10 +213,10 @@ void tristanImage(int x, int y, GLuint texid)
 	glTranslatef(x, y, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-		glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid,  wid);
-		glTexCoord2f(1.0f, 0.0f); glVertex2i( wid,  wid);
-		glTexCoord2f(1.0f, 1.0f); glVertex2i( wid, -wid);
+	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid,  wid);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i( wid,  wid);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid, -wid);
 	glEnd();
 	glPopMatrix();
 }
