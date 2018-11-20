@@ -257,6 +257,9 @@ void initOpengl(void)
 	glEnable(GL_TEXTURE_2D);
 	initialize_fonts();
 
+    // Load the intro screen texture
+    loadTexture(&gl.introScreenTexture, "./images/intro_screen.jpg");
+
     // Load the character texture
     loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
 
