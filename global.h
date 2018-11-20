@@ -32,6 +32,7 @@ public:
 
     Image *walkImage;
     GLuint introScreenTexture;
+    GLuint introTitleTexture;
     GLuint walkTexture;
     GLuint backgroundTexture;
     GLuint kennyCreditsTexture;

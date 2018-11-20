@@ -261,6 +261,9 @@ void initOpengl(void)
     // Load the intro screen background texture
     loadTexture(&gl.introScreenTexture, "./images/intro_background.jpg");
 
+    // Load the intro screen title texture
+    loadTextureAlpha(&gl.introTitleTexture, "./images/intro_title.png");
+
     // Load the character texture
     loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
 
