@@ -70,6 +70,17 @@ void Level::load(char *filename)
         b = new Banana((rand() % 80) * 50, (rand() % 200) + 300, gl.bananaTexture);
         ban.push_back(*b);
     }
+    
+    // Clear the vector of Torch Objects
+    tor.clear();
+
+    // Create new Torch objects
+    Torch *t;
+    srand(time(NULL));
+    for(int i = 0; i < 10; i++) {
+        t = new Torch((rand() % 80) * 50, (rand() % 200) + 300, gl.torchTexture);
+        tor.push_back(*t);
+    }
 
 }
 

@@ -26,9 +26,9 @@ class Torch
     GLuint texid;
 
     public:
-    Torch(int x, int y, GLuint tex): pos(x), pos(y), texid(tex) {}
+    Torch(int x, int y, GLuint tex): posx(x), posy(y), texid(tex) {}
     void physics();
     void render();
-}
+};
 
 #endif

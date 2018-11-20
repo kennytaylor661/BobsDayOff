@@ -286,7 +286,8 @@ void initOpengl(void)
     loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
 
     // Load the torch texture
-    loadTexture(&gl.torchTexture, "./images/torch.png");
+    //loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
+    loadTextureAlpha(&gl.torchTexture, "./images/walltorch.jpg");
 }
 
 void init() {
@@ -721,6 +722,12 @@ void render()
     // =========================
     for(unsigned int i = 0; i < lev.ban.size(); i++)
         lev.ban[i].render();
+    
+    // =========================
+    // Draw Torch objects
+    // =========================
+    for(unsigned int i = 0; i < lev.tor.size(); i++)
+        lev.tor[i].render();
 
 	// ========================
 	// Draw character sprite
