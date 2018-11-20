@@ -26,6 +26,9 @@ public:
     // Create an arry of Banana Class
     vector<Banana> ban;
 
+    //Create an array of Torch Class
+    vector<Torch> tor;
+
     Level();
     void load(char*);
     void removeCrLf(char *);

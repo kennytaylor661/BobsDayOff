@@ -25,7 +25,29 @@ void Banana::render()
 {
     // code that will draw the picture of the banana
     // reference code below for texture
-    //cout << "Banana::Render() at " << posx << "," << posy << " texture =" << texid << endl; 
+
+    int wid = 25;
+    glPushMatrix();
+    glTranslatef(posx - gl.camera[0], posy, 0);
+    glBindTexture(GL_TEXTURE_2D, texid);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.0f);
+    glColor4ub(255,255,255,255);
+    glBegin(GL_QUADS); 
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid,-wid);
+       	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+       	glTexCoord2f(1.0f, 0.0f); glVertex2i( wid, wid);
+       	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid,-wid);
+   	glEnd();
+   	glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_ALPHA_TEST);
+}
+
+void Torch::render()
+{
+    // code that will draw the picture of a torch
+    // reference code below for texture
 
     int wid = 25;
     glPushMatrix();

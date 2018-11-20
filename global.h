@@ -37,6 +37,7 @@ public:
     GLuint tristanTexture;
     GLuint rudyTexture;
     GLuint bananaTexture;
+    GLuint torchTexture;
     GLuint someObjectTexture;
     GLuint tileTexture[10];
     Sprite exp; 

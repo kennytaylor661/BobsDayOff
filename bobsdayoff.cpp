@@ -284,6 +284,9 @@ void initOpengl(void)
 
 	// Load Rudy's credit screen texture
     loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
+
+    // Load the torch texture
+    loadTexture(&gl.torchTexture, "./images/torch.png");
 }
 
 void init() {
