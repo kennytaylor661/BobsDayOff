@@ -31,6 +31,7 @@ public:
     bool leaderboardFlag = 0;
 
     Image *walkImage;
+    GLuint introScreenTexture;
     GLuint walkTexture;
     GLuint backgroundTexture;
     GLuint kennyCreditsTexture;
