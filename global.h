@@ -23,8 +23,13 @@ public:
     double delay;
     double physicsTime = 0.0, renderTime = 0.0; 
     double backgroundXoffset = 0.0; 
+
+    // Game state variables
+    bool paused = 1;
+    bool introScreenFlag = 1;
     bool creditsFlag = 0; 
     bool leaderboardFlag = 0;
+
     Image *walkImage;
     GLuint walkTexture;
     GLuint backgroundTexture;

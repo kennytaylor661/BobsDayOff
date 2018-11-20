@@ -65,6 +65,7 @@ int checkKeys(XEvent *e);
 void init();
 void physics();
 void render();
+void showIntroScreen();
 void show_credits();
 
 // timer.cpp functions
@@ -215,12 +216,20 @@ int main()
 			x11.checkResize(&e);
 			checkMouse(&e);
 			done = checkKeys(&e);
-		}
-		physics();
-	if(gl.render)
+	    }
+
+        // Run physics unless the game is paused
+        if (!gl.paused)
+            physics();
+
+        if (gl.introScreenFlag) {
+            showIntroScreen();
+            x11.swapBuffers();
+        } else if(gl.render) {
             render();
-		x11.swapBuffers();
-	}
+            x11.swapBuffers();
+        }
+    }
 	cleanup_fonts();
 	return 0;
 }
@@ -430,7 +439,12 @@ int checkKeys(XEvent *e)
 			break;
 		case XK_space:
 			//gl.yvelocity = 2? then gl.yvelocity -= gravity;
-			break;
+			// Leave the intro screen
+            if (gl.introScreenFlag) {
+                gl.introScreenFlag = !gl.introScreenFlag;
+                gl.paused = 0;
+            }
+            break;
 	}
 	return 0;
 }
@@ -856,6 +870,11 @@ void render()
     if (gl.movie) {
         screenCapture();
     }
+}
+
+void showIntroScreen()
+{
+
 }
 
 void show_credits()
