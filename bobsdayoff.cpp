@@ -264,6 +264,9 @@ void initOpengl(void)
     // Load the intro screen title texture
     loadTextureAlpha(&gl.introTitleTexture, "./images/intro_title.png");
 
+    // Load the intro press space to begin texture
+    loadTextureAlpha(&gl.introPressSpaceTexture, "./images/intro_press_space.png");
+
     // Load the character texture
     loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
 

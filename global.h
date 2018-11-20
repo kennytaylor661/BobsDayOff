@@ -33,6 +33,7 @@ public:
     Image *walkImage;
     GLuint introScreenTexture;
     GLuint introTitleTexture;
+    GLuint introPressSpaceTexture;
     GLuint walkTexture;
     GLuint backgroundTexture;
     GLuint kennyCreditsTexture;

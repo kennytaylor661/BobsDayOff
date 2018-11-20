@@ -232,11 +232,12 @@ void showIntroScreen()
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
 
-    // Draw the title text
+    // Draw the text
     drawImage(gl.xres/2, gl.yres-100, 492, 85, gl.introTitleTexture);
+    drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture);
 
     // Draw some text
-    drawText(gl.xres/2-20, gl.yres-200, 0x004040ff, (char*)"Press space to begin");
+    //drawText(gl.xres/2-20, gl.yres-200, 0x004040ff, (char*)"Press space to begin");
 }
 
 // Example functions for the SomeObject class
