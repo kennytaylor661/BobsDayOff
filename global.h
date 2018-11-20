@@ -41,6 +41,10 @@ public:
     //camera is centered at (0,0) lower-left of screen. 
     Flt camera[2];
     int lastFacing = 1;
+    // Track player score and health here for the moment
+    int health = 100;
+    int score = 0;
+
     ~Global();
     Global();
 };
