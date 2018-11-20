@@ -89,6 +89,7 @@ extern void drawTexturedTile(int, float, float, float);
 extern void loadTexture(GLuint*, Image);
 extern void loadTextureAlpha(GLuint*, Image);
 extern void showLeaderboard();
+extern void showIntroScreen();
  
 // Rudy file functions
 extern void rudyCredits(Rect*);
@@ -257,8 +258,8 @@ void initOpengl(void)
 	glEnable(GL_TEXTURE_2D);
 	initialize_fonts();
 
-    // Load the intro screen texture
-    loadTexture(&gl.introScreenTexture, "./images/intro_screen.jpg");
+    // Load the intro screen background texture
+    loadTexture(&gl.introScreenTexture, "./images/intro_background.jpg");
 
     // Load the character texture
     loadTextureAlpha(&gl.walkTexture, "./images/walk.gif");
@@ -883,15 +884,6 @@ void render()
     if (gl.movie) {
         screenCapture();
     }
-}
-
-void showIntroScreen()
-{
-    // Draw some text
-    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char *)"Bob's Day Off");
-    drawText(gl.xres/2-20, gl.yres/2+100, 0x004040ff, (char *)"Super intro screen");
-    drawText(gl.xres/2-20, gl.yres/2, 0x004040ff, (char *)"Press space to begin");
-
 }
 
 void show_credits()

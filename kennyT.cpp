@@ -199,6 +199,27 @@ void showLeaderboard()
 
 }
 
+void showIntroScreen()
+{
+    // Draw background image
+    glPushMatrix();
+    glColor3ub(255,255,255);
+    glBindTexture(GL_TEXTURE_2D, gl.introScreenTexture);
+    glBegin(GL_QUADS);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(0, 0);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(gl.xres, 0);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(gl.xres, gl.yres);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(0, gl.yres);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glPopMatrix();
+
+    // Draw some text
+    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"Bob's Day Off");
+    drawText(gl.xres/2-20, gl.yres/2+100, 0x004040ff, (char*)"Super intro screen");
+    drawText(gl.xres/2-20, gl.yres/2, 0x004040ff, (char*)"Press space to begin");
+}
+
 // Example functions for the SomeObject class
 void SomeObject::physics()
 {
