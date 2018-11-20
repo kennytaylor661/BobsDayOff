@@ -5,8 +5,6 @@
 #include <GL/glx.h>
 #include <utility>
 
-
-
 class Banana 
 {
     int posx, posy;
@@ -16,8 +14,6 @@ public:
     Banana(int x, int y, GLuint tex): posx(x), posy(y), texid(tex) {}
     void physics();
     void render();
-
-
 };
 
 class Torch
@@ -31,4 +27,14 @@ class Torch
     void render();
 };
 
+class Slimed
+{
+    int posx, posy;
+    GLuint texid;
+
+    public:
+    Slimed(int x, int y, GLuint tex): posx(x), posy(y), texid(tex) {}
+    void physics();
+    void render();
+};
 #endif

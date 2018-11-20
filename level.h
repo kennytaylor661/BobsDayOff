@@ -29,6 +29,9 @@ public:
     //Create an array of Torch Class
     vector<Torch> tor;
 
+    //Create an arry of Slime Class
+    vector<Slimed> slm;
+
     Level();
     void load(char*);
     void removeCrLf(char *);

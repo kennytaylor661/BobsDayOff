@@ -40,6 +40,7 @@ public:
     GLuint rudyTexture;
     GLuint bananaTexture;
     GLuint torchTexture;
+    GLuint slimeTexture;
     GLuint someObjectTexture;
     GLuint tileTexture[10];
     Sprite exp; 

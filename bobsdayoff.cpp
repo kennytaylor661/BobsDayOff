@@ -295,6 +295,9 @@ void initOpengl(void)
     // Load the torch texture
     //loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
     loadTextureAlpha(&gl.torchTexture, "./images/walltorch.jpg");
+
+    // Load the slime texture
+    loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
 }
 
 void init() {
@@ -735,6 +738,12 @@ void render()
     // =========================
     for(unsigned int i = 0; i < lev.tor.size(); i++)
         lev.tor[i].render();
+
+    // =========================
+    // Draw Slime objects
+    // =========================
+    for(unsigned int i = 0; i < lev.slm.size(); i++)
+        lev.slm[i].render();
 
 	// ========================
 	// Draw character sprite

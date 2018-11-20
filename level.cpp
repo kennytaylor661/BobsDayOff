@@ -76,12 +76,20 @@ void Level::load(char *filename)
 
     // Create new Torch objects
     Torch *t;
-    srand(time(NULL));
     for(int i = 0; i < 10; i++) {
         t = new Torch((rand() % 80) * 50, (rand() % 200) + 300, gl.torchTexture);
         tor.push_back(*t);
     }
 
+    // Clear the vector of Slime Objects
+    slm.clear();
+
+    // Create new Slime objects
+    Slimed *s;
+    for(int i = 0; i < 10; i++) {
+        s = new Slimed((rand() % 80) * 50, (rand() % 200) + 300, gl.slimeTexture);
+        slm.push_back(*s);
+    }
 }
 
 void Level::removeCrLf(char *str) {
