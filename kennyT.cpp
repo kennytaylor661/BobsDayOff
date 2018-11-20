@@ -38,6 +38,24 @@ void drawText(int x, int y, int color, char *text)
     ggprint8b(&r, 16, color, text);
 }
 
+void drawImage(int x, int y, int width, int height, GLuint texid)
+{
+    glPushMatrix();
+    glColor3ub(255,255,255);
+    glTranslatef(x, y, 0); 
+    glBindTexture(GL_TEXTURE_2D, texid);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.0f);
+    glBegin(GL_QUADS);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-width/2, -height/2);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(width/2, -height/2);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(width/2, height/2);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(-width/2, height/2);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0); 
+    glPopMatrix();
+}
+
 void showKennyImage(int x, int y, GLuint texid)
 {
     // Wiggle the image up and down between (y + yRange) and (y - yRange)
@@ -213,6 +231,9 @@ void showIntroScreen()
     glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);
     glPopMatrix();
+
+    // Draw the title text
+    drawImage(gl.xres, gl.yres/2-100, 492, 85, gl.introTitleTexture);
 
     // Draw some text
     drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"Bob's Day Off");
