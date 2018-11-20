@@ -874,6 +874,10 @@ void render()
 
 void showIntroScreen()
 {
+    // Draw some text
+    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char *)"Bob's Day Off");
+    drawText(gl.xres/2-20, gl.yres/2+100, 0x004040ff, (char *)"Super intro screen");
+    drawText(gl.xres/2-20, gl.yres/2, 0x004040ff, (char *)"Press space to begin");
 
 }
 
