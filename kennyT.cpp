@@ -233,12 +233,10 @@ void showIntroScreen()
     glPopMatrix();
 
     // Draw the title text
-    drawImage(gl.xres, gl.yres/2-100, 492, 85, gl.introTitleTexture);
+    drawImage(gl.xres/2, gl.yres-100, 492, 85, gl.introTitleTexture);
 
     // Draw some text
-    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"Bob's Day Off");
-    drawText(gl.xres/2-20, gl.yres/2+100, 0x004040ff, (char*)"Super intro screen");
-    drawText(gl.xres/2-20, gl.yres/2, 0x004040ff, (char*)"Press space to begin");
+    drawText(gl.xres/2-20, gl.yres-200, 0x004040ff, (char*)"Press space to begin");
 }
 
 // Example functions for the SomeObject class
