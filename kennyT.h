@@ -5,7 +5,7 @@
 #include <GL/glx.h>
 #include <utility>
 
-
+void drawHUD(struct timespec ts);
 
 class SomeObject 
 {

@@ -10,6 +10,11 @@
 
 using namespace std;
 
+// timer.cpp functions
+extern struct timespec timeStart, timeCurrent;
+extern double timeDiff(struct timespec *start, struct timespec *end);
+extern void timeCopy(struct timespec *dest, struct timespec *source);
+
 static double yVelocity = 1;
 static double yOffset = 0;
 
@@ -195,6 +200,38 @@ void loadTextureAlpha(GLuint *tex, Image img)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0,
         GL_RGBA, GL_UNSIGNED_BYTE, xData);
     free(xData);
+}
+
+void drawHUD(struct timespec ts)
+{
+    unsigned int c;
+    struct timespec te;
+    Rect r;
+
+    // Dim the text if we're showing the credits screen
+    if (gl.creditsFlag)
+        c = 0x00888822;
+    else
+        c = 0x00ffff44;
+    r.bot = gl.yres - 20; 
+    r.left = 10; 
+    r.center = 0;
+    ggprint8b(&r, 16, c, "W     Walk cycle");
+    ggprint8b(&r, 16, c, "E     Explosion");
+    ggprint8b(&r, 16, c, "C     Credits");
+    ggprint8b(&r, 16, c, "[1-2] Change Level"); 
+    ggprint8b(&r, 16, c, "+     faster");
+    ggprint8b(&r, 16, c, "-     slower");
+    ggprint8b(&r, 16, c, "D, right arrow -> walk right");
+    ggprint8b(&r, 16, c, "A, left arrow  <- walk left");
+    //ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
+
+    // Draw the physics and render times
+    clock_gettime(CLOCK_REALTIME, &te);
+    gl.renderTime = timeDiff(&ts, &te);
+    ggprint8b(&r, 16, c, "");
+    ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
+    ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
 }
 
 void showLeaderboard()
