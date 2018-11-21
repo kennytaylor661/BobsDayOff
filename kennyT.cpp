@@ -204,34 +204,66 @@ void loadTextureAlpha(GLuint *tex, Image img)
 
 void drawHUD(struct timespec ts)
 {
-    unsigned int c;
+    unsigned int c = 0x00ffff44;
     struct timespec te;
-    Rect r;
+    Rect upperLeft, upperRight;
 
-    // Dim the text if we're showing the credits screen
-    if (gl.creditsFlag)
-        c = 0x00888822;
-    else
-        c = 0x00ffff44;
-    r.bot = gl.yres - 20; 
-    r.left = 10; 
-    r.center = 0;
-    ggprint8b(&r, 16, c, "W     Walk cycle");
-    ggprint8b(&r, 16, c, "E     Explosion");
-    ggprint8b(&r, 16, c, "C     Credits");
-    ggprint8b(&r, 16, c, "[1-2] Change Level"); 
-    ggprint8b(&r, 16, c, "+     faster");
-    ggprint8b(&r, 16, c, "-     slower");
-    ggprint8b(&r, 16, c, "D, right arrow -> walk right");
-    ggprint8b(&r, 16, c, "A, left arrow  <- walk left");
-    //ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
+    // Draw a background for the text in the upper-left
+    glPushMatrix();
+    glColor4f(0.4, 0.4, 0.4, 0.7);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glTranslated(5, gl.yres-186, 0);
+    glBegin(GL_QUADS);
+        glVertex2i( 0,  0);  
+        glVertex2i( 0, 182); 
+        glVertex2i(165, 182); 
+        glVertex2i(165,  0);  
+    glEnd();
+    glDisable(GL_BLEND);
+    glPopMatrix();
 
-    // Draw the physics and render times
+    // Draw the text in the upper-left
+    upperLeft.bot = gl.yres - 20; 
+    upperLeft.left = 10; 
+    upperLeft.center = 0;
+    ggprint8b(&upperLeft, 16, c, "W     Walk cycle");
+    ggprint8b(&upperLeft, 16, c, "E     Explosion");
+    ggprint8b(&upperLeft, 16, c, "C     Credits");
+    ggprint8b(&upperLeft, 16, c, "[1-2] Change Level"); 
+    ggprint8b(&upperLeft, 16, c, "+     faster");
+    ggprint8b(&upperLeft, 16, c, "-     slower");
+    ggprint8b(&upperLeft, 16, c, "D, right arrow -> walk right");
+    ggprint8b(&upperLeft, 16, c, "A, left arrow  <- walk left");
+
+    // Draw a background for the text in the upper-right
+    glPushMatrix();
+    glColor4f(0.4, 0.4, 0.4, 0.7);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glTranslated(gl.xres-100-5, gl.yres-50-5, 0); 
+    glBegin(GL_QUADS);
+        glVertex2i( 0,  0);  
+        glVertex2i( 0, 50); 
+        glVertex2i(100, 50); 
+        glVertex2i(100,  0);  
+    glEnd();
+    glDisable(GL_BLEND);
+    glPopMatrix();
+ 
+    // Draw the text in the upper-left
+    upperRight.bot = gl.yres - 20; 
+    upperRight.left = gl.xres - 100; 
+    upperRight.center = 0;
+    ggprint8b(&upperRight, 16, c, "Score: %d", gl.score);
+    ggprint8b(&upperRight, 16, c, "Health: %d", gl.health);
+
+    // Draw the physics and render times (do this last)
     clock_gettime(CLOCK_REALTIME, &te);
     gl.renderTime = timeDiff(&ts, &te);
-    ggprint8b(&r, 16, c, "");
-    ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
-    ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
+    ggprint8b(&upperLeft, 16, c, "");
+    ggprint8b(&upperLeft, 16, c, "physics time: %lf sec", gl.physicsTime);
+    ggprint8b(&upperLeft, 16, c, "render time:  %lf sec", gl.renderTime);
 }
 
 void showLeaderboard()
@@ -272,9 +304,6 @@ void showIntroScreen()
     // Draw the text
     drawImage(gl.xres/2, gl.yres-100, 492, 85, gl.introTitleTexture);
     drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture);
-
-    // Draw some text
-    //drawText(gl.xres/2-20, gl.yres-200, 0x004040ff, (char*)"Press space to begin");
 }
 
 // Example functions for the SomeObject class
