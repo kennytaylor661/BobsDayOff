@@ -605,11 +605,10 @@ void physics(void)
 
 void render()
 {
-	struct timespec ts, te;
+	struct timespec ts;
 	// Record the start time
 	clock_gettime(CLOCK_REALTIME, &ts);
 
-	Rect r;
 	// =======================
 	// Clear the screen
 	// =======================
@@ -801,33 +800,9 @@ void render()
 	// ======================
 	// Draw the UI/HUD
 	// ======================
-	unsigned int c;
-	// Dim the text if we're showing the credits screen
-	if (gl.creditsFlag)
-		c = 0x00888822;
-	else
-		c = 0x00ffff44;
-	r.bot = gl.yres - 20;
-	r.left = 10;
-	r.center = 0;
-	ggprint8b(&r, 16, c, "W     Walk cycle");
-	ggprint8b(&r, 16, c, "E     Explosion");
-	ggprint8b(&r, 16, c, "C     Credits");
-	ggprint8b(&r, 16, c, "[1-2] Change Level");	
-	ggprint8b(&r, 16, c, "+     faster");
-	ggprint8b(&r, 16, c, "-     slower");
-	ggprint8b(&r, 16, c, "D, right arrow -> walk right");
-	ggprint8b(&r, 16, c, "A, left arrow  <- walk left");
-	//ggprint8b(&r, 16, c, "frame: %i", gl.walkFrame);
-
-	// Draw the physics and render times
-	clock_gettime(CLOCK_REALTIME, &te);
-	gl.renderTime = timeDiff(&ts, &te);
-	ggprint8b(&r, 16, c, "");
-	ggprint8b(&r, 16, c, "physics time: %lf sec", gl.physicsTime);
-	ggprint8b(&r, 16, c, "render time:  %lf sec", gl.renderTime);
-
-	// ==========================
+    drawHUD(ts);
+	
+    // ==========================
 	// Draw the credits screen
 	// ==========================
 	if (gl.creditsFlag)
