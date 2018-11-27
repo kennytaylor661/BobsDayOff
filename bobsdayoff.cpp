@@ -300,7 +300,7 @@ void initOpengl(void)
 
 	// Load the torch texture
 	//loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
-	loadTextureAlpha(&gl.torchTexture, "./images/walltorch.jpg");
+	loadTextureAlpha(&gl.torchTexture, "./images/torch.jpg");
 
 	// Load the slime texture
 	loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
