@@ -144,9 +144,9 @@ void Player::physics()
 	//posX += xvel;
 	posY += yvel;
 	yvel += GRAVITY;
-	if (posY < 114){
+	if (posY < 0){
 		yvel = 0;
-		posY = 114;
+		posY = 0;
 	}
 }
 //
@@ -168,6 +168,8 @@ void Slime::render()
 	glColor3ub(255,255,255);
 	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
 	glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
@@ -200,6 +202,8 @@ void Zombie::render()
 	glColor3ub(255,255,255);
 	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);	
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
 	glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
