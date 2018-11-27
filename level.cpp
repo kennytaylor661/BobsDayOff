@@ -90,6 +90,12 @@ void Level::load(char *filename)
         s = new Slimed((rand() % 80) * 50, (rand() % 200) + 300, gl.slimeTexture);
         slm.push_back(*s);
     }
+
+    // Clear the vector of zombie objects
+    zmb.clear();
+
+    // Create new zombie enemy
+    zmb.push_back(*(new Zombie(400, 400)));
 }
 
 void Level::removeCrLf(char *str) {
