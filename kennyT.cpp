@@ -1,12 +1,14 @@
 // Kenny Taylor
-// Modified:  11/16/18
+// Modified:  11/26/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
 #include <iostream>
 #include "fonts.h"
 #include "global.h"
+#include "http.h"
 #include "level.h"
+#include "kennyT.h"
 
 using namespace std;
 
@@ -284,6 +286,8 @@ void showLeaderboard()
     // Draw the credits title
     drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"High Scores:");
 
+    // Pull the current leaders from http://minions.rocket-tech.net/getscores.php
+    fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php", gl.xres/2, gl.yres/2);
 }
 
 void showIntroScreen()
@@ -304,6 +308,69 @@ void showIntroScreen()
     // Draw the text
     drawImage(gl.xres/2, gl.yres-100, 492, 85, gl.introTitleTexture);
     drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture);
+}
+
+void fetchHTTPScores(char *host, char *page, int x, int y)
+{
+    int sock = create_tcp_socket();
+    char *ip = get_ip(host);
+    //fprintf(stderr, "IP is %s\n", ip);
+    struct sockaddr_in *remote = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
+    remote->sin_family = AF_INET;
+    int tmpres = inet_pton(AF_INET, ip, (void *)(&(remote->sin_addr.s_addr)));
+    remote->sin_port = htons(80);
+
+    if (connect(sock, (struct sockaddr *)remote, sizeof(struct sockaddr)) >= 0) {
+        // Connected successfully
+        char *get = build_get_query(host, page);
+        //fprintf(stderr, "Query is:\n<<START>>\n%s<<END>>\n", get);
+        int sent = 0;
+        while (sent < (int)strlen(get)) {
+            tmpres = send(sock, get+sent, strlen(get)-sent, 0);
+            if (tmpres == -1) {
+                fprintf(stderr, "send command, Can't send query");
+                exit(1);
+             }
+            sent += tmpres;
+        }
+        // Receive the page
+        char buf[1000];
+        memset(buf, 0, sizeof(buf));
+        int htmlstart = 0;
+        char *htmlcontent;
+        char *line;
+        while ((tmpres = recv(sock, buf, BUFSIZ, 0)) > 0) {
+            if (htmlstart == 0) {
+                // Skip to the body portion of the HTML response
+                htmlcontent = strstr(buf, "\r\n\r\n");
+                if (htmlcontent != NULL) {
+                    htmlstart = 1;
+                    htmlcontent += 4;
+                }
+            } else {
+                htmlcontent = buf;
+            }
+            if (htmlstart) {
+                // Pull the first line
+                line = strtok(htmlcontent, "\n");
+                drawText(x, y, 0x800080, line);
+                // Pull the second line
+                line = strtok(NULL, "\n");
+                drawText(x, y-16, 0x800080, line);
+                // Pull the third line
+                line = strtok(NULL, "\n");
+                drawText(x, y-32, 0x800080, line);
+                // Pull the fourth line
+                line = strtok(NULL, "\n");
+                drawText(x, y-48, 0x800080, line);
+                // Pull the fifth line
+                line = strtok(NULL, "\n");
+                drawText(x, y-64, 0x800080, line);
+            }
+
+            memset(buf, 0, tmpres);
+        }
+    }
 }
 
 // Example functions for the SomeObject class
