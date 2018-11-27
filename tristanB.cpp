@@ -6,7 +6,7 @@
 #include "global.h"
 #include "level.h"
 
-const float GRAVITY = -0.2f;
+const float GRAVITY = -0.35f;
 extern Global gl;
 extern Player pl;
 extern Level lev;
@@ -75,18 +75,14 @@ void Player::moveRight()
 
 void Player::Jump()
 {
-	if (yvel == 0)
-		yvel = 4;
+	//cout << "player jump called\n";
+	if (grounded) {
+		yvel += 10;
+		grounded = false;
+	}
 }
-
-void Player::Fire()
-{
-
-}
-
 void Player::render()
 {
-    cout << "player posy = " << posY << endl;
 	float h = 128.0;
 	float w = h * 0.5;
 	glPushMatrix();
@@ -148,6 +144,7 @@ void Player::physics()
 	if (posY < 0){
 		yvel = 0;
 		posY = 0;
+		grounded = true;
 	}
 }
 //

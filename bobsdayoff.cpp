@@ -595,7 +595,10 @@ void physics(void)
 		gl.ball_vel[1] -= 0.9;
 	}
 	gl.ball_pos[1] += gl.ball_vel[1];
-
+	
+	// Handle the Player
+	pl.physics();
+	
 	// =======================================
 	// Handle the SomeObject objects (example)
 	// =======================================
