@@ -86,6 +86,7 @@ void Player::Fire()
 
 void Player::render()
 {
+    cout << "player posy = " << posY << endl;
 	float h = 128.0;
 	float w = h * 0.5;
 	glPushMatrix();
