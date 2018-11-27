@@ -4,6 +4,8 @@
 #include "fonts.h"
 #include <GL/glx.h>
 #include <utility>
+#include "global.h"
+extern Global gl;
 
 class Player
 {
@@ -48,7 +50,7 @@ class Slime : public Enemy
 {
 	int HP = 1;
 	int damage = 1;
-	GLuint texid;
+	GLuint texid = gl.slimeEnemyTexture;
 
 	public:
 	Slime(int x, int y): Enemy(x, y){}
@@ -63,7 +65,7 @@ class Zombie : public Enemy
 {
 	int HP = 5;
 	int damage = 1;
-	GLuint texid;
+	GLuint texid = gl.zombieTexture;
 
 	public:
 	Zombie(int x, int y): Enemy(x, y) {}
@@ -80,7 +82,7 @@ class Door
 	std::pair<int, int> upleft, downright; 
 	//coordinates for the UL and LR corners
 	char* dest;
-	GLuint texid;
+	GLuint texid = gl.doorTexture;
 
 	Door(int x1, int y1, int x2, int y2, char* dest, GLuint texture):
 		upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
