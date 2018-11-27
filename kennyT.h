@@ -6,7 +6,7 @@
 #include <utility>
 
 void drawHUD(struct timespec ts);
-void fetchHTTPScores(char*, char*, int, int);
+void fetchHTTPScores(char*, char*);
 
 class SomeObject 
 {

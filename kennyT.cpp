@@ -45,6 +45,16 @@ void drawText(int x, int y, int color, char *text)
     ggprint8b(&r, 16, color, text);
 }
 
+void drawText16(int x, int y, int color, char *text)
+{
+    Rect r;
+    r.bot = y;
+    r.left = x;
+    r.center = 0;
+    ggprint16(&r, 16, color, text);
+}
+
+
 void drawImage(int x, int y, int width, int height, GLuint texid)
 {
     glPushMatrix();
@@ -270,35 +280,36 @@ void drawHUD(struct timespec ts)
 
 void showLeaderboard()
 {
-    // Show the top 10 scores, pulled from minons.rocket-tech.net/getscores.php
+    // Show the top 5 scores, pulled from minons.rocket-tech.net/getscores.php
 
     // Draw background rectangle (center in viewport)
     glPushMatrix();
     glColor3ub(255,255,255);
     glBegin(GL_QUADS);
-        glVertex2i(gl.xres/2-300, gl.yres/2-200);
-        glVertex2i(gl.xres/2+300, gl.yres/2-200);
-        glVertex2i(gl.xres/2+300, gl.yres/2+200);
-        glVertex2i(gl.xres/2-300, gl.yres/2+200);
+        glVertex2i(gl.xres/2-150, gl.yres/2-180);
+        glVertex2i(gl.xres/2+150, gl.yres/2-180);
+        glVertex2i(gl.xres/2+150, gl.yres/2+180);
+        glVertex2i(gl.xres/2-150, gl.yres/2+180);
+
     glEnd();
     glPopMatrix();
 
     // Draw the credits title
-    drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"High Scores:");
+    drawText16(gl.xres/2-50, gl.yres/2+140, 0x004040ff, (char*)"High Scores:");
 
     // Pull the current leaders from http://minions.rocket-tech.net/getscores.php
     // Conditional statement avoids doing HTTP request every render loop
-    int x = gl.xres/2;
-    int y = gl.yres/2;
+    int x = gl.xres/2 - 40;
+    int y = gl.yres/2 + 60;
     if (gl.fetchLeaders == 1) {
         gl.fetchLeaders = 0;
-        fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php", x, y);
+        fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php");
     } else {
-        drawText(x, y, 0x800080, (char*)gl.leader1.c_str());
-        drawText(x, y-16, 0x800080, (char*)gl.leader2.c_str());
-        drawText(x, y-32, 0x800080, (char*)gl.leader3.c_str());
-        drawText(x, y-48, 0x800080, (char*)gl.leader4.c_str());
-        drawText(x, y-64, 0x800080, (char*)gl.leader5.c_str());
+        drawText16(x, y, 0x800080, (char*)gl.leader1.c_str());
+        drawText16(x, y-32, 0x800080, (char*)gl.leader2.c_str());
+        drawText16(x, y-64, 0x800080, (char*)gl.leader3.c_str());
+        drawText16(x, y-96, 0x800080, (char*)gl.leader4.c_str());
+        drawText16(x, y-128, 0x800080, (char*)gl.leader5.c_str());
     }
 }
 
@@ -322,7 +333,16 @@ void showIntroScreen()
     drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture);
 }
 
-void fetchHTTPScores(char *host, char *page, int x, int y)
+void showEndScreen()
+{
+    // Draw end image
+    //drawImage(gl.xres/2, gl.yres/2, 200, 200, gl.endScreenTexture);
+
+    // Draw the text
+    drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture); 
+}
+
+void fetchHTTPScores(char *host, char *page)
 {
     int sock = create_tcp_socket();
     char *ip = get_ip(host);
@@ -365,23 +385,18 @@ void fetchHTTPScores(char *host, char *page, int x, int y)
             if (htmlstart) {
                 // Pull the first line
                 line = strtok(htmlcontent, "\n");
-                drawText(x, y, 0x800080, line);
                 gl.leader1 = line;
                 // Pull the second line
                 line = strtok(NULL, "\n");
-                drawText(x, y-16, 0x800080, line);
                 gl.leader2 = line;
                 // Pull the third line
                 line = strtok(NULL, "\n");
-                drawText(x, y-32, 0x800080, line);
                 gl.leader3 = line;
                 // Pull the fourth line
                 line = strtok(NULL, "\n");
-                drawText(x, y-48, 0x800080, line);
                 gl.leader4 = line;
                 // Pull the fifth line
                 line = strtok(NULL, "\n");
-                drawText(x, y-64, 0x800080, line);
                 gl.leader5 = line;
             }
 
