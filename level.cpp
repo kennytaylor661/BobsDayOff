@@ -95,7 +95,7 @@ void Level::load(char *filename)
     zmb.clear();
 
     // Create new zombie enemy
-    zmb.push_back(*(new Zombie(400, 400)));
+    zmb.push_back(*(new Zombie(100, 400)));
 }
 
 void Level::removeCrLf(char *str) {
