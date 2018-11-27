@@ -303,7 +303,7 @@ void initOpengl(void)
 	loadTextureAlpha(&gl.torchTexture, "./images/torch.jpg");
 
 	// Load the slime texture
-	loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
+	loadTextureAlpha(&gl.slimeTexture, "./images/slime1.png");
 
 	// Load the Zombie texture
 	loadTextureAlpha(&gl.zombieTexture, "./images/zambie.jpg");

@@ -20,3 +20,7 @@ List of level textures:
   7 - undefined
   8 - undefined
   9 - undefined
+
+List of objects:
+
+  ! - torch with grey textures  

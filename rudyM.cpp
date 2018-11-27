@@ -123,3 +123,22 @@ void showRudyPicture(int x, int y, GLuint texid)
     	glPopMatrix();
 }
 
+void torchRender(int x, int y)
+{
+    int wid = 25;
+    glPushMatrix();
+    glTranslatef(x, y, 0);
+    glBindTexture(GL_TEXTURE_2D, gl.torchTexture);
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, 0.0f);
+    glColor4ub(255,255,255,255);
+    glBegin(GL_QUADS); 
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid,-wid);
+       	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+       	glTexCoord2f(1.0f, 0.0f); glVertex2i( wid, wid);
+       	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid,-wid);
+   	glEnd();
+   	glPopMatrix();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_ALPHA_TEST);
+}
