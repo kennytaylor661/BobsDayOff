@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "kennyT.h"
+#include "tristanB.h"
 
 using namespace std;
 
@@ -31,6 +32,15 @@ public:
 
     //Create an arry of Slime Class
     vector<Slimed> slm;
+
+	//Create an array of Slime(Enemy) Class
+	vector<Slime> slmE;
+
+	//Create an array of Zombie(Enemy) Class
+	vector<Zombie> zmb;
+
+	//Create an array of Door Class
+	vector<Door> dor;
 
     Level();
     void load(char*);

@@ -65,13 +65,14 @@ class Door
 {
 	std::pair<int, int> upleft, downright; 
 	//coordinates for the UL and LR corners
-	const char* dest;
+	char* dest;
 	GLuint texid;
 
-	Door(int x1, int y1, int x2, int y2, const char* dest, GLuint texture):
+	Door(int x1, int y1, int x2, int y2, char* dest, GLuint texture):
 		upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
 	public:
 	void loadDest();
+	void render();
 };
 
 void tristanCredits(Rect* r);

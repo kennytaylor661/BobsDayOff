@@ -304,6 +304,15 @@ void initOpengl(void)
 
 	// Load the slime texture
 	loadTextureAlpha(&gl.slimeTexture, "./images/slime.jpg");
+
+	// Load the Zombie texture
+	loadTextureAlpha(&gl.zombieTexture, "./images/zambie.jpg");
+
+	// Load the Enemy Slime texture
+	loadTextureAlpha(&gl.slimeEnemyTexture, "./images/slimeEnemy.png");
+
+	// Load the Door Texture
+	//loadTexture(&gl.doorTexture, "./images/door.jpg");
 }
 
 void init() {
@@ -599,6 +608,18 @@ void physics(void)
 	for(unsigned int i = 0; i < lev.ban.size(); i++)
 		lev.ban[i].physics();
 
+	// =========================
+	// Handle the zombie objects
+	// =========================
+	for(unsigned int i = 0; i < lev.zmb.size(); i++)
+		lev.zmb[i].physics();
+
+	// =========================
+	// Handle the SlimeE objects
+	// =========================
+	for(unsigned int i = 0; i < lev.slmE.size(); i++)
+		lev.slmE[i].physics();
+
 	// Record the physics time
 	clock_gettime(CLOCK_REALTIME, &te);
 	gl.physicsTime = timeDiff(&ts, &te);
@@ -722,31 +743,50 @@ void render()
 	for(unsigned int i = 0; i < lev.someobject.size(); i++)
 		lev.someobject[i].render();
 
-	// =========================
+	// ===================
 	// Draw Banana objects
-	// =========================
+	// ===================
 	for(unsigned int i = 0; i < lev.ban.size(); i++)
 		lev.ban[i].render();
 
-	// =========================
+	// ==================
 	// Draw Torch objects
-	// =========================
+	// ==================
 	for(unsigned int i = 0; i < lev.tor.size(); i++)
 		lev.tor[i].render();
 
-	// =========================
+	// ==================
 	// Draw Slime objects
-	// =========================
+	// ==================
 	for(unsigned int i = 0; i < lev.slm.size(); i++)
 		lev.slm[i].render();
+	
+	// ===================
+	// Draw SlimeE objects
+	// ===================
+	for(unsigned int i = 0; i < lev.slmE.size(); i++)
+		lev.slmE[i].render();
 
-	// ========================
+	// ===================
+	// Draw Zombie objects
+	// ===================
+	for(unsigned int i = 0; i < lev.zmb.size(); i++)
+		lev.zmb[i].render();
+
+	// =================
+	// Draw Door objects
+	// =================
+	for(unsigned int i = 0; i < lev.dor.size(); i++)
+		lev.dor[i].render();
+
+	// =====================
 	// Draw character sprite
-	// ========================
+	// =====================
 	pl.render();
-	// =======================
+
+	// =================
 	// Render explosions
-	// =======================
+	// =================
 	float h, w;
 	if (gl.exp.onoff) {
 		h = 80.0;
@@ -798,14 +838,14 @@ void render()
 		glDisable(GL_ALPHA_TEST);
 	}
 
-	// ======================
+	// ===============
 	// Draw the UI/HUD
-	// ======================
+	// ===============
     drawHUD(ts);
 	
-    // ==========================
+    // =======================
 	// Draw the credits screen
-	// ==========================
+	// =======================
 	if (gl.creditsFlag)
 		show_credits();
 

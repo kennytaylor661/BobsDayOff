@@ -28,7 +28,7 @@ void Enemy::physics()
 		return;
 	this->posY += yvel;
 	this->yvel += GRAVITY;
-	//	this->AI(p);
+	this->AI(pl);
 }
 
 std::pair<int, int> Enemy::getPos()
@@ -188,6 +188,17 @@ void Zombie::AI(Player p)
 
 void Zombie::render()
 {
+	int wid = 25;
+	glPushMatrix();
+	glColor3ub(255,255,255);
+	glBindTexture(GL_TEXTURE_2D, texid);
+	glBegin(GL_QUADS);
+	glVertex2i(-wid, -wid);
+	glVertex2i(wid, -wid);
+	glVertex2i(wid, wid);
+	glVertex2i(-wid, wid);
+	glEnd();
+	glPopMatrix();
 
 }
 //
@@ -195,7 +206,23 @@ void Zombie::render()
 //Door Class
 void Door::loadDest()
 {
+	lev.load(this->dest);
+}
 
+void Door::render()
+{
+	float h = 64.0;
+	float w = 32.0;
+	glPushMatrix();
+	glColor3ub(255,255,255);
+	glBindTexture(GL_TEXTURE_2D, texid);
+	glBegin(GL_QUADS);
+	glVertex2i(-w, -h);
+	glVertex2i(w, -h);
+	glVertex2i(w, h);
+	glVertex2i(-w, h);
+	glEnd();
+	glPopMatrix();
 }
 //
 

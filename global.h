@@ -48,6 +48,9 @@ public:
     GLuint slimeTexture;
     GLuint someObjectTexture;
     GLuint tileTexture[10];
+	GLuint zombieTexture;
+	GLuint slimeEnemyTexture;
+	GLuint doorTexture;
     Sprite exp; 
     Sprite exp44;
     Vec ball_pos;
