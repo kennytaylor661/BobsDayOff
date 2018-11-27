@@ -26,7 +26,7 @@ void Enemy::physics()
 	if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
 			posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
 		return;
-	if (posY > 0) {
+	if (posY > 114) {
 		this->posY += yvel;
 		this->yvel += GRAVITY;
 	}
@@ -62,7 +62,7 @@ void Player::moveLeft()
 }
 void Player::moveRight()
 {
-	posY++;
+	posX++;
 	// Move the background to the left
 	gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
 	// Move the foreground to the left
@@ -141,11 +141,13 @@ void Player::render()
 
 void Player::physics()
 {
-	posX += xvel;
+	//posX += xvel;
 	posY += yvel;
 	yvel += GRAVITY;
-	if (yvel < 0)
+	if (posY < 114){
 		yvel = 0;
+		posY = 114;
+	}
 }
 //
 
@@ -167,10 +169,10 @@ void Slime::render()
 	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
-	glVertex2i(-wid, -wid);
-	glVertex2i(wid, -wid);
-	glVertex2i(wid, wid);
-	glVertex2i(-wid, wid);
+	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
 	glEnd();
 	glPopMatrix();
 }
@@ -199,10 +201,11 @@ void Zombie::render()
 	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
-	glVertex2i(-wid, -wid);
-	glVertex2i(wid, -wid);
-	glVertex2i(wid, wid);
-	glVertex2i(-wid, wid);
+	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+
 	glEnd();
 	glPopMatrix();
 
@@ -223,10 +226,10 @@ void Door::render()
 	glColor3ub(255,255,255);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
-	glVertex2i(-w, -h);
-	glVertex2i(w, -h);
-	glVertex2i(w, h);
-	glVertex2i(-w, h);
+	glTexCoord2f(0.0f, 1.0f); glVertex2i(-w, -h);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i(w, -h);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i(w, h);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(-w, h);
 	glEnd();
 	glPopMatrix();
 }
@@ -247,9 +250,10 @@ void tristanImage(int x, int y, GLuint texid)
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid,  wid);
-	glTexCoord2f(1.0f, 0.0f); glVertex2i( wid,  wid);
-	glTexCoord2f(1.0f, 1.0f); glVertex2i( wid, -wid);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+
 	glEnd();
 	glPopMatrix();
 }

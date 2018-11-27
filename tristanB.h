@@ -9,7 +9,7 @@ extern Global gl;
 
 class Player
 {
-	int posX, posY, HP, wid;
+	int posX = 0, posY = 114, HP = 10, wid;
 	float xvel, yvel;
 	GLuint texid;
 
