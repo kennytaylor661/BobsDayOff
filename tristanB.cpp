@@ -26,8 +26,10 @@ void Enemy::physics()
 	if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
 			posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
 		return;
-	this->posY += yvel;
-	this->yvel += GRAVITY;
+	if (posY > 0;) {
+		this->posY += yvel;
+		this->yvel += GRAVITY;
+	}
 	this->AI(pl);
 }
 
