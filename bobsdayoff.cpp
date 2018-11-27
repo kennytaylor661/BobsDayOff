@@ -468,7 +468,7 @@ int checkKeys(XEvent *e)
 			gl.creditsFlag = !gl.creditsFlag;
 			break;
 		case XK_space:
-			//gl.yvelocity = 2? then gl.yvelocity -= gravity;
+			pl.Jump();
 			// Leave the intro screen
 			if (gl.introScreenFlag) {
 				gl.introScreenFlag = !gl.introScreenFlag;
