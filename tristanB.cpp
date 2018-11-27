@@ -23,17 +23,12 @@ void Enemy::moveRight()
 
 void Enemy::physics()
 {
-    cout << "called enemy::physics()" << endl;
 	//if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
 	//		posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
 	//	return;
-    cout << "zombie posy = " << posY << endl;
 	if (posY > 114) {
-        cout << "  changing position..  ";
 		this->posY += yvel;
-        cout << "new position: " << posY;
 		this->yvel += GRAVITY;
-        cout << "  new velocity: " << yvel << endl;
 	}
 	this->AI(pl);
 }
