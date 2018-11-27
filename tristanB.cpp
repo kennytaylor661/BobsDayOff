@@ -26,7 +26,7 @@ void Enemy::physics()
 	if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
 			posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
 		return;
-	if (posY > 0;) {
+	if (posY > 0) {
 		this->posY += yvel;
 		this->yvel += GRAVITY;
 	}
@@ -90,6 +90,7 @@ void Player::render()
 	float w = h * 0.5;
 	glPushMatrix();
 	glColor3f(1.0, 1.0, 1.0);
+	glTranslatef(0, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, gl.walkTexture);
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.0f);
