@@ -161,6 +161,7 @@ void Slime::render()
 	int wid = 25;
 	glPushMatrix();
 	glColor3ub(255,255,255);
+	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
 	glVertex2i(-wid, -wid);
@@ -189,9 +190,10 @@ void Zombie::AI(Player p)
 
 void Zombie::render()
 {
-	int wid = 25;
+	int wid = 50;
 	glPushMatrix();
 	glColor3ub(255,255,255);
+	glTranslatef(posX, posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glBegin(GL_QUADS);
 	glVertex2i(-wid, -wid);
