@@ -287,7 +287,19 @@ void showLeaderboard()
     drawText(gl.xres/2-20, gl.yres/2+170, 0x004040ff, (char*)"High Scores:");
 
     // Pull the current leaders from http://minions.rocket-tech.net/getscores.php
-    fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php", gl.xres/2, gl.yres/2);
+    // Conditional statement avoids doing HTTP request every render loop
+    int x = gl.xres/2;
+    int y = gl.yres/2;
+    if (gl.fetchLeaders == 1) {
+        gl.fetchLeaders = 0;
+        fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php", x, y);
+    } else {
+        drawText(x, y, 0x800080, (char*)gl.leader1.c_str());
+        drawText(x, y-16, 0x800080, (char*)gl.leader2.c_str());
+        drawText(x, y-32, 0x800080, (char*)gl.leader3.c_str());
+        drawText(x, y-48, 0x800080, (char*)gl.leader4.c_str());
+        drawText(x, y-64, 0x800080, (char*)gl.leader5.c_str());
+    }
 }
 
 void showIntroScreen()
@@ -354,23 +366,29 @@ void fetchHTTPScores(char *host, char *page, int x, int y)
                 // Pull the first line
                 line = strtok(htmlcontent, "\n");
                 drawText(x, y, 0x800080, line);
+                gl.leader1 = line;
                 // Pull the second line
                 line = strtok(NULL, "\n");
                 drawText(x, y-16, 0x800080, line);
+                gl.leader2 = line;
                 // Pull the third line
                 line = strtok(NULL, "\n");
                 drawText(x, y-32, 0x800080, line);
+                gl.leader3 = line;
                 // Pull the fourth line
                 line = strtok(NULL, "\n");
                 drawText(x, y-48, 0x800080, line);
+                gl.leader4 = line;
                 // Pull the fifth line
                 line = strtok(NULL, "\n");
                 drawText(x, y-64, 0x800080, line);
+                gl.leader5 = line;
             }
 
             memset(buf, 0, tmpres);
         }
     }
+    close(sock);
 }
 
 // Example functions for the SomeObject class

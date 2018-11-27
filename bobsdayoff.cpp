@@ -423,6 +423,7 @@ int checkKeys(XEvent *e)
 			gl.exp44.onoff ^= 1;
 			break;
 		case XK_l:
+            gl.fetchLeaders = 1;
 			gl.leaderboardFlag = !gl.leaderboardFlag;
 			break;
 		case XK_1:

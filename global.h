@@ -3,10 +3,13 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <string>
 #include "image.h"
 #include "kennyT.h"
 #include "rudyM.h"
 #include "sprite.h"
+
+using namespace std;
 
 typedef double Flt;
 typedef Flt Matrix[4][4];
@@ -29,6 +32,7 @@ public:
     bool introScreenFlag = 1;
     bool creditsFlag = 0; 
     bool leaderboardFlag = 0;
+    bool fetchLeaders = 0;
 
     Image *walkImage;
     GLuint introScreenTexture;
@@ -54,6 +58,8 @@ public:
     // Track player score and health here for the moment
     int health = 100;
     int score = 0;
+    // Leaderboard values
+    string leader1, leader2, leader3, leader4, leader5;
 
     ~Global();
     Global();
