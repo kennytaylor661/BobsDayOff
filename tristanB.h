@@ -19,6 +19,10 @@ class Player
 	void Fire();
 	void physics();
 	void render();
+	struct hitbox
+	{
+		int left, right, top, bottom;
+	};
 };
 
 class Enemy
@@ -47,8 +51,13 @@ class Slime : public Enemy
 	GLuint texid;
 
 	public:
+	Slime(int x, int y): Enemy(x, y){}
 	void AI(Player p);
 	void render();
+	struct hitbox
+	{
+		int left, right, top, bottom;
+	};
 };
 class Zombie : public Enemy
 {
@@ -57,8 +66,13 @@ class Zombie : public Enemy
 	GLuint texid;
 
 	public:
+	Zombie(int x, int y): Enemy(x, y) {}
 	void AI(Player p);
 	void render();
+	struct hitbox
+	{
+		int left, right, top, bottom;
+	};
 };
 
 class Door
@@ -73,6 +87,10 @@ class Door
 	public:
 	void loadDest();
 	void render();
+	struct hitbox
+	{
+		int left, right, top, bottom;
+	};
 };
 
 void tristanCredits(Rect* r);
