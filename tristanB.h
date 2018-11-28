@@ -7,12 +7,31 @@
 #include "global.h"
 extern Global gl;
 
+struct Hitbox
+{
+	float top, bottom, left, right;
+	
+	Hitbox() {top = 0; bottom = 0; left = 0; right = 0;}
+
+	Hitbox(float t, float b, float l, float r):
+		top(t), bottom(b), left(l), right(r){}
+
+	bool isColliding(Hitbox other)
+	{
+		return ((left <= other.right && right >= other.left)  ||
+				(right >= other.left && left <= other.right)) &&
+			   ((bottom <= other.top && top >= other.bottom)  ||
+				(top >= other.bottom && bottom <= other.top));
+	}
+};
+
 class Player
 {
 	int HP = 10, wid;
 	bool grounded;
 	float posX = 0.0f, posY = 0.0f, xvel, yvel;
 	GLuint texid;
+	Hitbox hitbox;
 
 	public:
 	std::pair<int, int> getPos();
@@ -22,21 +41,18 @@ class Player
 	void Fire();
 	void physics();
 	void render();
-	struct hitbox
-	{
-		int left, right, top, bottom;
-	};
+	Hitbox getHitbox(){return this->hitbox;}
 };
 
 class Enemy
 {
 
 	protected:
-		int posX, posY, HP, damage;
-		float xvel = 0, yvel = 0;
+		int HP, damage;
+		float posX, posY, xvel = 0, yvel = 0;
 
 	public:
-		Enemy(int x, int y):posX(x), posY(y) {}
+		Enemy(float x, float y): posX(x), posY(y) {}
 		~Enemy(){}
 
 		void moveLeft();
@@ -52,30 +68,39 @@ class Slime : public Enemy
 	int HP = 1;
 	int damage = 1;
 	GLuint texid = gl.slimeEnemyTexture;
+	Hitbox hitbox;
 
 	public:
-	Slime(int x, int y): Enemy(x, y){}
+	Slime(float x, float y): Enemy(x, y)
+	{
+		hitbox.top = posY + 25;
+		hitbox.bottom = posY - 25;
+		hitbox.left = posX - 25;
+		hitbox.right = posX + 25;
+	}
 	void AI(Player p);
 	void render();
-	struct hitbox
-	{
-		int left, right, top, bottom;
-	};
+	Hitbox getHitbox(){return this->hitbox;}
 };
 class Zombie : public Enemy
 {
 	int HP = 5;
 	int damage = 1;
 	GLuint texid = gl.zombieTexture;
+	Hitbox hitbox;
 
 	public:
-	Zombie(int x, int y): Enemy(x, y) {}
+	Zombie(float x, float y): Enemy(x, y)
+	{
+		hitbox.top = posY + 50;
+		hitbox.bottom = posY - 50;
+		hitbox.left = posX - 50;
+		hitbox.right = posX + 50;
+
+	}
 	void AI(Player p);
 	void render();
-	struct hitbox
-	{
-		int left, right, top, bottom;
-	};
+	Hitbox getHitbox(){return this->hitbox;}
 };
 
 class Door
@@ -90,10 +115,6 @@ class Door
 	public:
 	void loadDest();
 	void render();
-	struct hitbox
-	{
-		int left, right, top, bottom;
-	};
 };
 
 void tristanCredits(Rect* r);
