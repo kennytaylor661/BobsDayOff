@@ -311,6 +311,9 @@ void initOpengl(void)
 	// Load the Enemy Slime texture
 	loadTextureAlpha(&gl.slimeEnemyTexture, "./images/slimeEnemy.png");
 
+    // Load the end screen texture
+    loadTextureAlpha(&gl.endScreenTexture, "./images/end_screen.jpg");
+
 	// Load the Door Texture
 	//loadTexture(&gl.doorTexture, "./images/door.jpg");
 }
@@ -413,6 +416,10 @@ int checkKeys(XEvent *e)
 		case XK_m:
 			gl.movie ^= 1;
 			break;
+        case XK_n:
+            gl.endScreenFlag = !gl.endScreenFlag;
+            gl.paused = 1;
+            break;
 		case XK_w:
 			timers.recordTime(&timers.walkTime);
 			gl.walk ^= 1;
@@ -474,6 +481,12 @@ int checkKeys(XEvent *e)
 				gl.introScreenFlag = !gl.introScreenFlag;
 				gl.paused = 0;
 			}
+            // Leave the end screen
+            if (gl.endScreenFlag) {
+                gl.endScreenFlag = !gl.endScreenFlag;
+                gl.paused = 0;
+                // Need to reload level and reset health here
+            }
 			break;
 	}
 	return 0;
@@ -713,8 +726,10 @@ void render()
 		col = (col+1) % lev.ncols;
 
     }
-        
+    
+    // ========================    
     // Draw torches
+    // ========================
          
 	col = (int)(gl.camera[0] / dd);
 	col = col % lev.ncols;
@@ -869,8 +884,14 @@ void render()
 	if (gl.leaderboardFlag)
 		showLeaderboard();
 
-	if (gl.movie) {
-		screenCapture();
+    // ===========================
+    // Draw the end screen
+    // ===========================
+    if (gl.endScreenFlag)
+        showEndScreen();
+
+    if (gl.movie) {
+        screenCapture();
 	}
 }
 

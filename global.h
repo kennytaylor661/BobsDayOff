@@ -32,6 +32,7 @@ public:
     bool introScreenFlag = 1;
     bool creditsFlag = 0; 
     bool leaderboardFlag = 0;
+    bool endScreenFlag = 0;
     bool fetchLeaders = 0;
 
     Image *walkImage;
@@ -47,6 +48,7 @@ public:
     GLuint torchTexture;
     GLuint slimeTexture;
     GLuint someObjectTexture;
+    GLuint endScreenTexture;
     GLuint tileTexture[10];
 	GLuint zombieTexture;
 	GLuint slimeEnemyTexture;

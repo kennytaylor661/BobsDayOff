@@ -1,5 +1,5 @@
 // Kenny Taylor
-// Modified:  11/26/18
+// Modified:  11/28/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
@@ -335,11 +335,26 @@ void showIntroScreen()
 
 void showEndScreen()
 {
+    // Gray out the background
+    glPushMatrix();
+    glColor4f(0.0, 0.0, 0.0, 0.9);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glTranslated(5, gl.yres-186, 0); 
+    glBegin(GL_QUADS);
+        glVertex2i( 0,  0);  
+        glVertex2i( 0, gl.yres); 
+        glVertex2i(gl.xres, gl.yres); 
+        glVertex2i(gl.xres,  0);  
+    glEnd();
+    glDisable(GL_BLEND);
+    glPopMatrix();
+
     // Draw end image
-    //drawImage(gl.xres/2, gl.yres/2, 200, 200, gl.endScreenTexture);
+    drawImage(gl.xres/2, gl.yres/2+100, 200, 200, gl.endScreenTexture);
 
     // Draw the text
-    drawImage(gl.xres/2, gl.yres-200, 351, 51, gl.introPressSpaceTexture); 
+    drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.introPressSpaceTexture); 
 }
 
 void fetchHTTPScores(char *host, char *page)
