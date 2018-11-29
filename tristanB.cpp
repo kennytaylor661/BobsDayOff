@@ -164,7 +164,8 @@ void Slime::render()
 	int wid = 25;
 	glPushMatrix();
 	glColor3ub(255,255,255);
-	glTranslatef(posX, posY, 0);
+//	glTranslatef(posX, posY, 0);
+    glTranslatef(posX - gl.camera[0], posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.0f);
@@ -198,7 +199,8 @@ void Zombie::render()
 	int wid = 50;
 	glPushMatrix();
 	glColor3ub(255,255,255);
-	glTranslatef(posX, posY, 0);
+//	glTranslatef(posX, posY, 0);
+    glTranslatef(posX - gl.camera[0], posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.0f);	
