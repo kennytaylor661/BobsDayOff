@@ -26,7 +26,7 @@ void Enemy::physics()
 	//if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
 	//		posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
 	//	return;
-	if (posY > 114) {
+	if (posY > 200) {
 		this->posY += yvel;
 		this->yvel += GRAVITY;
 	}
@@ -164,7 +164,6 @@ void Slime::render()
 	int wid = 25;
 	glPushMatrix();
 	glColor3ub(255,255,255);
-//	glTranslatef(posX, posY, 0);
     glTranslatef(posX - gl.camera[0], posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glEnable(GL_ALPHA_TEST);
@@ -199,7 +198,6 @@ void Zombie::render()
 	int wid = 50;
 	glPushMatrix();
 	glColor3ub(255,255,255);
-//	glTranslatef(posX, posY, 0);
     glTranslatef(posX - gl.camera[0], posY, 0);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glEnable(GL_ALPHA_TEST);
