@@ -708,9 +708,26 @@ void render()
 			else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
 				drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
 			--row;
+            
 		}
 		col = (col+1) % lev.ncols;
-	}
+
+    }
+        
+    // Draw torches
+         
+	col = (int)(gl.camera[0] / dd);
+	col = col % lev.ncols;
+    for (int j=0; j<ncols_to_render; j++) {
+	    int row = lev.nrows-1;
+	    for (int i=0; i<lev.nrows; i++) {
+            if(lev.arr[row][col] == '!') 
+                torchRender(j*dd+offx, i*lev.ftsz[1]+offy);
+            --row;
+        }
+        col = (col+1) % lev.ncols;
+    }
+	
 
 	// ========================
 	// Draw the ball (disabled)
@@ -751,12 +768,6 @@ void render()
 	// ===================
 	for(unsigned int i = 0; i < lev.ban.size(); i++)
 		lev.ban[i].render();
-
-	// ==================
-	// Draw Torch objects
-	// ==================
-	for(unsigned int i = 0; i < lev.tor.size(); i++)
-		lev.tor[i].render();
 
 	// ==================
 	// Draw Slime objects

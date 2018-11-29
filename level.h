@@ -27,9 +27,6 @@ public:
     // Create an arry of Banana Class
     vector<Banana> ban;
 
-    //Create an array of Torch Class
-    vector<Torch> tor;
-
     //Create an arry of Slime Class
     vector<Slimed> slm;
 

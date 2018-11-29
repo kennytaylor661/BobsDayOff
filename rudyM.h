@@ -5,6 +5,8 @@
 #include <GL/glx.h>
 #include <utility>
 
+void torchRender(int, int);
+
 class Banana 
 {
     int posx, posy;

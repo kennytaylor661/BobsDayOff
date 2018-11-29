@@ -127,7 +127,7 @@ void torchRender(int x, int y)
 {
     int wid = 25;
     glPushMatrix();
-    glTranslatef(x, y, 0);
+    glTranslatef(x+wid, y+wid, 0);
     glBindTexture(GL_TEXTURE_2D, gl.torchTexture);
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);
