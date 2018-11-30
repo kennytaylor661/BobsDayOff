@@ -1,0 +1,15 @@
+# Level 3 - Gordon's original file
+# Updated 11/18/18
+                          *       !    *   !                   *     !       *                      !          *     !      
+         *         !          *                   pppppppp        *                ppppppppp   *           !                
+                                              *   pppppppp                         ppppppppp                     ppppppppp  
+     pppppppp       *     ppppppppppppppppppp                   pppppppppppp                       *           ppppp  pppp  
+     ppppppppppp          ppppppppppppppppppp              *    pppppppppppp   *                             ppppp    pppp  
+     pp        ppp               pppppp              !                                 !     *            pppppp      pppp  
+     pp    !    pppp         !   pppppp   !                     *    !                                 ppppppp        pppp  
+     pp          ppppp           pppppp       *   pppppppp                  *      ppppppppp     *     pp        *    pppp  
+     pp           pppppp         pppppp           pppppppp        *                ppppppppp           pp     *       pppp  
+kkkkkppkkkkkkkkkkkkpppppppkkkkkkkppppppkkkkkkkkkkkppppppppkkkkkkkkkkkkkkkkkkkkkkkkkpppppppppkkkkkkkkkkkppkkkkkkkkkkkkkppppkk
+kkkkkppkkkkkkkkkkkkpppppppkkkkkkkppppppkkkkkkkkkkkppppppppkkkkkkkkkkkkkkkkkkkkkkkkkpppppppppkkkkkkkkkkkppkkkkkkkkkkkkkppppkk
+                                                                                                                            
+                                                                                                                            

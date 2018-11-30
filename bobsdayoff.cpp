@@ -452,6 +452,11 @@ int checkKeys(XEvent *e)
 			loadLevel(&lev, (char*)"level2.txt"); 
 			gl.render = 1;
 			break;
+        case XK_3:
+            gl.render = 0;
+            loadLevel(&lev, (char*)"level3.txt");
+            gl.render = 1;
+            break;
 		case XK_Left:
 			break;
 		case XK_Right:
@@ -717,6 +722,9 @@ void render()
 			// Draw dark gray tile
 			else if (lev.arr[row][col] == 'z')
 				drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.4, 0.4, 0.4);
+            // Draw black tile
+            else if (lev.arr[row][col] == 'k')
+                drawSolidTile((Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx, 0.1, 0.1, 0.1);
 			// Draw textured tiles
 			else if(lev.arr[row][col] >= '0' && lev.arr[row][col] <= '9')
 				drawTexturedTile((int)lev.arr[row][col] - (int)'0', (Flt)j*dd+offx, (Flt)i*lev.ftsz[1]+offy, tx);
