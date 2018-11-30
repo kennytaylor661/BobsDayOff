@@ -29,11 +29,19 @@ class Player
 {
 	int HP = 100, wid;
 	bool grounded;
-	float posX = gl.xres/2, posY = 0.0f, xvel, yvel;
+	float posX = gl.xres/2, posY = 0.0f, xvel = 0, yvel = 0;
 	GLuint texid;
 	Hitbox hitbox;
 	int iframes = 0;
 	public:
+	Player()
+	{
+		hitbox.top = posY + 64;
+		hitbox.bottom = posY - 64;
+		hitbox.left = posX - 32;
+		hitbox.right = posX + 32;
+	}
+
 	int bananaCount = 0;
 	int getHP(){return this->HP;}
 	std::pair<int, int> getPos();

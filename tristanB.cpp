@@ -26,7 +26,7 @@ void Enemy::physics()
     //if (posX > gl.camera[0] + gl.xres/2 || posX < gl.camera[0] - gl.xres/2||
     //		posY > gl.camera[1] + gl.yres/2 || posY < gl.camera[1] - gl.yres/2)
     //	return;
-    if (posY > 200) {
+    if (posY > 0) {
         this->posY += yvel;
         this->yvel += GRAVITY;
     }
@@ -163,8 +163,8 @@ void Player::physics()
 		}
 	*/
 
-	posX += xvel;
-	xvel -= 1;
+//	posX += xvel;
+//	xvel -= 1;
     posY += yvel;
     yvel += GRAVITY;
     if (posY < 0){
@@ -190,7 +190,7 @@ void Slime::render()
     int wid = 25;
     glPushMatrix();
     glColor3ub(255,255,255);
-    glTranslatef(posX - gl.camera[0], posY, 0);
+    glTranslatef(posX - gl.camera[0], posY + 225, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);
@@ -209,11 +209,9 @@ void Zombie::AI(Player p)
 {
     std::pair<int,int> playerLoc = p.getPos();
 
-    if (playerLoc.first > posX && playerLoc.first - posX <= gl.xres/2 && 
-            playerLoc.second - posY <= gl.yres && posY - playerLoc.second <= gl.yres/2) {
+    if (playerLoc.first > posX) {
         this->moveRight();
-    } else if (playerLoc.first < posX && posX - playerLoc.first <= gl.xres/2 &&
-            playerLoc.second - posY <= gl.yres/2 && posY - playerLoc.second <= gl.yres/2) {
+    } else if (playerLoc.first < posX) {
         this->moveLeft();
     }
     usleep(500);
@@ -224,7 +222,7 @@ void Zombie::render()
     int wid = 50;
     glPushMatrix();
     glColor3ub(255,255,255);
-    glTranslatef(posX - gl.camera[0], posY, 0);
+    glTranslatef(posX - gl.camera[0], posY + 200, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);	
