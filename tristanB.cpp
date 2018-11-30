@@ -197,10 +197,10 @@ void Slime::render()
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-    glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
-    glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
-    glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+    glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, -wid);
+    glTexCoord2f(0.0f, 1.0f); glVertex2i(wid, -wid);
+    glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, wid);
+    glTexCoord2f(1.0f, 0.0f); glVertex2i(-wid, wid);
     glEnd();
     glPopMatrix();
 }
@@ -229,10 +229,21 @@ void Zombie::render()
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);	
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-    glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
-    glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
-    glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+
+    std::pair<int,int> playerLoc = pl.getPos();
+    if (playerLoc.first >= posX) {
+        // Draw zombie facing right
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+    } else if (playerLoc.first < posX) {
+        // Draw zombie facing left
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(-wid, -wid);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(wid, -wid);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(wid, wid);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(-wid, wid);
+    }
 
     glEnd();
     glPopMatrix();

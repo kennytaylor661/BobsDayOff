@@ -95,6 +95,7 @@ class Zombie : public Enemy
 {
 	GLuint texid = gl.zombieTexture;
 	Hitbox hitbox;
+    int lastFacing;
 
 	public:
 	Zombie(float x, float y): Enemy(x, y)
