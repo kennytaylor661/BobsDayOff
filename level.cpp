@@ -70,28 +70,22 @@ void Level::load(char *filename)
         b = new Banana((rand() % 80) * 50, (rand() % 200) + 300, gl.bananaTexture);
         ban.push_back(*b);
     }
-    
-    // Clear the vector of Slime Objects
-    //slm.clear();
-
-    // Create new Slime objects
-    //Slimed *s;
-    //for(int i = 0; i < 10; i++) {
-    //    s = new Slimed((rand() % 80) * 50, (rand() % 200) + 300, gl.slimeTexture);
-    //    slm.push_back(*s);
-    //}
 
     // Clear the vector of zombie objects
     zmb.clear();
 
     // Create new zombie enemy
     zmb.push_back(*(new Zombie(100, 400)));
+    zmb.push_back(*(new Zombie(2000, 400)));
+    zmb.push_back(*(new Zombie(3300, 400)));
 
     // Clear the vector of slime enemies
     slmE.clear();
 
     // Create new slime enemy
     slmE.push_back(*(new Slime(700, 400)));
+    slmE.push_back(*(new Slime(1400, 400)));
+    slmE.push_back(*(new Slime(3200, 400)));
 }
 
 void Level::removeCrLf(char *str) {

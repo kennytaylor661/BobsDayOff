@@ -22,15 +22,10 @@ Banana::Banana(int x, int y, GLuint tex)
     posy = y;
     texid = tex;
 
-    hitbox.top = posy + 25;
-    hitbox.bottom = posy - 25;
+    hitbox.top = posy + 25 - 200;
+    hitbox.bottom = posy - 25 - 200;
     hitbox.left = posx - 25;
     hitbox.right = posx + 25;
-
-    cout << " Banana Hitbox top = " << hitbox.top << endl;
-    cout << " Banana Hitbox bottom = " << hitbox.bottom << endl;
-    cout << " Banana Hitbox left = " << hitbox.left << endl;
-    cout << " Banana Hitbox right = " << hitbox.right << endl;
 }
 
 void Banana::physics()
