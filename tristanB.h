@@ -29,7 +29,7 @@ class Player
 {
 	int HP = 10, wid;
 	bool grounded;
-	float posX = 0.0f, posY = 0.0f, xvel, yvel;
+	float posX = gl.xres/2, posY = 0.0f, xvel, yvel;
 	GLuint texid;
 	Hitbox hitbox;
 
