@@ -184,17 +184,12 @@ void Zombie::AI(Player p)
 {
     std::pair<int,int> playerLoc = p.getPos();
 
-    cout << "Zombie::AI() called.." << endl;
-    cout << "  Player x = " << playerLoc.first << ", zombie x = " << posX << endl;
-    cout << "  Player y = " << playerLoc.second << ", zombie y = " << posY << endl;
     if (playerLoc.first > posX && playerLoc.first - posX <= gl.xres/2 && 
             playerLoc.second - posY <= gl.yres && posY - playerLoc.second <= gl.yres/2) {
         this->moveRight();
-        cout << "  Moving zombie right.." << endl;
     } else if (playerLoc.first < posX && posX - playerLoc.first <= gl.xres/2 &&
             playerLoc.second - posY <= gl.yres/2 && posY - playerLoc.second <= gl.yres/2) {
         this->moveLeft();
-        cout << "  Moving zombie left.." << endl;
     }
     usleep(500);
 }
