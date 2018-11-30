@@ -27,13 +27,14 @@ struct Hitbox
 
 class Player
 {
-	int HP = 10, wid;
+	int HP = 100, wid;
 	bool grounded;
 	float posX = gl.xres/2, posY = 0.0f, xvel, yvel;
 	GLuint texid;
 	Hitbox hitbox;
-
+	int iframes = 0;
 	public:
+	int bananaCount = 0;
 	std::pair<int, int> getPos();
 	void moveLeft();
 	void moveRight();
@@ -48,7 +49,6 @@ class Enemy
 {
 
 	protected:
-		int HP, damage;
 		float posX, posY, xvel = 0, yvel = 0;
 
 	public:
@@ -65,8 +65,6 @@ class Enemy
 
 class Slime : public Enemy
 {
-	int HP = 1;
-	int damage = 1;
 	GLuint texid = gl.slimeEnemyTexture;
 	Hitbox hitbox;
 
@@ -78,14 +76,14 @@ class Slime : public Enemy
 		hitbox.left = posX - 25;
 		hitbox.right = posX + 25;
 	}
+	int HP = 1;
+	int damage = 1;
 	void AI(Player p);
 	void render();
 	Hitbox getHitbox(){return this->hitbox;}
 };
 class Zombie : public Enemy
 {
-	int HP = 5;
-	int damage = 1;
 	GLuint texid = gl.zombieTexture;
 	Hitbox hitbox;
 
@@ -98,6 +96,8 @@ class Zombie : public Enemy
 		hitbox.right = posX + 50;
 
 	}
+	int HP = 5;
+	int damage = 1;
 	void AI(Player p);
 	void render();
 	Hitbox getHitbox(){return this->hitbox;}

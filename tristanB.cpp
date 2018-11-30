@@ -140,6 +140,31 @@ void Player::render()
 void Player::physics()
 {
     //posX += xvel;
+	iframes--;
+	for (int i = 0; i < lev.zmb.size(); i++)
+		if (iframes <= 0 &&
+			this->getHitbox().isColliding(lev.zmb[i].getHitbox())) {
+			iframes = 300;
+			HP -= lev.zmb[i].damage;
+			xvel += 5;
+		}
+	for (int i = 0; i < lev.slmE.size(); i++)
+		if (iframes <= 0 &&
+			this->getHitbox().isColliding(lev.slmE[i].getHitbox())) {
+			iframes = 300;
+			HP -= lev.slmE[i].damage;
+			xvel += 5;
+		}
+	/*
+	for (int i = 0; i < lev.ban.size(); i++)
+		if(this->getHitbox().isColliding(lev.ban[i].getHitbox())) {	
+			bananaCount++;
+			lev.ban.erase(i);
+		}
+	*/
+
+	posX += xvel;
+	xvel -= 1;
     posY += yvel;
     yvel += GRAVITY;
     if (posY < 0){
