@@ -159,7 +159,7 @@ void Player::physics()
 	for (int i = 0; i < lev.ban.size(); i++)
 		if(this->getHitbox().isColliding(lev.ban[i].getHitbox())) {	
 			bananaCount++;
-			lev.ban.erase(i);
+			lev.ban.erase(lev.ban.begin() + i);
 		}
 	*/
 

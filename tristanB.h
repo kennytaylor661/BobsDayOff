@@ -35,6 +35,7 @@ class Player
 	int iframes = 0;
 	public:
 	int bananaCount = 0;
+	int getHP(){return this->HP;}
 	std::pair<int, int> getPos();
 	void moveLeft();
 	void moveRight();
