@@ -124,7 +124,7 @@ class Timers {
 
 Global gl;
 
-Player pl;
+Player* pl = new Player;
 
 // Start on level 1
 Level lev;
@@ -226,6 +226,15 @@ int main()
 		if (!gl.paused)
 			physics();
 
+        // Check if the player is dead
+        if (pl->getHP() <= 0) {
+            gl.paused = 1;
+            delete pl;
+            pl = new Player;
+            gl.endScreenFlag = 1;
+        }
+
+        // Render the screen
 		if (gl.introScreenFlag) {
 			showIntroScreen();
 			x11.swapBuffers();
@@ -480,7 +489,7 @@ int checkKeys(XEvent *e)
 			gl.creditsFlag = !gl.creditsFlag;
 			break;
 		case XK_space:
-			pl.Jump();
+			pl->Jump();
 			// Leave the intro screen
 			if (gl.introScreenFlag) {
 				gl.introScreenFlag = !gl.introScreenFlag;
@@ -489,7 +498,9 @@ int checkKeys(XEvent *e)
             // Leave the end screen
             if (gl.endScreenFlag) {
                 gl.endScreenFlag = !gl.endScreenFlag;
+                loadLevel(&lev, (char*)"level1.txt");
                 gl.paused = 0;
+                gl.render = 1;
                 // Need to reload level and reset health here
             }
 			break;
@@ -540,10 +551,10 @@ void physics(void)
 		}
 
 		if (gl.keys[XK_Left] || gl.keys[XK_a]) {
-			pl.moveLeft();
+			pl->moveLeft();
 
 		} else if (gl.camera[0] <= (lev.ncols * lev.tilesize[0] - gl.xres/2)) {
-			pl.moveRight();		
+			pl->moveRight();		
 		}
 
 		// Move the explosions
@@ -615,7 +626,7 @@ void physics(void)
 	gl.ball_pos[1] += gl.ball_vel[1];
 	
 	// Handle the Player
-	pl.physics();
+	pl->physics();
 	
 	// =======================================
 	// Handle the SomeObject objects (example)
@@ -835,7 +846,7 @@ void render()
 	// =====================
 	// Draw character sprite
 	// =====================
-	pl.render();
+	pl->render();
 
 	// =================
 	// Render explosions

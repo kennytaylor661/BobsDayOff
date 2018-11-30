@@ -8,7 +8,7 @@
 
 const float GRAVITY = -0.35f;
 extern Global gl;
-extern Player pl;
+extern Player* pl;
 extern Level lev;
 //Enemy Class
 void Enemy::moveLeft()
@@ -36,7 +36,7 @@ void Enemy::physics()
         this->hitbox.top += yvel;
         this->yvel += GRAVITY;
     }
-    this->AI(pl);
+    this->AI(*pl);
 }
 
 std::pair<int, int> Enemy::getPos()
@@ -156,14 +156,14 @@ void Player::physics()
 	for (int i = 0; i < lev.zmb.size(); i++)
 		if (iframes <= 0 &&
 			this->getHitbox().isColliding(lev.zmb[i].getHitbox())) {
-			iframes = 300;
+			iframes = 10;
 			HP -= lev.zmb[i].damage;
 			xvel += 5;
 		}
 	for (int i = 0; i < lev.slmE.size(); i++)
 		if (iframes <= 0 &&
 			this->getHitbox().isColliding(lev.slmE[i].getHitbox())) {
-			iframes = 300;
+			iframes = 10;
 			HP -= lev.slmE[i].damage;
 			xvel += 5;
 		}
@@ -244,7 +244,7 @@ void Zombie::render()
     glAlphaFunc(GL_GREATER, 0.0f);	
     glBegin(GL_QUADS);
 
-    std::pair<int,int> playerLoc = pl.getPos();
+    std::pair<int,int> playerLoc = pl->getPos();
     if (playerLoc.first >= posX) {
         // Draw zombie facing right
         glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);

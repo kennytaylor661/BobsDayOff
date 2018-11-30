@@ -18,9 +18,6 @@ struct Hitbox
 
 	bool isColliding(Hitbox other)
 	{
-        cout << "isColliding() called.." << endl;
-        cout << "  this: left=" << left << ", right=" << right << ", bottom=" << bottom << ", top=" << top << endl;
-        cout << "  other: left=" << other.left << ", right=" << other.right << ", bottom=" << other.bottom << ", top=" << other.top << endl;
 		return ((left <= other.right && right >= other.left)  ||
 				(right >= other.left && left <= other.right)) &&
 			   ((bottom <= other.top && top >= other.bottom)  ||
