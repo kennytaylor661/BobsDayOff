@@ -18,6 +18,9 @@ struct Hitbox
 
 	bool isColliding(Hitbox other)
 	{
+        cout << "isColliding() called.." << endl;
+        cout << "  this: left=" << left << ", right=" << right << ", bottom=" << bottom << ", top=" << top << endl;
+        cout << "  other: left=" << other.left << ", right=" << other.right << ", bottom=" << other.bottom << ", top=" << other.top << endl;
 		return ((left <= other.right && right >= other.left)  ||
 				(right >= other.left && left <= other.right)) &&
 			   ((bottom <= other.top && top >= other.bottom)  ||
@@ -56,9 +59,9 @@ class Player
 
 class Enemy
 {
-
 	protected:
 		float posX, posY, xvel = 0, yvel = 0;
+        Hitbox hitbox;
 
 	public:
 		Enemy(float x, float y): posX(x), posY(y) {}
@@ -75,7 +78,6 @@ class Enemy
 class Slime : public Enemy
 {
 	GLuint texid = gl.slimeEnemyTexture;
-	Hitbox hitbox;
 
 	public:
 	Slime(float x, float y): Enemy(x, y)
@@ -94,7 +96,6 @@ class Slime : public Enemy
 class Zombie : public Enemy
 {
 	GLuint texid = gl.zombieTexture;
-	Hitbox hitbox;
     int lastFacing;
 
 	public:

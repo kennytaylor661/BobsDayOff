@@ -14,11 +14,15 @@ extern Level lev;
 void Enemy::moveLeft()
 {
     posX--;
+    hitbox.left--;
+    hitbox.right--;
 }
 
 void Enemy::moveRight()
 {
     posX++;
+    hitbox.left++;
+    hitbox.right++;
 }
 
 void Enemy::physics()
@@ -28,6 +32,8 @@ void Enemy::physics()
     //	return;
     if (posY > 0) {
         this->posY += yvel;
+        this->hitbox.bottom += yvel;
+        this->hitbox.top += yvel;
         this->yvel += GRAVITY;
     }
     this->AI(pl);
@@ -48,6 +54,8 @@ std::pair<int, int> Player::getPos()
 void Player::moveLeft()
 {
     posX -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.left -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.right -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
 
     // Move the background to the right
     gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
@@ -66,6 +74,8 @@ void Player::moveLeft()
 void Player::moveRight()
 {
     posX += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.left += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.right += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
 
     // Move the background to the left
     gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
@@ -168,10 +178,14 @@ void Player::physics()
 //	posX += xvel;
 //	xvel -= 1;
     posY += yvel;
+    hitbox.top += yvel;
+    hitbox.bottom += yvel;
     yvel += GRAVITY;
     if (posY < 0){
         yvel = 0;
         posY = 0;
+        hitbox.top = 128;
+        hitbox.bottom = 0; 
         grounded = true;
     }
 }
