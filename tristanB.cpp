@@ -153,27 +153,27 @@ void Player::physics()
 {
     //posX += xvel;
 	iframes--;
-	for (int i = 0; i < lev.zmb.size(); i++)
+	for (unsigned int i = 0; i < lev.zmb.size(); i++)
 		if (iframes <= 0 &&
 			this->getHitbox().isColliding(lev.zmb[i].getHitbox())) {
 			iframes = 10;
 			HP -= lev.zmb[i].damage;
 			xvel += 5;
 		}
-	for (int i = 0; i < lev.slmE.size(); i++)
+	for (unsigned int i = 0; i < lev.slmE.size(); i++)
 		if (iframes <= 0 &&
 			this->getHitbox().isColliding(lev.slmE[i].getHitbox())) {
 			iframes = 10;
 			HP -= lev.slmE[i].damage;
 			xvel += 5;
 		}
-	/*
-	for (int i = 0; i < lev.ban.size(); i++)
+	
+	for (unsigned int i = 0; i < lev.ban.size(); i++)
 		if(this->getHitbox().isColliding(lev.ban[i].getHitbox())) {	
 			bananaCount++;
+            gl.score += 100;
 			lev.ban.erase(lev.ban.begin() + i);
 		}
-	*/
 
 //	posX += xvel;
 //	xvel -= 1;
