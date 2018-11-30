@@ -6,7 +6,7 @@
 #include <vector>
 #include "kennyT.h"
 #include "tristanB.h"
-
+#include "rudyM.h"
 using namespace std;
 
 //defined types

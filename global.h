@@ -6,7 +6,7 @@
 #include <string>
 #include "image.h"
 #include "kennyT.h"
-#include "rudyM.h"
+//#include "rudyM.h"
 #include "sprite.h"
 
 using namespace std;

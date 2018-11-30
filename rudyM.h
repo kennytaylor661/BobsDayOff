@@ -8,20 +8,26 @@
 
 #include <GL/glx.h>
 #include <utility>
+#include "global.h"
+#include "tristanB.h"
+
 typedef double Flt;
 
 void torchRender(int, int);
 void slimeRender(int, int);
 void drawWallDecorations(Flt dd, int ncols_to_render, Flt offx, Flt offy);
+
 class Banana 
 {
     int posx, posy;
     GLuint texid;
+    Hitbox hitbox;
 
 public:
-    Banana(int x, int y, GLuint tex): posx(x), posy(y), texid(tex) {}
+    Banana(int, int, GLuint);
     void physics();
     void render();
+    Hitbox getHitbox(){return this->hitbox;}
 };
 
 class Torch

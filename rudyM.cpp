@@ -16,6 +16,18 @@ extern Level lev;
 static double xVelocity = 1;
 static double xOffset = 0;
 
+Banana::Banana(int x, int y, GLuint tex)
+{
+    posx = x;
+    posy = y;
+    texid = tex;
+
+    hitbox.top = posy + 25;
+    hitbox.bottom = posy - 25;
+    hitbox.left = posx - 25;
+    hitbox.right = posx + 25;
+}
+
 void Banana::physics()
 {
 
