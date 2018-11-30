@@ -9,6 +9,7 @@
 #include "http.h"
 #include "level.h"
 #include "kennyT.h"
+#include "tristanB.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ static double yVelocity = 1;
 static double yOffset = 0;
 
 extern Global gl;
+extern Player pl;
 
 void showKennyCredits(Rect *r)
 {
@@ -268,7 +270,7 @@ void drawHUD(struct timespec ts)
     upperRight.left = gl.xres - 100; 
     upperRight.center = 0;
     ggprint8b(&upperRight, 16, c, "Score: %d", gl.score);
-    ggprint8b(&upperRight, 16, c, "Health: %d", gl.health);
+    ggprint8b(&upperRight, 16, c, "Health: %d", pl.getHP());
 
     // Draw the physics and render times (do this last)
     clock_gettime(CLOCK_REALTIME, &te);
