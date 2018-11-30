@@ -88,7 +88,7 @@ class Slime : public Enemy
 		hitbox.right = posX + 25;
 	}
 	int HP = 1;
-	int damage = 1;
+	int damage = 10;
 	void AI(Player p);
 	void render();
 	Hitbox getHitbox(){return this->hitbox;}
@@ -108,7 +108,7 @@ class Zombie : public Enemy
 
 	}
 	int HP = 5;
-	int damage = 1;
+	int damage = 10;
 	void AI(Player p);
 	void render();
 	Hitbox getHitbox(){return this->hitbox;}
