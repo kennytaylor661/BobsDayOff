@@ -8,10 +8,11 @@
 
 #include <GL/glx.h>
 #include <utility>
+typedef double Flt;
 
 void torchRender(int, int);
 void slimeRender(int, int);
-
+void drawWallDecorations(Flt dd, int ncols_to_render, Flt offx, Flt offy);
 class Banana 
 {
     int posx, posy;

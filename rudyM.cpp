@@ -9,9 +9,10 @@ using namespace std;
 #include "fonts.h"
 #include "rudyM.h"
 #include "global.h"
+#include "level.h"
 
 extern Global gl;
-
+extern Level lev;
 static double xVelocity = 1;
 static double xOffset = 0;
 
@@ -161,4 +162,25 @@ void slimeRender(int x, int y)
    	glPopMatrix();
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_ALPHA_TEST);
+}
+
+void drawWallDecorations(Flt dd, int ncols_to_render, Flt offx, Flt offy) 
+{
+   // ==================
+   // Draw Torches
+   // ==================
+   int col, row;
+   col = (int)(gl.camera[0] / dd);
+   col = col % lev.ncols;
+   for (int j=0; j<ncols_to_render; j++) {
+       int row = lev.nrows-1;
+       for (int i=0; i<lev.nrows; i++) {
+           if(lev.arr[row][col] == '!')
+               torchRender(j*dd+offx, i*lev.ftsz[1]+offy);
+           if(lev.arr[row][col] == '*') 
+               slimeRender(j*dd+offx, i*lev.ftsz[1]+offy);          
+           --row;
+       }
+       col = (col+1) % lev.ncols;
+   }
 }
