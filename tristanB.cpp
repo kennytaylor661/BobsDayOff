@@ -47,7 +47,8 @@ std::pair<int, int> Player::getPos()
 
 void Player::moveLeft()
 {
-    posX--;
+    posX -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+
     // Move the background to the right
     gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
     if (gl.backgroundXoffset > 0)
@@ -64,7 +65,8 @@ void Player::moveLeft()
 }
 void Player::moveRight()
 {
-    posX++;
+    posX += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+
     // Move the background to the left
     gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
     // Move the foreground to the left
