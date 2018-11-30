@@ -10,6 +10,7 @@
 #include <utility>
 
 void torchRender(int, int);
+void slimeRender(int, int);
 
 class Banana 
 {

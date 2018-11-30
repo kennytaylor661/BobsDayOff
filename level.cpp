@@ -72,14 +72,14 @@ void Level::load(char *filename)
     }
     
     // Clear the vector of Slime Objects
-    slm.clear();
+    //slm.clear();
 
     // Create new Slime objects
-    Slimed *s;
-    for(int i = 0; i < 10; i++) {
-        s = new Slimed((rand() % 80) * 50, (rand() % 200) + 300, gl.slimeTexture);
-        slm.push_back(*s);
-    }
+    //Slimed *s;
+    //for(int i = 0; i < 10; i++) {
+    //    s = new Slimed((rand() % 80) * 50, (rand() % 200) + 300, gl.slimeTexture);
+    //    slm.push_back(*s);
+    //}
 
     // Clear the vector of zombie objects
     zmb.clear();

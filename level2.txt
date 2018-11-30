@@ -1,14 +1,14 @@
 # Level 2 - New test level
 # Updated 10/24/18
-         !      ! !       !      ! !      !      ! !       !        ! !        !         ! !         !         ! !       !  
-                                                                                          !                     !           
-                 !                !               !                  !                                                      
-    rrrrrrrrrrr                         rrrrr                                                                               
-    rr       rr                      rrrr   rrrr                      rrrrrrrrrrr    rrr            rrrrrrrrr               
-    rr       rr      rrrrrrrrrrr     rr       rr                      rr       rr    r r          rrr       rrr             
-    rr       rr      rr       rr     rr       rr      rrrrrrrrrrr     rr       rr    r r        rrr           rrr           
-    rr       rr      rr       rr     rr       rr      rrrrrrrrrrr     rr       rr    r r      rrr               rrr         
-    rr       rr      rr       rr     rr       rr      rr       rr     rr       rr    r r    rrr                   rrr       
+         !      ! !       !    * ! !      !      ! !       !        ! !     *  !     *   ! !      *  !   *     ! !       !  
+      *    *          *                *    *          *       *     *           *        !   *    *            !    *      
+                 !       *    *   !            *  !                  !   *          *     *          *      *               
+    rrrrrrrrrrr         *               rrrrr            *       *           *                 *        *        *     *    
+    rr       rr    *        *        rrrr   rrrr   *   *     *        rrrrrrrrrrr  * rrr            rrrrrrrrr               
+    rr   *   rr      rrrrrrrrrrr     rr       rr                  *   rr       rr    r r    *     rrr       rrr     *       
+    rr       rr      rr       rr  *  rr  *    rr    * rrrrrrrrrrr     rr   *   rr    r r        rrr    *      rrr           
+    rr *     rr  *   rr   *   rr     rr    *  rr *    rrrrrrrrrrr     rr   *   rr    r r  *   rrr  *    *       rrr    *    
+    rr    *  rr      rr     * rr     rr       rr      rr       rr     rr       rr    r r    rrr             *     rrr       
 gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                                                                                                                             

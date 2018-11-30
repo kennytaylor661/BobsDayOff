@@ -742,6 +742,22 @@ void render()
         }
         col = (col+1) % lev.ncols;
     }
+
+    // ========================
+    // Draw Slime on walls
+    // ========================
+
+    col = (int)(gl.camera[0] / dd);
+    col = col % lev.ncols;
+    for (int j=0; j<ncols_to_render; j++) {
+        int row = lev.nrows-1;
+        for (int i=0; i<lev.nrows; i++) {
+            if(lev.arr[row][col] == '*')
+                slimeRender(j*dd+offx, i*lev.ftsz[1]+offy);
+            --row;
+        }
+        col = (col+1) % lev.ncols;
+    }
 	
 
 	// ========================
@@ -787,8 +803,8 @@ void render()
 	// ==================
 	// Draw Slime objects
 	// ==================
-	for(unsigned int i = 0; i < lev.slm.size(); i++)
-		lev.slm[i].render();
+	//for(unsigned int i = 0; i < lev.slm.size(); i++)
+	//	lev.slm[i].render();
 	
 	// ===================
 	// Draw SlimeE objects

@@ -28,7 +28,7 @@ public:
     vector<Banana> ban;
 
     //Create an arry of Slime Class
-    vector<Slimed> slm;
+    //vector<Slimed> slm;
 
 	//Create an array of Slime(Enemy) Class
 	vector<Slime> slmE;
