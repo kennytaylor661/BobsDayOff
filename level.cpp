@@ -86,6 +86,12 @@ void Level::load(char *filename)
 
     // Create new zombie enemy
     zmb.push_back(*(new Zombie(100, 400)));
+
+    // Clear the vector of slime enemies
+    slmE.clear();
+
+    // Create new slime enemy
+    slmE.push_back(*(new Slime(700, 400)));
 }
 
 void Level::removeCrLf(char *str) {
