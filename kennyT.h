@@ -10,16 +10,5 @@ void drawImage(int, int, int, int, GLuint);
 void fetchHTTPScores(char*, char*);
 void showEndScreen();
 
-class SomeObject 
-{
-    int posx, posy;
-    GLuint texid;
-
-public:
-    SomeObject(int x, int y, GLuint tex): posx(x), posy(y), texid(tex) {}
-    void physics();
-    void render();
-
-};
 
 #endif

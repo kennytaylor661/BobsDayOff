@@ -53,13 +53,6 @@ void Level::load(char *filename)
     gl.camera[0] = gl.camera[1] = 0.0;
     gl.backgroundXoffset = 0.0;
 
-    // Clear the vector of SomeObject objects
-    someobject.clear();
-    // Create a few collectable SomeObject objects
-    SomeObject *so;
-    so = new SomeObject(100, 100, gl.someObjectTexture);
-    someobject.push_back(*so);
-
     // Clear the vector of Banana Objects
     ban.clear();
 

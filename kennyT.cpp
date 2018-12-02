@@ -422,13 +422,3 @@ void fetchHTTPScores(char *host, char *page)
     close(sock);
 }
 
-// Example functions for the SomeObject class
-void SomeObject::physics()
-{
-    //cout << "SomeObject::physics() was called.." << endl;
-}
-
-void SomeObject::render()
-{
-    //cout << "SomeObject::render() was called.." << endl;
-}

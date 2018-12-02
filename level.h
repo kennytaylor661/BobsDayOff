@@ -21,14 +21,9 @@ public:
     int levelWidth;
     Flt ftsz[2];
     Flt tile_base;
-    // Create an array of the SomeObject class objects
-    vector<SomeObject> someobject;
 
     // Create an arry of Banana Class
     vector<Banana> ban;
-
-    //Create an arry of Slime Class
-    //vector<Slimed> slm;
 
 	//Create an array of Slime(Enemy) Class
 	vector<Slime> slmE;

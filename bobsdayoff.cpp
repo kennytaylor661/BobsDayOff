@@ -628,12 +628,6 @@ void physics(void)
     // Handle the Player
     pl->physics();
 
-    // =======================================
-    // Handle the SomeObject objects (example)
-    // =======================================
-    for(unsigned int i = 0; i < lev.someobject.size(); i++) 
-        lev.someobject[i].physics();
-
     // =========================
     // Handle the banana objects
     // =========================
@@ -775,12 +769,6 @@ void render()
     glVertex2i(cx-60, 130);
     glEnd();
 #endif
-
-    // ===================================
-    // Render SomeObject objects (example)
-    // ===================================
-    for(unsigned int i = 0; i < lev.someobject.size(); i++)
-        lev.someobject[i].render();
 
     // ===================
     // Draw Banana objects
