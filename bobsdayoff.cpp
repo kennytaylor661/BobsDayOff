@@ -822,8 +822,8 @@ void render()
     // =================
     // Draw Door objects
     // =================
-    for (unsigned int i = 0; i < lev.dor.size(); i++)
-        lev.dor[i].render();
+    //for (unsigned int i = 0; i < lev.dor.size(); i++)
+    //    lev.dor[i].render();
 
     // ================
     // Draw bullets

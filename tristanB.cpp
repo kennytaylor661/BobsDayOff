@@ -228,6 +228,7 @@ void Slime::render()
     glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
     glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
     glEnd();
+    glDisable(GL_ALPHA_TEST);
     glPopMatrix();
 }
 //
@@ -272,6 +273,7 @@ void Zombie::render()
     }
 
     glEnd();
+    glDisable(GL_ALPHA_TEST);
     glPopMatrix();
 
 }

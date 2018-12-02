@@ -449,8 +449,8 @@ void Bullet::physics()
 void Bullet::render()
 {
     glPushMatrix();
-    glColor3f(0.8, 0.8, 0.8); 
-    glTranslated(posX, posY + 200, 0); 
+    glColor3f(0.0, 0.0, 0.0); 
+    glTranslated(posX, posY + 220, 0); 
     glBegin(GL_QUADS);
         glVertex2i( 0,  0);  
         glVertex2i( 0, ysize); 
