@@ -9,11 +9,13 @@ using namespace std;
 extern Global gl;
 
 Level::Level() {
-    load((char *)"level1.txt");
+    load(1);
 }
 
-void Level::load(char *filename)
+void Level::load(int levelNum)
 {
+    FILE *fpi;
+
     //Log("Level constructor\n");
     tilesize[0] = 32; 
     tilesize[1] = 32; 
@@ -21,8 +23,17 @@ void Level::load(char *filename)
     ftsz[1] = (Flt)tilesize[1];
     tile_base = 140.0;
     //read level
-    //FILE *fpi = fopen("level1.txt","r");
-    FILE *fpi = fopen(filename, "r");
+    switch(levelNum) {
+        case 1:
+            fpi = fopen("level1.txt", "r");
+            break;
+        case 2:
+            fpi = fopen("level2.txt", "r");
+            break;
+        case 3:
+            fpi = fopen("level3.txt", "r");
+            break;
+    };
     if (fpi) {
         nrows=0;
         char line[200];
@@ -84,7 +95,7 @@ void Level::load(char *filename)
     dor.clear();
 
     // Place a static door at x=3800
-    dor.push_back(*(new Door(3800, 64, 128, 256)));
+    dor.push_back(*(new Door(3800, 64, 128, 256, 2)));
 }
 
 void Level::removeCrLf(char *str) {

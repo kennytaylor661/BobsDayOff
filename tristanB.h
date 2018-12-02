@@ -116,12 +116,12 @@ class Zombie : public Enemy
 class Door
 {
     int posX, posY, width, height;
-    char* dest;
+    int dest;
     GLuint texid = gl.doorTexture;
     Hitbox hitbox;
 
     public:
-        Door(int, int, int, int);
+        Door(int, int, int, int, int);
         void loadDest();
         void render();
         Hitbox getHitbox(){return this->hitbox;}

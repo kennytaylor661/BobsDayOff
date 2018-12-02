@@ -181,7 +181,7 @@ void drawWallDecorations(Flt dd, int ncols_to_render, Flt offx, Flt offy)
    // ==================
    // Draw Torches
    // ==================
-   int col, row;
+   int col;
    col = (int)(gl.camera[0] / dd);
    col = col % lev.ncols;
    for (int j=0; j<ncols_to_render; j++) {

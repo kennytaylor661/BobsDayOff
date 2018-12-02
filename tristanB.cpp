@@ -281,12 +281,13 @@ void Zombie::render()
 
 //Door Class
 
-Door::Door(int x, int y, int wid, int hgt)
+Door::Door(int x, int y, int wid, int hgt, int levelNum)
 {
     posX = x;
     posY = y;
     width = wid;
     height = hgt;
+    dest = levelNum;
 
     hitbox.top = posY + height/2; 
     hitbox.bottom = posY - height/2; 

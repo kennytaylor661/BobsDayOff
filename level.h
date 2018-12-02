@@ -40,7 +40,7 @@ public:
     vector<Bullet> bullet;
 
     Level();
-    void load(char*);
+    void load(int);
     void removeCrLf(char *);
 }; 
 

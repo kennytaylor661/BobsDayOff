@@ -83,7 +83,7 @@ extern void drawText(int,int,int,char*);
 extern void showKennyCredits(Rect*);
 extern void showKennyCredits(int, int);
 extern void showKennyImage(int, int, GLuint);
-extern void loadLevel(Level*, char*);
+extern void loadLevel(Level*, int);
 extern void drawTexturedBackground();
 extern void drawSolidTile(float,float,float,float,float,float);
 extern void drawTexturedTile(int, float, float, float);
@@ -211,7 +211,7 @@ class X11_wrapper {
 int main()
 {
     initOpengl();
-    lev.load((char *)"level1.txt");
+    lev.load(1);
     init();
     int done = 0;
     while (!done) {
@@ -460,8 +460,8 @@ int checkKeys(XEvent *e)
             // Enter the door, if player is standing in front of one
             for (unsigned int i = 0; i < lev.dor.size(); i++)
                 if (pl->getHitbox().isColliding(lev.dor[i].getHitbox()))
-                    //lev.dor[i].loadDest();
-                    cout << "traveling through door.." << endl;
+                    lev.dor[i].loadDest();
+                    //cout << "traveling through door.." << endl;
             break;
         case XK_s:
             screenCapture();
@@ -493,17 +493,17 @@ int checkKeys(XEvent *e)
             break;
         case XK_1:
             gl.render=0;
-            loadLevel(&lev, (char*)"level1.txt");
+            loadLevel(&lev, 1);
             gl.render=1;
             break;
         case XK_2:
             gl.render = 0;
-            loadLevel(&lev, (char*)"level2.txt"); 
+            loadLevel(&lev, 2); 
             gl.render = 1;
             break;
         case XK_3:
             gl.render = 0;
-            loadLevel(&lev, (char*)"level3.txt");
+            loadLevel(&lev, 3);
             gl.render = 1;
             break;
         case XK_Left:
@@ -542,7 +542,7 @@ int checkKeys(XEvent *e)
             // Leave the end screen
             if (gl.endScreenFlag) {
                 gl.endScreenFlag = !gl.endScreenFlag;
-                loadLevel(&lev, (char*)"level1.txt");
+                loadLevel(&lev, 1);
                 gl.paused = 0;
                 gl.render = 1;
                 // Need to reload level and reset health here

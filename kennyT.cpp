@@ -103,9 +103,9 @@ void showKennyImage(int x, int y, GLuint texid)
     glPopMatrix();
 }
 
-void loadLevel(Level *lev, char *filename)
+void loadLevel(Level *lev, int levelNum)
 {
-    lev->load(filename);
+    lev->load(levelNum);
 }
 
 void drawTexturedBackground()
