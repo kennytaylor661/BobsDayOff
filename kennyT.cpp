@@ -241,14 +241,15 @@ void drawHUD(struct timespec ts)
     upperLeft.bot = gl.yres - 20; 
     upperLeft.left = 10; 
     upperLeft.center = 0;
-    ggprint8b(&upperLeft, 16, c, "W     Walk cycle");
-    ggprint8b(&upperLeft, 16, c, "E     Explosion");
-    ggprint8b(&upperLeft, 16, c, "C     Credits");
-    ggprint8b(&upperLeft, 16, c, "[1-2] Change Level"); 
-    ggprint8b(&upperLeft, 16, c, "+     faster");
-    ggprint8b(&upperLeft, 16, c, "-     slower");
-    ggprint8b(&upperLeft, 16, c, "D, right arrow -> walk right");
-    ggprint8b(&upperLeft, 16, c, "A, left arrow  <- walk left");
+    //ggprint8b(&upperLeft, 16, c, "W     Walk cycle");
+    ggprint8b(&upperLeft, 16, c, "ENTER    Shoot");
+    ggprint8b(&upperLeft, 16, c, "E        Explosion");
+    ggprint8b(&upperLeft, 16, c, "C        Credits");
+    ggprint8b(&upperLeft, 16, c, "[1-3]    Change Level"); 
+    ggprint8b(&upperLeft, 16, c, "+        faster");
+    ggprint8b(&upperLeft, 16, c, "-        slower");
+    ggprint8b(&upperLeft, 16, c, "D, right walk right");
+    ggprint8b(&upperLeft, 16, c, "A, left  walk left");
 
     // Draw a background for the text in the upper-right
     glPushMatrix();
