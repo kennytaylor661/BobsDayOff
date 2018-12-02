@@ -96,8 +96,23 @@ void Level::load(int levelNum)
     // Clear the vector of doors
     dor.clear();
 
-    // Place a static door at x=3800
-    dor.push_back(*(new Door(3800, 64, 128, 256, 2)));
+    // Place doors
+    switch(levelNum) {
+        case 1:
+            // Place door at end leading to level 2
+            dor.push_back(*(new Door(3800, 64, 128, 256, 2)));
+            break;
+        case 2:
+            // Place door at beginning leading to level 1
+            dor.push_back(*(new Door(400, 64, 128, 256, 1)));
+            // Place a door at end leading to level 3
+            dor.push_back(*(new Door(3800, 64, 128, 256, 3)));
+            break;
+        case 3:
+            // Place door at beginning leading to level 2
+            dor.push_back(*(new Door(400, 64, 128, 256, 2)));
+            break;
+    };
 }
 
 void Level::removeCrLf(char *str) {
