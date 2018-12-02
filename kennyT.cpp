@@ -425,8 +425,17 @@ void fetchHTTPScores(char *host, char *page)
 Bullet::Bullet(int x, int y, int vel)
 {
     posX = x;
-    posY = y;
+    posY = y + 200;
     xvel = vel;
+    xsize = 10;
+    ysize = 10;
+
+    hitbox.top = posY + ysize/2; 
+    hitbox.bottom = posY - ysize/2; 
+    hitbox.left = posX - xsize/2; 
+    hitbox.right = posX + xsize/2; 
+
+    cout << "Created new bullet at (" << x << ", " << y << ") with xvel = " << vel << endl;
 }
 
 void Bullet::physics()
@@ -441,9 +450,9 @@ void Bullet::render()
     glTranslated(posX, posY, 0); 
     glBegin(GL_QUADS);
         glVertex2i( 0,  0);  
-        glVertex2i( 0, 4); 
-        glVertex2i(4, 4); 
-        glVertex2i(4,  0);  
+        glVertex2i( 0, ysize); 
+        glVertex2i(xsize, ysize); 
+        glVertex2i(xsize,  0);  
     glEnd();
     glPopMatrix();
 }

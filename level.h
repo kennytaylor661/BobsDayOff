@@ -37,6 +37,7 @@ public:
 	vector<Door> dor;
 
     // Create an array of Bullet() Class
+    vector<Bullet> bullet;
 
     Level();
     void load(char*);

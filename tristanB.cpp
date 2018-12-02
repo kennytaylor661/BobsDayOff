@@ -36,6 +36,15 @@ void Enemy::physics()
         this->hitbox.top += yvel;
         this->yvel += GRAVITY;
     }
+
+    // Check for collisions with bullets
+    for (unsigned int i = 0; i < lev.bullet.size(); i++)
+        if (this->getHitbox().isColliding(lev.bullet[i].getHitbox())) {
+            // Decrement the enemy hitpoints
+            HP--;
+            cout << "  bullet collided with enemy!" << endl;
+        }
+
     this->AI(*pl);
 }
 

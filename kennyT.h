@@ -14,12 +14,14 @@ void showEndScreen();
 class Bullet
 {
     float posX, posY, xvel = 0, yvel = 0;
+    int xsize, ysize;
     GLuint texid;
     Hitbox hitbox;
     public:
         Bullet(int, int, int);
         void physics();
         void render();
+        Hitbox getHitbox(){return hitbox;}
 };
 
 #endif

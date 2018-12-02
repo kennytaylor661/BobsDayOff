@@ -403,6 +403,8 @@ void screenCapture()
 
 int checkKeys(XEvent *e)
 {
+    pair<int,int> playerLoc = pl->getPos();
+
     //keyboard input?
     static int shift=0;
     if (e->type != KeyPress && e->type != KeyRelease)
@@ -483,6 +485,9 @@ int checkKeys(XEvent *e)
             break;
         case XK_Escape:
             return 1;
+            break;
+        case XK_Return:
+            lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second + 30, 10 * gl.lastFacing)));
             break;
         case XK_c: //Credits key is C.
             gl.creditsFlag = !gl.creditsFlag;
@@ -625,26 +630,34 @@ void physics(void)
     }
     gl.ball_pos[1] += gl.ball_vel[1];
 
+    // =========================
     // Handle the Player
+    // =========================
     pl->physics();
 
     // =========================
     // Handle the banana objects
     // =========================
-    for(unsigned int i = 0; i < lev.ban.size(); i++)
+    for (unsigned int i = 0; i < lev.ban.size(); i++)
         lev.ban[i].physics();
 
     // =========================
     // Handle the zombie objects
     // =========================
-    for(unsigned int i = 0; i < lev.zmb.size(); i++)
+    for (unsigned int i = 0; i < lev.zmb.size(); i++)
         lev.zmb[i].physics();
 
     // =========================
     // Handle the SlimeE objects
     // =========================
-    for(unsigned int i = 0; i < lev.slmE.size(); i++)
+    for (unsigned int i = 0; i < lev.slmE.size(); i++)
         lev.slmE[i].physics();
+
+    // =========================
+    // Handle the bullet objects
+    // =========================
+    for (unsigned int i = 0; i < lev.bullet.size(); i++)
+        lev.bullet[i].physics();
 
     // Record the physics time
     clock_gettime(CLOCK_REALTIME, &te);
@@ -773,32 +786,32 @@ void render()
     // ===================
     // Draw Banana objects
     // ===================
-    for(unsigned int i = 0; i < lev.ban.size(); i++)
+    for (unsigned int i = 0; i < lev.ban.size(); i++)
         lev.ban[i].render();
-
-    // ==================
-    // Draw Slime objects
-    // ==================
-    //for(unsigned int i = 0; i < lev.slm.size(); i++)
-    //	lev.slm[i].render();
 
     // ===================
     // Draw SlimeE objects
     // ===================
-    for(unsigned int i = 0; i < lev.slmE.size(); i++)
+    for (unsigned int i = 0; i < lev.slmE.size(); i++)
         lev.slmE[i].render();
 
     // ===================
     // Draw Zombie objects
     // ===================
-    for(unsigned int i = 0; i < lev.zmb.size(); i++)
+    for (unsigned int i = 0; i < lev.zmb.size(); i++)
         lev.zmb[i].render();
 
     // =================
     // Draw Door objects
     // =================
-    for(unsigned int i = 0; i < lev.dor.size(); i++)
+    for (unsigned int i = 0; i < lev.dor.size(); i++)
         lev.dor[i].render();
+
+    // ================
+    // Draw bullets
+    // ================
+    for (unsigned int i = 0; i < lev.bullet.size(); i++)
+        lev.bullet[i].render();
 
     // =====================
     // Draw character sprite

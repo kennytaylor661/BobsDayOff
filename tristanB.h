@@ -64,12 +64,14 @@ class Enemy
 		Enemy(float x, float y): posX(x), posY(y) {}
 		~Enemy(){}
 
+        int HP;
 		void moveLeft();
 		void moveRight();
 		virtual void AI(Player p) = 0;
 		void physics();
 		std::pair<int, int> getPos();
 		virtual void render() = 0;
+        Hitbox getHitbox(){return this->hitbox;}
 };
 
 class Slime : public Enemy
