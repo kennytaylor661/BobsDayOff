@@ -237,6 +237,13 @@ int main()
         // Check for dead zombies
         for (unsigned int i = 0; i < lev.zmb.size(); i++)
             if (lev.zmb[i].HP <= 0) {
+                // Draw explosion
+                std::pair<int,int> enemyPos = lev.zmb[i].getPos();
+                gl.exp.pos[0] = enemyPos.first - gl.camera[0];
+                gl.exp.pos[1] = enemyPos.second + 200;
+                gl.exp.pos[2] =   0.0;
+                timers.recordTime(&gl.exp.time);
+                gl.exp.onoff ^= 1;
                 // Delete dead zombie
                 lev.zmb.erase(lev.zmb.begin() + i);
                 // Add player score
@@ -246,14 +253,18 @@ int main()
         // Check for dead slime enemies
         for (unsigned int i = 0; i < lev.slmE.size(); i++)
             if (lev.slmE[i].HP <= 0) {
+                // Draw explosion
+                std::pair<int,int> enemyPos = lev.slmE[i].getPos();
+                gl.exp.pos[0] = enemyPos.first - gl.camera[0];
+                gl.exp.pos[1] = enemyPos.second + 200;
+                gl.exp.pos[2] =   0.0;
+                timers.recordTime(&gl.exp.time);
+                gl.exp.onoff ^= 1;
                 // Delete dead slime
                 lev.slmE.erase(lev.slmE.begin() + i); 
                 // Add player score
                 gl.score += 1000;
             }
-
-        // DEBUG - PRINT GL.DELAY
-        cout << "gl.delay = " << gl.delay << endl;
 
         // Render the screen
         if (gl.introScreenFlag) {
@@ -451,24 +462,24 @@ int checkKeys(XEvent *e)
         case XK_m:
             gl.movie ^= 1;
             break;
-        case XK_w:
-            timers.recordTime(&timers.walkTime);
-            gl.walk ^= 1;
-            break;
-        case XK_e:
-            gl.exp.pos[0] = 200.0;
-            gl.exp.pos[1] = -60.0;
-            gl.exp.pos[2] =   0.0;
-            timers.recordTime(&gl.exp.time);
-            gl.exp.onoff ^= 1;
-            break;
-        case XK_f:
-            gl.exp44.pos[0] = 200.0;
-            gl.exp44.pos[1] = -60.0;
-            gl.exp44.pos[2] =   0.0;
-            timers.recordTime(&gl.exp44.time);
-            gl.exp44.onoff ^= 1;
-            break;
+        //case XK_w:
+        //    timers.recordTime(&timers.walkTime);
+        //    gl.walk ^= 1;
+        //    break;
+        //case XK_e:
+        //    gl.exp.pos[0] = 200.0;
+        //    gl.exp.pos[1] = -60.0;
+        //    gl.exp.pos[2] =   0.0;
+        //    timers.recordTime(&gl.exp.time);
+        //    gl.exp.onoff ^= 1;
+        //    break;
+        //case XK_f:
+        //    gl.exp44.pos[0] = 200.0;
+        //    gl.exp44.pos[1] = -60.0;
+        //    gl.exp44.pos[2] =   0.0;
+        //    timers.recordTime(&gl.exp44.time);
+        //    gl.exp44.onoff ^= 1;
+        //    break;
         case XK_l:
             gl.fetchLeaders = 1;
             gl.leaderboardFlag = !gl.leaderboardFlag;
@@ -858,10 +869,15 @@ void render()
         float tx = (float)ix / 5.0;
         float ty = (float)iy / 5.0;
         glBegin(GL_QUADS);
-        glTexCoord2f(tx,     ty+0.2); glVertex2i(cx-w, cy-h);
-        glTexCoord2f(tx,     ty);     glVertex2i(cx-w, cy+h);
-        glTexCoord2f(tx+0.2, ty);     glVertex2i(cx+w, cy+h);
-        glTexCoord2f(tx+0.2, ty+0.2); glVertex2i(cx+w, cy-h);
+//        glTexCoord2f(tx,     ty+0.2); glVertex2i(cx-w, cy-h);
+//        glTexCoord2f(tx,     ty);     glVertex2i(cx-w, cy+h);
+//        glTexCoord2f(tx+0.2, ty);     glVertex2i(cx+w, cy+h);
+//        glTexCoord2f(tx+0.2, ty+0.2); glVertex2i(cx+w, cy-h);
+        glTexCoord2f(tx,     ty+0.2); glVertex2i(-w, -h);
+        glTexCoord2f(tx,     ty);     glVertex2i(-w, h);
+        glTexCoord2f(tx+0.2, ty);     glVertex2i(w, h);
+        glTexCoord2f(tx+0.2, ty+0.2); glVertex2i(w, -h);
+
         glEnd();
         glPopMatrix();
         glBindTexture(GL_TEXTURE_2D, 0);
