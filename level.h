@@ -6,7 +6,9 @@
 #include <vector>
 #include "kennyT.h"
 #include "tristanB.h"
+#include "kennyT.h"
 #include "rudyM.h"
+
 using namespace std;
 
 //defined types
@@ -25,14 +27,16 @@ public:
     // Create an arry of Banana Class
     vector<Banana> ban;
 
-	//Create an array of Slime(Enemy) Class
+	// Create an array of Slime(Enemy) Class
 	vector<Slime> slmE;
 
-	//Create an array of Zombie(Enemy) Class
+	// Create an array of Zombie(Enemy) Class
 	vector<Zombie> zmb;
 
-	//Create an array of Door Class
+	// Create an array of Door Class
 	vector<Door> dor;
+
+    // Create an array of Bullet() Class
 
     Level();
     void load(char*);

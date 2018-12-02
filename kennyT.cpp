@@ -422,3 +422,9 @@ void fetchHTTPScores(char *host, char *page)
     close(sock);
 }
 
+Bullet::Bullet(int x, int y, int vel)
+{
+    posX = x;
+    posY = y;
+    xvel = vel;
+}
