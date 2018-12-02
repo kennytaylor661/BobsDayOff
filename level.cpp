@@ -90,8 +90,8 @@ void Level::load(int levelNum)
 
     // Create new slime enemy
     slmE.push_back(*(new Slime(700, 100)));
-    //slmE.push_back(*(new Slime(1400, 100)));
-    //slmE.push_back(*(new Slime(3200, 100)));
+    slmE.push_back(*(new Slime(1400, 100)));
+    slmE.push_back(*(new Slime(3200, 100)));
 
     // Clear the vector of doors
     dor.clear();

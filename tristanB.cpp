@@ -32,8 +32,9 @@ void Enemy::physics()
     //	return;
     if (posY > 0) {
         this->posY += yvel;
-        this->hitbox.bottom += yvel;
-        this->hitbox.top += yvel;
+        hitbox.top = posY + height/2 + yOffset;
+        hitbox.bottom = posY - height/2 + yOffset;
+
         this->yvel += GRAVITY;
     }
 
@@ -217,10 +218,8 @@ void Player::physics()
 //Slime Class
 void Slime::AI(Player p)
 {
-    cout << "slime posY = " << posY << ", yOffset = " << yOffset << endl;
-
     // Wiggle the image up and down between (y + yRange) and (y - yRange)
-    int yRange = 50;
+    int yRange = 75;
     yOffset += yOffsetVel;
    if (yOffset > yRange) {
         yOffset = yRange;
