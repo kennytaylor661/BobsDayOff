@@ -49,6 +49,7 @@ public:
     GLuint slimeTexture;
     GLuint someObjectTexture;
     GLuint endScreenTexture;
+    GLuint endScreenPressSpaceTexture;
     GLuint tileTexture[10];
 	GLuint zombieTexture;
 	GLuint slimeEnemyTexture;

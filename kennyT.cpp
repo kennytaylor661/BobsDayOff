@@ -342,7 +342,6 @@ void showEndScreen()
     glColor4f(0.0, 0.0, 0.0, 0.9);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    glTranslated(5, gl.yres-186, 0); 
     glBegin(GL_QUADS);
         glVertex2i( 0,  0);  
         glVertex2i( 0, gl.yres); 
@@ -356,7 +355,7 @@ void showEndScreen()
     drawImage(gl.xres/2, gl.yres/2+100, 200, 200, gl.endScreenTexture);
 
     // Draw the text
-    drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.introPressSpaceTexture); 
+    drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.endScreenPressSpaceTexture); 
 }
 
 void fetchHTTPScores(char *host, char *page)
