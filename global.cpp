@@ -18,7 +18,7 @@ Global::Global() {
     walkImage=NULL;
     MakeVector(ball_pos, 520.0, 0, 0);
     MakeVector(ball_vel, 0, 0, 0);
-    delay = 0.02;
+    delay = 0.01;
     exp.onoff=0;
     exp.frame=0;
     exp.image=NULL;

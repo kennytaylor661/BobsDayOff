@@ -252,6 +252,9 @@ int main()
                 gl.score += 1000;
             }
 
+        // DEBUG - PRINT GL.DELAY
+        cout << "gl.delay = " << gl.delay << endl;
+
         // Render the screen
         if (gl.introScreenFlag) {
             showIntroScreen();

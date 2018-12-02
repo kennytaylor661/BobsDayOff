@@ -436,7 +436,7 @@ Bullet::Bullet(int x, int y, int vel)
     hitbox.left = posX - xsize/2; 
     hitbox.right = posX + xsize/2; 
 
-    cout << "Created new bullet at (" << x << ", " << y << ") with xvel = " << vel << endl;
+    //cout << "Created new bullet at (" << x << ", " << y << ") with xvel = " << vel << endl;
 }
 
 void Bullet::physics()
