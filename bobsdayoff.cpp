@@ -456,6 +456,13 @@ int checkKeys(XEvent *e)
     }
     (void)shift;
     switch (key) {
+        case XK_e:
+            // Enter the door, if player is standing in front of one
+            for (unsigned int i = 0; i < lev.dor.size(); i++)
+                if (pl->getHitbox().isColliding(lev.dor[i].getHitbox()))
+                    //lev.dor[i].loadDest();
+                    cout << "traveling through door.." << endl;
+            break;
         case XK_s:
             screenCapture();
             break;

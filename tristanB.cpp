@@ -280,6 +280,19 @@ void Zombie::render()
 //
 
 //Door Class
+
+Door::Door(int x, int y, int wid, int hgt)
+{
+    posX = x;
+    posY = y;
+    width = wid;
+    height = hgt;
+
+    hitbox.top = posY + height/2; 
+    hitbox.bottom = posY - height/2; 
+    hitbox.left = posX - width/2; 
+    hitbox.right = posX + width/2; 
+}
 void Door::loadDest()
 {
     lev.load(this->dest);
@@ -287,7 +300,6 @@ void Door::loadDest()
 
 void Door::render()
 {
-    cout << "rendering door at (" << posX - gl.camera[0] << ", " << posY << ")" << endl;
     glPushMatrix();
     glColor3ub(255,255,255);
     glTranslatef(posX - gl.camera[0], posY + 200, 0);

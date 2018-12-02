@@ -118,12 +118,13 @@ class Door
     int posX, posY, width, height;
     char* dest;
     GLuint texid = gl.doorTexture;
+    Hitbox hitbox;
 
     public:
-        Door(int x, int y, int wid, int hgt):
-            posX(x), posY(y), width(wid), height(hgt){}
+        Door(int, int, int, int);
         void loadDest();
         void render();
+        Hitbox getHitbox(){return this->hitbox;}
 };
 
 void tristanCredits(Rect* r);
