@@ -31,12 +31,14 @@ public:
     bool creditsFlag = 0; 
     bool leaderboardFlag = 0;
     bool endScreenFlag = 0;
+    bool initialScreenFlag = 0;
     bool fetchLeaders = 0;
 
     Image *walkImage;
     GLuint introScreenTexture;
     GLuint introTitleTexture;
     GLuint introPressSpaceTexture;
+    GLuint initialTexture;
     GLuint walkTexture;
     GLuint backgroundTexture;
     GLuint kennyCreditsTexture;

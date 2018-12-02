@@ -359,7 +359,7 @@ void showEndScreen()
     drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.endScreenPressSpaceTexture); 
 }
 
-void showInitialsScreen()
+void showInitialScreen()
 {
     // Gray out the background
     glPushMatrix();
@@ -379,14 +379,15 @@ void showInitialsScreen()
     glPushMatrix();
     glColor3ub(255,255,255);
     glBegin(GL_QUADS);
-        glVertex2i(gl.xres/2-150, gl.yres/2-180);
-        glVertex2i(gl.xres/2+150, gl.yres/2-180);
-        glVertex2i(gl.xres/2+150, gl.yres/2+180);
-        glVertex2i(gl.xres/2-150, gl.yres/2+180);
+        glVertex2i(gl.xres/2-175, gl.yres/2-180);
+        glVertex2i(gl.xres/2+175, gl.yres/2-180);
+        glVertex2i(gl.xres/2+175, gl.yres/2+180);
+        glVertex2i(gl.xres/2-175, gl.yres/2+180);
     glEnd();
     glPopMatrix();
 
-
+    // Prompt the user for initials
+    drawImage(gl.xres/2, gl.yres/2+150, 308, 47, gl.initialTexture);
 }
 
 void fetchHTTPScores(char *host, char *page)

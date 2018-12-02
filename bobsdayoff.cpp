@@ -340,7 +340,6 @@ void initOpengl(void)
     loadTexture(&gl.rudyTexture, "./images/resize_turtle.jpg");
 
     // Load the torch texture
-    //loadTexture(&gl.torchTexture, "./images/walltorch.jpg");
     loadTextureAlpha(&gl.torchTexture, "./images/torch.jpg");
 
     // Load the slime texture
@@ -360,6 +359,9 @@ void initOpengl(void)
 
     // Load the Door Texture
     loadTexture(&gl.doorTexture, "./images/door.jpg");
+
+    // Load the initials screen texture
+    loadTexture(&gl.initialTexture, "./images/initials.png");
 }
 
 void init() {
@@ -543,10 +545,10 @@ int checkKeys(XEvent *e)
             // Leave the end screen
             if (gl.endScreenFlag) {
                 gl.endScreenFlag = !gl.endScreenFlag;
-                loadLevel(&lev, 1);
-                gl.paused = 0;
-                gl.render = 1;
-                // Need to reload level and reset health here
+                gl.initialScreenFlag = 1;
+                //loadLevel(&lev, 1);
+                //gl.paused = 0;
+                //gl.render = 1;
             }
             break;
     }
@@ -948,6 +950,12 @@ void render()
     // ===========================
     if (gl.endScreenFlag)
         showEndScreen();
+
+    // ===========================
+    // Draw the initials screen
+    // ===========================
+    if (gl.initialScreenFlag)
+        showInitialScreen();
 
     if (gl.movie) {
         screenCapture();
