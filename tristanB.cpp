@@ -45,6 +45,7 @@ void Enemy::physics()
             // Delete the bullet object
             lev.bullet.erase(lev.bullet.begin() + i);
             cout << "  bullet collided with enemy!" << endl;
+            cout << "  new enemy HP = " << HP << endl;
         }
 
     this->AI(*pl);

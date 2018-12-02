@@ -234,6 +234,24 @@ int main()
             gl.endScreenFlag = 1;
         }
 
+        // Check for dead zombies
+        for (unsigned int i = 0; i < lev.zmb.size(); i++)
+            if (lev.zmb[i].HP <= 0) {
+                // Delete dead zombie
+                lev.zmb.erase(lev.zmb.begin() + i);
+                // Add player score
+                gl.score += 1000;
+            }
+
+        // Check for dead slime enemies
+        for (unsigned int i = 0; i < lev.slmE.size(); i++)
+            if (lev.slmE[i].HP <= 0) {
+                // Delete dead slime
+                lev.slmE.erase(lev.slmE.begin() + i); 
+                // Add player score
+                gl.score += 1000;
+            }
+
         // Render the screen
         if (gl.introScreenFlag) {
             showIntroScreen();

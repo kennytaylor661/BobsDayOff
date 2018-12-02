@@ -23,16 +23,6 @@ struct Hitbox
                ((bottom <= other.top && top >= other.bottom)  ||  
                 (top >= other.bottom && bottom <= other.top));
     }
-
-	bool isCollidingDebug(Hitbox other)
-	{
-        cout << "enemy: left=" << left << ", right=" << right << ", bottom=" << bottom << ", top=" << top << endl;
-        cout << "bullet: left=" << other.left << ", right=" << other.right << ", bottom=" << other.bottom << ", top=" << other.top << endl;
-		return ((left <= other.right && right >= other.left)  ||
-				(right >= other.left && left <= other.right)) &&
-			   ((bottom <= other.top && top >= other.bottom)  ||
-				(top >= other.bottom && bottom <= other.top));
-	}
 };
 
 class Player
@@ -74,7 +64,7 @@ class Enemy
 		Enemy(float x, float y): posX(x), posY(y) {}
 		~Enemy(){}
 
-        int HP;
+        int HP = 3;
 		void moveLeft();
 		void moveRight();
 		virtual void AI(Player p) = 0;
@@ -96,7 +86,7 @@ class Slime : public Enemy
 		hitbox.left = posX - 25;
 		hitbox.right = posX + 25;
 	}
-	int HP = 1;
+	//int HP = 1;
 	int damage = 10;
 	void AI(Player p);
 	void render();
@@ -116,7 +106,7 @@ class Zombie : public Enemy
 		hitbox.right = posX + 50;
 
 	}
-	int HP = 5;
+	//int HP = 5;
 	int damage = 10;
 	void AI(Player p);
 	void render();
