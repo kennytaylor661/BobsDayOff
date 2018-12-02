@@ -359,7 +359,7 @@ void initOpengl(void)
     loadTextureAlpha(&gl.endScreenPressSpaceTexture, "./images/end_press_space.png");
 
     // Load the Door Texture
-    //loadTexture(&gl.doorTexture, "./images/door.jpg");
+    loadTexture(&gl.doorTexture, "./images/door.jpg");
 }
 
 void init() {
@@ -785,6 +785,15 @@ void render()
 
     }
 
+    // =================
+    // Draw Door objects
+    // =================
+    for (unsigned int i = 0; i < lev.dor.size(); i++)
+        lev.dor[i].render();
+
+    // =====================
+    // Draw wall decorations
+    // =====================
     drawWallDecorations(dd, ncols_to_render, offx, offy);
 
     // ========================

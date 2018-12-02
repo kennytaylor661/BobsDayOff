@@ -23,4 +23,5 @@ List of level textures:
 
 List of objects:
 
-  ! - torch with grey textures  
+  ! - torch
+  * - slime  

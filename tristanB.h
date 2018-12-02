@@ -115,16 +115,15 @@ class Zombie : public Enemy
 
 class Door
 {
-	std::pair<int, int> upleft, downright; 
-	//coordinates for the UL and LR corners
-	char* dest;
-	GLuint texid = gl.doorTexture;
+    int posX, posY, width, height;
+    char* dest;
+    GLuint texid = gl.doorTexture;
 
-	Door(int x1, int y1, int x2, int y2, char* dest, GLuint texture):
-		upleft(x1,y1), downright(x2, y2), dest(dest), texid(texture){}
-	public:
-	void loadDest();
-	void render();
+    public:
+        Door(int x, int y, int wid, int hgt):
+            posX(x), posY(y), width(wid), height(hgt){}
+        void loadDest();
+        void render();
 };
 
 void tristanCredits(Rect* r);

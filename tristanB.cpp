@@ -1,4 +1,4 @@
-//Name: Tristan Bock
+
 //Date: 2018-09-25
 #include "tristanB.h"
 #include <cstdlib> //Rand()
@@ -287,16 +287,16 @@ void Door::loadDest()
 
 void Door::render()
 {
-    float h = 64.0;
-    float w = 32.0;
+    cout << "rendering door at (" << posX - gl.camera[0] << ", " << posY << ")" << endl;
     glPushMatrix();
     glColor3ub(255,255,255);
+    glTranslatef(posX - gl.camera[0], posY + 200, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 1.0f); glVertex2i(-w, -h);
-    glTexCoord2f(1.0f, 1.0f); glVertex2i(w, -h);
-    glTexCoord2f(1.0f, 0.0f); glVertex2i(w, h);
-    glTexCoord2f(0.0f, 0.0f); glVertex2i(-w, h);
+    glTexCoord2f(0.0f, 1.0f); glVertex2i(-width/2, -height/2);
+    glTexCoord2f(1.0f, 1.0f); glVertex2i(width/2, -height/2);
+    glTexCoord2f(1.0f, 0.0f); glVertex2i(width/2, height/2);
+    glTexCoord2f(0.0f, 0.0f); glVertex2i(-width/2, height/2);
     glEnd();
     glPopMatrix();
 }

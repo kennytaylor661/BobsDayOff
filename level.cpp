@@ -79,6 +79,12 @@ void Level::load(char *filename)
     slmE.push_back(*(new Slime(700, 400)));
     slmE.push_back(*(new Slime(1400, 400)));
     slmE.push_back(*(new Slime(3200, 400)));
+
+    // Clear the vector of doors
+    dor.clear();
+
+    // Place a static door at x=3800
+    dor.push_back(*(new Door(3800, 64, 128, 256)));
 }
 
 void Level::removeCrLf(char *str) {
