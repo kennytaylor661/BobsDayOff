@@ -66,8 +66,8 @@ std::pair<int, int> Player::getPos()
 void Player::moveLeft()
 {
     posX -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.left -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.right -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.left = posX - 32;
+    hitbox.right = posX + 32;
 
     // Move the background to the right
     gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
@@ -86,8 +86,8 @@ void Player::moveLeft()
 void Player::moveRight()
 {
     posX += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.left += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.right += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
+    hitbox.left = posX - 32;
+    hitbox.right = posX + 32;
 
     // Move the background to the left
     gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
