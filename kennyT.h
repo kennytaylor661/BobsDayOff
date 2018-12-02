@@ -18,6 +18,8 @@ class Bullet
     Hitbox hitbox;
     public:
         Bullet(int, int, int);
+        void physics();
+        void render();
 };
 
 #endif

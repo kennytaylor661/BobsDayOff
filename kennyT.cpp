@@ -428,3 +428,22 @@ Bullet::Bullet(int x, int y, int vel)
     posY = y;
     xvel = vel;
 }
+
+void Bullet::physics()
+{
+    posX += xvel;
+}
+
+void Bullet::render()
+{
+    glPushMatrix();
+    glColor3f(0.8, 0.8, 0.8); 
+    glTranslated(posX, posY, 0); 
+    glBegin(GL_QUADS);
+        glVertex2i( 0,  0);  
+        glVertex2i( 0, 4); 
+        glVertex2i(4, 4); 
+        glVertex2i(4,  0);  
+    glEnd();
+    glPopMatrix();
+}
