@@ -45,6 +45,7 @@ class Player
 	int bananaCount = 0;
 	int getHP(){return this->HP;}
 	std::pair<int, int> getPos();
+    void resetPos();
 	void moveLeft();
 	void moveRight();
 	void Jump();

@@ -7,6 +7,7 @@
 using namespace std;
 
 extern Global gl;
+extern Player *pl;
 
 Level::Level() {
     load(1);
@@ -63,6 +64,7 @@ void Level::load(int levelNum)
     // Put player back at the start of the level
     gl.camera[0] = gl.camera[1] = 0.0;
     gl.backgroundXoffset = 0.0;
+    pl->resetPos();
 
     // Clear the vector of Banana Objects
     ban.clear();

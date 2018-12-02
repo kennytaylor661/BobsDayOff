@@ -60,7 +60,18 @@ std::pair<int, int> Enemy::getPos()
 //Player Class
 std::pair<int, int> Player::getPos()
 {
-    return std::pair<int, int>(this->posX, this->posY);
+    return std::pair<int, int>(posX, posY);
+}
+
+void Player::resetPos()
+{
+    posX = gl.xres/2;
+    posY = 0.0f;
+
+    hitbox.top = posY + 64; 
+    hitbox.bottom = posY - 64; 
+    hitbox.left = posX - 32; 
+    hitbox.right = posX + 32; 
 }
 
 void Player::moveLeft()

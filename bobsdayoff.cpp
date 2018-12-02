@@ -526,6 +526,7 @@ int checkKeys(XEvent *e)
             return 1;
             break;
         case XK_Return:
+            cout << "bullet created at (" << playerLoc.first << ", " << playerLoc.second << ")" << endl;
             lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second, 10 * gl.lastFacing)));
             break;
         case XK_c: //Credits key is C.
