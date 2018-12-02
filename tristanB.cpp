@@ -217,18 +217,26 @@ void Player::physics()
 //Slime Class
 void Slime::AI(Player p)
 {
-    if (rand()%2 == 0)
-        this->moveLeft();
-    else
-        this->moveRight();
-    usleep(2000);
+    cout << "slime posY = " << posY << ", yOffset = " << yOffset << endl;
+
+    // Wiggle the image up and down between (y + yRange) and (y - yRange)
+    int yRange = 50;
+    yOffset += yOffsetVel;
+   if (yOffset > yRange) {
+        yOffset = yRange;
+        yOffsetVel = -2;
+    } else if (yOffset < -yRange) {
+        yOffset = -yRange;
+        yOffsetVel = 2;
+    }
 }
 
 void Slime::render()
 {
+
     glPushMatrix();
     glColor3ub(255,255,255);
-    glTranslatef(posX - gl.camera[0], posY + 225, 0);
+    glTranslatef(posX - gl.camera[0], posY + 225 + yOffset, 0);
     glBindTexture(GL_TEXTURE_2D, texid);
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);

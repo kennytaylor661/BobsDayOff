@@ -58,7 +58,7 @@ class Player
 class Enemy
 {
 	protected:
-		float posX, posY, xvel = 0, yvel = 0;
+		float posX, posY, xvel = 0, yvel = 0, yOffset, yOffsetVel = 2;
         int width, height;
         Hitbox hitbox;
 
