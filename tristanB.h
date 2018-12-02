@@ -59,6 +59,7 @@ class Enemy
 {
 	protected:
 		float posX, posY, xvel = 0, yvel = 0;
+        int width, height;
         Hitbox hitbox;
 
 	public:
@@ -82,10 +83,13 @@ class Slime : public Enemy
 	public:
 	Slime(float x, float y): Enemy(x, y)
 	{
-		hitbox.top = posY + 25;
-		hitbox.bottom = posY - 25;
-		hitbox.left = posX - 25;
-		hitbox.right = posX + 25;
+        width = 80;
+        height = 80;
+
+		hitbox.top = posY + height/2;
+		hitbox.bottom = posY - height/2;
+		hitbox.left = posX - width/2;
+		hitbox.right = posX + width/2;
 	}
 	//int HP = 1;
 	int damage = 10;
@@ -101,10 +105,13 @@ class Zombie : public Enemy
 	public:
 	Zombie(float x, float y): Enemy(x, y)
 	{
-		hitbox.top = posY + 50;
-		hitbox.bottom = posY - 50;
-		hitbox.left = posX - 50;
-		hitbox.right = posX + 50;
+        width = 100;
+        height = 200;
+
+		hitbox.top = posY + height/2;
+		hitbox.bottom = posY - height/2;
+		hitbox.left = posX - width/2;
+		hitbox.right = posX + width/2;
 
 	}
 	//int HP = 5;

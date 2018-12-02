@@ -226,7 +226,6 @@ void Slime::AI(Player p)
 
 void Slime::render()
 {
-    int wid = 25;
     glPushMatrix();
     glColor3ub(255,255,255);
     glTranslatef(posX - gl.camera[0], posY + 225, 0);
@@ -234,10 +233,10 @@ void Slime::render()
     glEnable(GL_ALPHA_TEST);
     glAlphaFunc(GL_GREATER, 0.0f);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-    glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
-    glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
-    glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-width/2, -height/2);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(width/2, -height/2);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(width/2, height/2);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(-width/2, height/2);
     glEnd();
     glDisable(GL_ALPHA_TEST);
     glPopMatrix();
@@ -259,7 +258,6 @@ void Zombie::AI(Player p)
 
 void Zombie::render()
 {
-    int wid = 50;
     glPushMatrix();
     glColor3ub(255,255,255);
     glTranslatef(posX - gl.camera[0], posY + 200, 0);
@@ -271,16 +269,16 @@ void Zombie::render()
     std::pair<int,int> playerLoc = pl->getPos();
     if (playerLoc.first >= posX) {
         // Draw zombie facing right
-        glTexCoord2f(0.0f, 1.0f); glVertex2i(-wid, -wid);
-        glTexCoord2f(1.0f, 1.0f); glVertex2i(wid, -wid);
-        glTexCoord2f(1.0f, 0.0f); glVertex2i(wid, wid);
-        glTexCoord2f(0.0f, 0.0f); glVertex2i(-wid, wid);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(-width/2, -height/2);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(width/2, -height/2);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(width/2, height/2);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(-width/2, height/2);
     } else if (playerLoc.first < posX) {
         // Draw zombie facing left
-        glTexCoord2f(1.0f, 1.0f); glVertex2i(-wid, -wid);
-        glTexCoord2f(0.0f, 1.0f); glVertex2i(wid, -wid);
-        glTexCoord2f(0.0f, 0.0f); glVertex2i(wid, wid);
-        glTexCoord2f(1.0f, 0.0f); glVertex2i(-wid, wid);
+        glTexCoord2f(1.0f, 1.0f); glVertex2i(-width/2, -height/2);
+        glTexCoord2f(0.0f, 1.0f); glVertex2i(width/2, -height/2);
+        glTexCoord2f(0.0f, 0.0f); glVertex2i(width/2, height/2);
+        glTexCoord2f(1.0f, 0.0f); glVertex2i(-width/2, height/2);
     }
 
     glEnd();
