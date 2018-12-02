@@ -10,6 +10,7 @@ void drawHUD(struct timespec ts);
 void drawImage(int, int, int, int, GLuint);
 void fetchHTTPScores(char*, char*);
 void showEndScreen();
+void showInitialsScreen();
 
 class Bullet
 {

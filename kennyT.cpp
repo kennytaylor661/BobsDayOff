@@ -244,7 +244,7 @@ void drawHUD(struct timespec ts)
     //ggprint8b(&upperLeft, 16, c, "W     Walk cycle");
     ggprint8b(&upperLeft, 16, c, "ENTER    Shoot");
     ggprint8b(&upperLeft, 16, c, "SPACE    Jump");
-    //ggprint8b(&upperLeft, 16, c, "E        Explosion");
+    ggprint8b(&upperLeft, 16, c, "E        Enter Door");
     ggprint8b(&upperLeft, 16, c, "C        Credits");
     ggprint8b(&upperLeft, 16, c, "[1-3]    Change Level"); 
     //ggprint8b(&upperLeft, 16, c, "+        faster");
@@ -358,6 +358,11 @@ void showEndScreen()
 
     // Draw the text
     drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.endScreenPressSpaceTexture); 
+}
+
+void showInitialsScreen()
+{
+
 }
 
 void fetchHTTPScores(char *host, char *page)
