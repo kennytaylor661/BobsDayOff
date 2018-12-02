@@ -42,6 +42,8 @@ void Enemy::physics()
         if (this->getHitbox().isColliding(lev.bullet[i].getHitbox())) {
             // Decrement the enemy hitpoints
             HP--;
+            // Delete the bullet object
+            lev.bullet.erase(lev.bullet.begin() + i);
             cout << "  bullet collided with enemy!" << endl;
         }
 

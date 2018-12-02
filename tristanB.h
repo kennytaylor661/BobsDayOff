@@ -16,8 +16,18 @@ struct Hitbox
 	Hitbox(float t, float b, float l, float r):
 		top(t), bottom(b), left(l), right(r){}
 
-	bool isColliding(Hitbox other)
+    bool isColliding(Hitbox other)
+    {
+        return ((left <= other.right && right >= other.left)  ||  
+                (right >= other.left && left <= other.right)) &&
+               ((bottom <= other.top && top >= other.bottom)  ||  
+                (top >= other.bottom && bottom <= other.top));
+    }
+
+	bool isCollidingDebug(Hitbox other)
 	{
+        cout << "enemy: left=" << left << ", right=" << right << ", bottom=" << bottom << ", top=" << top << endl;
+        cout << "bullet: left=" << other.left << ", right=" << other.right << ", bottom=" << other.bottom << ", top=" << other.top << endl;
 		return ((left <= other.right && right >= other.left)  ||
 				(right >= other.left && left <= other.right)) &&
 			   ((bottom <= other.top && top >= other.bottom)  ||

@@ -487,7 +487,7 @@ int checkKeys(XEvent *e)
             return 1;
             break;
         case XK_Return:
-            lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second + 30, 10 * gl.lastFacing)));
+            lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second, 10 * gl.lastFacing)));
             break;
         case XK_c: //Credits key is C.
             gl.creditsFlag = !gl.creditsFlag;
