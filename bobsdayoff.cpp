@@ -458,41 +458,127 @@ int checkKeys(XEvent *e)
     }
     (void)shift;
     switch (key) {
-        case XK_e:
-            // Enter the door, if player is standing in front of one
-            for (unsigned int i = 0; i < lev.dor.size(); i++)
-                if (pl->getHitbox().isColliding(lev.dor[i].getHitbox()))
-                    lev.dor[i].loadDest();
-                    //cout << "traveling through door.." << endl;
+        case XK_a:
+            if (gl.initialScreenFlag)
+                pushInitials('A');
             break;
-        case XK_s:
-            screenCapture();
+        case XK_b:
+            if (gl.initialScreenFlag)
+                pushInitials('B');
+            break;
+        case XK_c: //Credits key is C.
+            if (gl.initialScreenFlag)
+                pushInitials('C');
+            else
+                gl.creditsFlag = !gl.creditsFlag;
+            break;
+        case XK_d:
+            if (gl.initialScreenFlag)
+                pushInitials('D');
+            break;
+        case XK_e:
+            if (gl.initialScreenFlag)
+                pushInitials('E');
+            else {
+                // Enter the door, if player is standing in front of one
+                for (unsigned int i = 0; i < lev.dor.size(); i++)
+                    if (pl->getHitbox().isColliding(lev.dor[i].getHitbox()))
+                        lev.dor[i].loadDest();
+            }
+            break;
+        case XK_f:
+            if (gl.initialScreenFlag)
+                pushInitials('F');
+            break;
+        case XK_g:
+            if (gl.initialScreenFlag)
+                pushInitials('G');
+            break;
+        case XK_h:
+            if (gl.initialScreenFlag)
+                pushInitials('H');
+            break;
+        case XK_i:
+            if (gl.initialScreenFlag)
+                pushInitials('I');
+            break;
+        case XK_j:
+            if (gl.initialScreenFlag)
+                pushInitials('J');
+            break;
+        case XK_k:
+            if (gl.initialScreenFlag)
+                pushInitials('K');
+            break;
+        case XK_l:
+            if (gl.initialScreenFlag)
+                pushInitials('L');
+            else {
+                gl.fetchLeaders = 1;
+                gl.leaderboardFlag = !gl.leaderboardFlag;
+            }
             break;
         case XK_m:
-            gl.movie ^= 1;
+            if (gl.initialScreenFlag)
+                pushInitials('M');
+            else
+                gl.movie ^= 1;
             break;
-        //case XK_w:
-        //    timers.recordTime(&timers.walkTime);
-        //    gl.walk ^= 1;
-        //    break;
-        //case XK_e:
-        //    gl.exp.pos[0] = 200.0;
-        //    gl.exp.pos[1] = -60.0;
-        //    gl.exp.pos[2] =   0.0;
-        //    timers.recordTime(&gl.exp.time);
-        //    gl.exp.onoff ^= 1;
-        //    break;
-        //case XK_f:
-        //    gl.exp44.pos[0] = 200.0;
-        //    gl.exp44.pos[1] = -60.0;
-        //    gl.exp44.pos[2] =   0.0;
-        //    timers.recordTime(&gl.exp44.time);
-        //    gl.exp44.onoff ^= 1;
-        //    break;
-        case XK_l:
-            gl.fetchLeaders = 1;
-            gl.leaderboardFlag = !gl.leaderboardFlag;
+        case XK_n:
+            if (gl.initialScreenFlag)
+                pushInitials('N');
             break;
+        case XK_o:
+            if (gl.initialScreenFlag)
+                pushInitials('O');
+            break;
+        case XK_p:
+            if (gl.initialScreenFlag)
+                pushInitials('P');
+            break;
+        case XK_q:
+            if (gl.initialScreenFlag)
+                pushInitials('Q');
+            break;
+        case XK_r:
+            if (gl.initialScreenFlag)
+                pushInitials('R');
+            break;
+        case XK_s:
+            if (gl.initialScreenFlag)
+                pushInitials('S');
+            else
+                screenCapture();
+            break;
+        case XK_t:
+            if (gl.initialScreenFlag)
+                pushInitials('T');
+            break;
+        case XK_u:
+            if (gl.initialScreenFlag)
+                pushInitials('U');
+            break;
+        case XK_v:
+            if (gl.initialScreenFlag)
+                pushInitials('V');
+            break;
+        case XK_w:
+            if (gl.initialScreenFlag)
+                pushInitials('W');
+            break;
+        case XK_x:
+            if (gl.initialScreenFlag)
+                pushInitials('X');
+            break;
+        case XK_y:
+            if (gl.initialScreenFlag)
+                pushInitials('Y');
+            break;
+        case XK_z:
+            if (gl.initialScreenFlag)
+                pushInitials('Z');
+            break;
+
         case XK_1:
             gl.render=0;
             loadLevel(&lev, 1);
@@ -530,9 +616,6 @@ int checkKeys(XEvent *e)
         case XK_Return:
             cout << "bullet created at (" << playerLoc.first << ", " << playerLoc.second << ")" << endl;
             lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second, 10 * gl.lastFacing)));
-            break;
-        case XK_c: //Credits key is C.
-            gl.creditsFlag = !gl.creditsFlag;
             break;
         case XK_space:
             if (!gl.endScreenFlag)

@@ -21,6 +21,9 @@ extern void timeCopy(struct timespec *dest, struct timespec *source);
 static double yVelocity = 1;
 static double yOffset = 0;
 
+static char initials[4];
+static int iCount;
+
 extern Global gl;
 extern Player* pl;
 
@@ -489,4 +492,25 @@ void Bullet::render()
         glVertex2i(xsize,  0);  
     glEnd();
     glPopMatrix();
+}
+
+void pushInitials(char c)
+{
+    initials[iCount] = c;
+    iCount++;
+    cout << "user entered '" << c << "', iCount = " << iCount << endl;
+
+    // Check to see if user has entered three initials
+    if (iCount == 3) {
+        initials[iCount] = '\0';
+        cout << "user entered: " << initials << endl;
+        gl.initialScreenFlag = 0;
+        // Push high scores to minions.rocket-tech.net
+        // ADD THE CODE HERE
+
+        // Show the leaderboard
+        gl.fetchLeaders = 1; 
+        gl.leaderboardFlag = !gl.leaderboardFlag;
+        iCount = 0;
+    }
 }

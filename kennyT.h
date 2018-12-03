@@ -11,6 +11,7 @@ void drawImage(int, int, int, int, GLuint);
 void fetchHTTPScores(char*, char*);
 void showEndScreen();
 void showInitialScreen();
+void pushInitials(char);
 
 class Bullet
 {
