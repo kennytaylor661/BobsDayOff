@@ -66,6 +66,9 @@ void Level::load(int levelNum)
     gl.backgroundXoffset = 0.0;
     pl->resetPos();
 
+    // Reset the score
+    gl.score = 0;
+
     // Clear the vector of Banana Objects
     ban.clear();
 

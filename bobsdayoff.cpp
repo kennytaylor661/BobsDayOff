@@ -618,7 +618,7 @@ int checkKeys(XEvent *e)
             lev.bullet.push_back(*(new Bullet(playerLoc.first, playerLoc.second, 10 * gl.lastFacing)));
             break;
         case XK_space:
-            if (!gl.endScreenFlag)
+            if (!gl.leaderboardFlag && !gl.endScreenFlag)
                 pl->Jump();
             // Leave the intro screen
             if (gl.introScreenFlag) {
@@ -629,9 +629,12 @@ int checkKeys(XEvent *e)
             if (gl.endScreenFlag) {
                 gl.endScreenFlag = !gl.endScreenFlag;
                 gl.initialScreenFlag = 1;
-                //loadLevel(&lev, 1);
-                //gl.paused = 0;
-                //gl.render = 1;
+            }
+            if (gl.leaderboardFlag) {
+                gl.leaderboardFlag = 0;
+                loadLevel(&lev, 1);
+                gl.paused = 0;
+                gl.render = 1;
             }
             break;
     }

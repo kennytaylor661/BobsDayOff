@@ -289,14 +289,28 @@ void showLeaderboard()
 {
     // Show the top 5 scores, pulled from minons.rocket-tech.net/getscores.php
 
+    // Gray out the background
+    glPushMatrix();
+    glColor4f(0.0, 0.0, 0.0, 0.9);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBegin(GL_QUADS);
+        glVertex2i( 0,  0);
+        glVertex2i( 0, gl.yres);
+        glVertex2i(gl.xres, gl.yres);
+        glVertex2i(gl.xres,  0);
+    glEnd();
+    glDisable(GL_BLEND);
+    glPopMatrix();
+
     // Draw background rectangle (center in viewport)
     glPushMatrix();
     glColor3ub(255,255,255);
     glBegin(GL_QUADS);
-        glVertex2i(gl.xres/2-150, gl.yres/2-180);
-        glVertex2i(gl.xres/2+150, gl.yres/2-180);
-        glVertex2i(gl.xres/2+150, gl.yres/2+180);
-        glVertex2i(gl.xres/2-150, gl.yres/2+180);
+        glVertex2i(gl.xres/2-175, gl.yres/2-180);
+        glVertex2i(gl.xres/2+175, gl.yres/2-180);
+        glVertex2i(gl.xres/2+175, gl.yres/2+180);
+        glVertex2i(gl.xres/2-175, gl.yres/2+180);
     glEnd();
     glPopMatrix();
 
@@ -317,6 +331,9 @@ void showLeaderboard()
         drawText16(x, y-96, 0x800080, (char*)gl.leader4.c_str());
         drawText16(x, y-128, 0x800080, (char*)gl.leader5.c_str());
     }
+
+    // Draw the 'press space to continue' image
+    drawImage(gl.xres/2, gl.yres/2-130, 351, 51, gl.endScreenPressSpaceTexture);
 }
 
 void showIntroScreen()
