@@ -317,7 +317,8 @@ void showLeaderboard()
     glPopMatrix();
 
     // Draw the credits title
-    drawText16(gl.xres/2-50, gl.yres/2+140, 0x004040ff, (char*)"High Scores:");
+    //drawText16(gl.xres/2-50, gl.yres/2+140, 0x004040ff, (char*)"High Scores:");
+    drawImage(gl.xres/2, gl.yres/2+140, 213, 47, gl.highScoreTexture);
 
     // Pull the current leaders from http://minions.rocket-tech.net/getscores.php
     // Conditional statement avoids doing HTTP request every render loop

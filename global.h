@@ -39,6 +39,7 @@ public:
     GLuint introTitleTexture;
     GLuint introPressSpaceTexture;
     GLuint initialTexture;
+    GLuint highScoreTexture;
     GLuint walkTexture;
     GLuint backgroundTexture;
     GLuint kennyCreditsTexture;

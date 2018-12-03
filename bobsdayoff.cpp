@@ -362,6 +362,9 @@ void initOpengl(void)
 
     // Load the initials screen texture
     loadTexture(&gl.initialTexture, "./images/initials.png");
+
+    // Load the high scores screen texture
+    loadTexture(&gl.highScoreTexture, "./images/high_scores.png");
 }
 
 void init() {
