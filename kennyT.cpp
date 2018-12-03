@@ -223,7 +223,8 @@ void loadTextureAlpha(GLuint *tex, Image img)
 
 void drawHUD(struct timespec ts)
 {
-    unsigned int c = 0x00ffff44;
+    //unsigned int c = 0x00ffff44;
+    unsigned int c = 0x00ffffff;
     struct timespec te;
     Rect upperLeft, upperRight;
 
@@ -263,22 +264,22 @@ void drawHUD(struct timespec ts)
     glColor4f(0.4, 0.4, 0.4, 0.7);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glTranslated(gl.xres-100-5, gl.yres-50-5, 0); 
+    glTranslated(gl.xres-130-5, gl.yres-60-5, 0); 
     glBegin(GL_QUADS);
         glVertex2i( 0,  0);  
-        glVertex2i( 0, 50); 
-        glVertex2i(100, 50); 
-        glVertex2i(100,  0);  
+        glVertex2i( 0, 60); 
+        glVertex2i(130, 60); 
+        glVertex2i(130,  0);  
     glEnd();
     glDisable(GL_BLEND);
     glPopMatrix();
  
     // Draw the text in the upper-left
-    upperRight.bot = gl.yres - 20; 
-    upperRight.left = gl.xres - 100; 
+    upperRight.bot = gl.yres - 30; 
+    upperRight.left = gl.xres - 130; 
     upperRight.center = 0;
-    ggprint8b(&upperRight, 16, c, "Score: %d", gl.score);
-    ggprint8b(&upperRight, 16, c, "Health: %d", pl->getHP());
+    ggprint16(&upperRight, 30, c, "Score: %d", gl.score);
+    ggprint16(&upperRight, 30, c, "Health: %d", pl->getHP());    
 
     // Draw the physics and render times (do this last)
     clock_gettime(CLOCK_REALTIME, &te);

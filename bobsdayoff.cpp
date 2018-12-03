@@ -638,6 +638,7 @@ int checkKeys(XEvent *e)
             if (gl.leaderboardFlag) {
                 gl.leaderboardFlag = 0;
                 loadLevel(&lev, 1);
+                gl.score = 0;
                 gl.paused = 0;
                 gl.render = 1;
             }
