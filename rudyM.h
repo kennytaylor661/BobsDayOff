@@ -3,9 +3,9 @@
  *Modified on: 11/27/18
  *
 */
+
 #ifndef RUDY_H
 #define RUDY_H
-
 #include <GL/glx.h>
 #include <utility>
 #include "global.h"
