@@ -322,7 +322,7 @@ void showLeaderboard()
 
     // Pull the current leaders from http://minions.rocket-tech.net/getscores.php
     // Conditional statement avoids doing HTTP request every render loop
-    int x = gl.xres/2 - 40;
+    int x = gl.xres/2 - 70;
     int y = gl.yres/2 + 60;
     if (gl.fetchLeaders == 1) {
         gl.fetchLeaders = 0;
