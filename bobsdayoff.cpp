@@ -538,6 +538,8 @@ int checkKeys(XEvent *e)
         case XK_p:
             if (gl.initialScreenFlag)
                 pushInitials('P');
+            if(!gl.initialScreenFlag)
+                gl.paused = !gl.paused;
             break;
         case XK_q:
             if (gl.initialScreenFlag)

@@ -251,7 +251,8 @@ void drawHUD(struct timespec ts)
     ggprint8b(&upperLeft, 16, c, "SPACE    Jump");
     ggprint8b(&upperLeft, 16, c, "E        Enter Door");
     ggprint8b(&upperLeft, 16, c, "C        Credits");
-    ggprint8b(&upperLeft, 16, c, "[1-3]    Change Level"); 
+    ggprint8b(&upperLeft, 16, c, "P        Pause");
+    //ggprint8b(&upperLeft, 16, c, "[1-3]    Change Level"); 
     //ggprint8b(&upperLeft, 16, c, "+        faster");
     //ggprint8b(&upperLeft, 16, c, "-        slower");
     ggprint8b(&upperLeft, 16, c, "D, right walk right");
