@@ -540,7 +540,7 @@ void pushInitials(char c)
 void uploadScore()
 {
     string host = "minions.rocket-tech.net"; 
-    string page = "postScore.php?initials=";
+    string page = "postscore.php?initials=";
     page.append(initials);
     page.append("&score=");
     char score[30];
