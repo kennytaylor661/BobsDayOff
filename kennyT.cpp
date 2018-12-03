@@ -4,6 +4,8 @@
 
 #include <GL/glx.h>
 #include <iostream>
+#include <cstdio>
+#include <string>
 #include "fonts.h"
 #include "global.h"
 #include "http.h"
@@ -522,12 +524,50 @@ void pushInitials(char c)
         initials[iCount] = '\0';
         cout << "user entered: " << initials << endl;
         gl.initialScreenFlag = 0;
+
         // Push high scores to minions.rocket-tech.net
-        // ADD THE CODE HERE
+        uploadScore();
+        cout << "score uploaded successfully" << endl;
 
         // Show the leaderboard
         gl.fetchLeaders = 1; 
         gl.leaderboardFlag = !gl.leaderboardFlag;
         iCount = 0;
     }
+}
+
+void uploadScore()
+{
+    string host = "minions.rocket-tech.net"; 
+    string page = "postScore.php?initials=";
+    page.append(initials);
+    page.append("&score=");
+    char score[30];
+    sprintf(score, "%d", gl.score);
+    page.append(score);
+    cout << "posting score to:  " << host << "/" << page << endl;
+
+    int sock = create_tcp_socket();
+    char *ip = get_ip((char*)host.c_str());
+    //fprintf(stderr, "IP is %s\n", ip);
+    struct sockaddr_in *remote = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
+    remote->sin_family = AF_INET;
+    int tmpres = inet_pton(AF_INET, ip, (void *)(&(remote->sin_addr.s_addr)));
+    remote->sin_port = htons(80);
+
+    if (connect(sock, (struct sockaddr *)remote, sizeof(struct sockaddr)) >= 0) {
+        // Connected successfully
+        char *get = build_get_query((char*)host.c_str(), (char*)page.c_str());
+        //fprintf(stderr, "Query is:\n<<START>>\n%s<<END>>\n", get);
+        int sent = 0;
+        while (sent < (int)strlen(get)) {
+            tmpres = send(sock, get+sent, strlen(get)-sent, 0); 
+            if (tmpres == -1) {
+                fprintf(stderr, "send command, Can't send query");
+                exit(1);
+             }
+            sent += tmpres;
+        }
+    }
+    close(sock);
 }

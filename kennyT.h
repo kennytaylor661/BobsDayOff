@@ -12,6 +12,7 @@ void fetchHTTPScores(char*, char*);
 void showEndScreen();
 void showInitialScreen();
 void pushInitials(char);
+void uploadScore();
 
 class Bullet
 {
