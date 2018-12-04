@@ -22,7 +22,6 @@ extern void timeCopy(struct timespec *dest, struct timespec *source);
 
 static double yVelocity = 1;
 static double yOffset = 0;
-
 static char initials[4];
 static int iCount;
 
@@ -413,6 +412,9 @@ void showInitialScreen()
 
     // Prompt the user for initials
     drawImage(gl.xres/2, gl.yres/2+150, 308, 47, gl.initialTexture);
+
+    // Echo the initials back to the player
+    drawText16(gl.xres/2 - 30, gl.yres/2, 0x00000000, initials);
 }
 
 void fetchHTTPScores(char *host, char *page)
@@ -520,17 +522,17 @@ void pushInitials(char c)
 {
     initials[iCount] = c;
     iCount++;
-    cout << "user entered '" << c << "', iCount = " << iCount << endl;
+    //cout << "user entered '" << c << "', iCount = " << iCount << endl;
 
     // Check to see if user has entered three initials
     if (iCount == 3) {
         initials[iCount] = '\0';
-        cout << "user entered: " << initials << endl;
+        //cout << "user entered: " << initials << endl;
         gl.initialScreenFlag = 0;
 
         // Push high scores to minions.rocket-tech.net
         uploadScore();
-        cout << "score uploaded successfully" << endl;
+        //cout << "score uploaded successfully" << endl;
 
         // Show the leaderboard
         gl.fetchLeaders = 1; 
