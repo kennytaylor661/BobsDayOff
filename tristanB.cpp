@@ -69,17 +69,17 @@ void Player::resetPos()
     posX = gl.xres/2;
     posY = 0.0f;
 
-    hitbox.top = posY + 64; 
-    hitbox.bottom = posY - 64; 
-    hitbox.left = posX - 32; 
-    hitbox.right = posX + 32; 
+    hitbox.top = posY + height; 
+    hitbox.bottom = posY; 
+    hitbox.left = posX - width/2; 
+    hitbox.right = posX + width/2; 
 }
 
 void Player::moveLeft()
 {
     posX -= 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.left = posX - 32;
-    hitbox.right = posX + 32;
+    hitbox.left = posX - width/2;
+    hitbox.right = posX + width/2;
 
     // Move the background to the right
     gl.backgroundXoffset += 1.0 * (0.05 / gl.delay);
@@ -98,8 +98,8 @@ void Player::moveLeft()
 void Player::moveRight()
 {
     posX += 2.0/lev.tilesize[0] * (1.0 / gl.delay);
-    hitbox.left = posX - 32;
-    hitbox.right = posX + 32;
+    hitbox.left = posX - width/2;
+    hitbox.right = posX + width/2;
 
     // Move the background to the left
     gl.backgroundXoffset -= 1.0 * (0.05 / gl.delay);
@@ -120,8 +120,11 @@ void Player::Jump()
 }
 void Player::render()
 {
-    float h = 128.0;
-    float w = h * 0.5;
+    // Draw hitbox
+    //hitbox.draw(114);
+
+    float h = height/2;
+    float w = width/2;
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0);
     glTranslatef(0, posY, 0);
@@ -208,8 +211,8 @@ void Player::physics()
     if (posY < 0){
         yvel = 0;
         posY = 0;
-        hitbox.top = 128;
-        hitbox.bottom = 0; 
+        hitbox.top = posY + height;
+        hitbox.bottom = posY; 
         grounded = true;
     }
 }

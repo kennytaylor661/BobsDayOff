@@ -42,6 +42,7 @@ struct Hitbox
 class Player
 {
 	int HP = 100, wid;
+    int height = 256, width = 128;
 	bool grounded;
 	float posX = gl.xres/2, posY = 0.0f, xvel = 0, yvel = 0;
 	GLuint texid;
@@ -50,10 +51,10 @@ class Player
 	public:
 	Player()
 	{
-		hitbox.top = posY + 64;
-		hitbox.bottom = posY - 64;
-		hitbox.left = posX - 32;
-		hitbox.right = posX + 32;
+		hitbox.top = posY + height;
+		hitbox.bottom = posY;
+		hitbox.left = posX - width/2;
+		hitbox.right = posX + width/2;
 	}
 
 	int bananaCount = 0;
@@ -126,7 +127,6 @@ class Zombie : public Enemy
 		hitbox.bottom = posY - height/2;
 		hitbox.left = posX - width/2;
 		hitbox.right = posX + width/2;
-
 	}
 	//int HP = 5;
 	int damage = 10;
