@@ -1,5 +1,5 @@
 // Kenny Taylor
-// Modified:  11/28/18
+// Modified:  12/3/18
 // Purpose:  individual work on group project
 
 #include <GL/glx.h>
@@ -119,7 +119,8 @@ void drawTexturedBackground()
         for (int j=0; j < 20; j++) {
             glPushMatrix();
             glColor3f(1.0, 1.0, 1.0);
-            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0);  
+            glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset,
+                140+i*bgHeight+bgHeight/2, 0);  
             glBindTexture(GL_TEXTURE_2D, gl.backgroundTexture);
             glBegin(GL_QUADS);
                 glTexCoord2f(0.0f, 1.0f); glVertex2i(-bgWidth/2, -bgHeight/2);
@@ -327,7 +328,8 @@ void showLeaderboard()
     int y = gl.yres/2 + 60;
     if (gl.fetchLeaders == 1) {
         gl.fetchLeaders = 0;
-        fetchHTTPScores((char*)"minions.rocket-tech.net", (char*)"getscores.php");
+        fetchHTTPScores((char*)"minions.rocket-tech.net",
+            (char*)"getscores.php");
     } else {
         drawText16(x, y, 0x800080, (char*)gl.leader1.c_str());
         drawText16(x, y-32, 0x800080, (char*)gl.leader2.c_str());
@@ -337,7 +339,8 @@ void showLeaderboard()
     }
 
     // Draw the 'press space to continue' image
-    drawImage(gl.xres/2, gl.yres/2-130, 351, 51, gl.endScreenPressSpaceTexture);
+    drawImage(gl.xres/2, gl.yres/2-130, 351, 51,
+        gl.endScreenPressSpaceTexture);
 }
 
 void showIntroScreen()
@@ -380,7 +383,8 @@ void showEndScreen()
     drawImage(gl.xres/2, gl.yres/2+100, 200, 200, gl.endScreenTexture);
 
     // Draw the text
-    drawImage(gl.xres/2, gl.yres/2-100, 351, 51, gl.endScreenPressSpaceTexture); 
+    drawImage(gl.xres/2, gl.yres/2-100, 351, 51,
+        gl.endScreenPressSpaceTexture); 
 }
 
 void showInitialScreen()
@@ -422,9 +426,11 @@ void fetchHTTPScores(char *host, char *page)
     int sock = create_tcp_socket();
     char *ip = get_ip(host);
     //fprintf(stderr, "IP is %s\n", ip);
-    struct sockaddr_in *remote = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
+    struct sockaddr_in *remote =
+        (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
     remote->sin_family = AF_INET;
-    int tmpres = inet_pton(AF_INET, ip, (void *)(&(remote->sin_addr.s_addr)));
+    int tmpres = inet_pton(AF_INET, ip,
+        (void *)(&(remote->sin_addr.s_addr)));
     remote->sin_port = htons(80);
 
     if (connect(sock, (struct sockaddr *)remote, sizeof(struct sockaddr)) >= 0) {
@@ -555,9 +561,10 @@ void uploadScore()
     int sock = create_tcp_socket();
     char *ip = get_ip((char*)host.c_str());
     //fprintf(stderr, "IP is %s\n", ip);
-    struct sockaddr_in *remote = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
+    struct sockaddr_in *remote =
+        (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in *));
     remote->sin_family = AF_INET;
-    int tmpres = inet_pton(AF_INET, ip, (void *)(&(remote->sin_addr.s_addr)));
+    int tmpres = inet_pton(AF_INET,ip,(void *)(&(remote->sin_addr.s_addr)));
     remote->sin_port = htons(80);
 
     if (connect(sock, (struct sockaddr *)remote, sizeof(struct sockaddr)) >= 0) {
