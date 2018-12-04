@@ -115,8 +115,8 @@ void loadLevel(Level *lev, int levelNum)
 void drawTexturedBackground()
 {
     int bgWidth = 256, bgHeight = 256; 
-    for (int i=0; i < 3; i++) {
-        for (int j=0; j < 15; j++) {
+    for (int i=0; i < 4; i++) {
+        for (int j=0; j < 20; j++) {
             glPushMatrix();
             glColor3f(1.0, 1.0, 1.0);
             glTranslatef(j*bgWidth+bgWidth/2+gl.backgroundXoffset, 140+i*bgHeight+bgHeight/2, 0);  

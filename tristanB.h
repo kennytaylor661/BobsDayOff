@@ -23,6 +23,20 @@ struct Hitbox
                ((bottom <= other.top && top >= other.bottom)  ||  
                 (top >= other.bottom && bottom <= other.top));
     }
+    
+    void draw(int yOffset)
+    {
+        glPushMatrix();
+        glColor3f(1.0, 0.0, 0.0); 
+        glTranslated(0 - gl.camera[0], 0 + yOffset, 0); 
+        glBegin(GL_POLYGON);
+            glVertex2i(left, bottom);  
+            glVertex2i(left, top); 
+            glVertex2i(right, top); 
+            glVertex2i(right,  bottom);  
+        glEnd();
+        glPopMatrix();
+    }
 };
 
 class Player

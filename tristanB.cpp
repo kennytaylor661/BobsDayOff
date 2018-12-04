@@ -221,7 +221,12 @@ void Slime::AI(Player p)
     // Wiggle the image up and down between (y + yRange) and (y - yRange)
     int yRange = 75;
     yOffset += yOffsetVel;
-   if (yOffset > yRange) {
+    // Fix the hitbox offset
+    hitbox.top = posY + height/2 + yOffset;
+    hitbox.bottom = posY - height/2 + yOffset;
+
+
+    if (yOffset > yRange) {
         yOffset = yRange;
         yOffsetVel = -2;
     } else if (yOffset < -yRange) {
@@ -232,6 +237,8 @@ void Slime::AI(Player p)
 
 void Slime::render()
 {
+    // Draw hitbox
+    //hitbox.draw(225);
 
     glPushMatrix();
     glColor3ub(255,255,255);
@@ -265,6 +272,9 @@ void Zombie::AI(Player p)
 
 void Zombie::render()
 {
+    // Draw hitbox
+    //hitbox.draw(250);
+
     glPushMatrix();
     glColor3ub(255,255,255);
     glTranslatef(posX - gl.camera[0], posY + 250, 0);
@@ -291,7 +301,6 @@ void Zombie::render()
     glEnd();
     glDisable(GL_ALPHA_TEST);
     glPopMatrix();
-
 }
 //
 
