@@ -544,6 +544,7 @@ void pushInitials(char c)
         gl.fetchLeaders = 1; 
         gl.leaderboardFlag = !gl.leaderboardFlag;
         iCount = 0;
+        initials[0] = '\0';
     }
 }
 
